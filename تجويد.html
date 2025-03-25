@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <a href="index.html">
+    <button style="background-color:#8792ae; color: 3; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+        الرجوع للصفحة الرئيسية
+    </button>
+</a>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أحكام التجويد</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            text-align: right;
+            background-color: #f5f5f5;
+            margin: 20px;
+            padding: 20px;
+            color: black;
+        }
+        h1, h2 {
+            color: #e4ecfc;
+        }
+        .rule {
+            background-color: #fff;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        audio {
+            width: 100%;
+            margin-top: 10px;
+        }
+        button {
+            padding: 10px;
+            background-color: #e4ecfc;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+        .pdf-box {
+            background-color: white;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .pdf-buttons {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>أحكام التجويد</h1>
+
+    <div class="rule">
+        <h2>الإدغام</h2>
+        <p>الإدغام هو دمج حرف ساكن في الحرف الذي يليه بحيث يصبحان حرفًا واحدًا مشددًا.</p>
+        <button onclick="playAudio('idgham')">🎧 استمع للإدغام</button>
+        <audio id="idgham" controls></audio>
+    </div>
+
+    <div class="rule">
+        <h2>الإخفاء</h2>
+        <p>الإخفاء هو نطق النون الساكنة أو التنوين بصوت بين الإظهار والإدغام مع غنة.</p>
+        <button onclick="playAudio('ikhfa')">🎧 استمع للإخفاء</button>
+        <audio id="ikhfa" controls></audio>
+    </div>
+
+    <div class="rule">
+        <h2>الإظهار</h2>
+        <p>الإظهار هو نطق النون الساكنة أو التنوين بوضوح دون إدغام أو غنة.</p>
+        <button onclick="playAudio('izhar')">🎧 استمع للإظهار</button>
+        <audio id="izhar" controls></audio>
+    </div>
+
+    <div class="rule">
+        <h2>الإقلاب</h2>
+        <p>الإقلاب هو قلب النون الساكنة أو التنوين إلى ميم مخفاة عند التقاء النون الساكنة بحرف الباء.</p>
+        <button onclick="playAudio('iqlaab')">🎧 استمع للإقلاب</button>
+        <audio id="iqlaab" controls></audio>
+    </div>
+
+    <div class="rule">
+        <h2>مد العوض</h2>
+        <p>مد العوض يكون عند الوقف على التنوين بالفتح، حيث يستبدل التنوين بألف مدية.</p>
+        <button onclick="playAudio('mad_awad')">🎧 استمع لمد العوض</button>
+        <audio id="mad_awad" controls></audio>
+    </div>
+
+    <div class="rule">
+        <h2>مد البدل</h2>
+        <p>مد البدل هو أن تأتي همزة قبل حرف المد، ويمد بمقدار حركتين.</p>
+        <button onclick="playAudio('mad_badal')">🎧 استمع لمد البدل</button>
+        <audio id="mad_badal" controls></audio>
+    </div>
+
+    <div class="rule">
+        <h2>مد اللين</h2>
+        <p>مد اللين يكون عند مجيء حرف الواو أو الياء الساكنتين بعد حرف مفتوح، ويمد عند الوقف.</p>
+        <button onclick="playAudio('mad_leen')">🎧 استمع لمد اللين</button>
+        <audio id="mad_leen" controls></audio>
+    </div>
+
+    <div class="rule">
+        <h2>أحكام اللام الشمسية والقمرية</h2>
+        <p>اللام الشمسية تكتب ولا تُنطق، أما القمرية فتُكتب وتُلفظ.</p>
+        <button onclick="playAudio('lam_shams_qamar')">🎧 استمع لأحكام اللام</button>
+        <audio id="lam_shams_qamar" controls></audio>
+    </div>
+
+   <!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أحكام التجويد</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            text-align: right;
+            background-color: #f5f5f5;
+            margin: 20px;
+            padding: 20px;
+            color: black;
+        }
+        h1, h2 {
+            color: #8792ae;
+        }
+        .rule {
+            background-color: #fff;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        audio {
+            width: 100%;
+            margin-top: 10px;
+        }
+        button {
+            padding: 10px;
+            background-color: #8792ae;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+        .pdf-box {
+            background-color: white;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .pdf-buttons {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    
+
+    <div class="pdf-box">
+        <h2>📖 للمزيد تابع كتاب التجويد الميسر</h2>
+        <div class="pdf-buttons">
+            <button onclick="window.open('التجويد_الميسر.pdf', '_blank')">📖 تصفح الكتاب</button>
+            <button onclick="window.location.href='التجويد_الميسر.pdf'">⬇️ تنزيل الكتاب</button>
+        </div>
+    </div>
+
+</body>
+</html>
+    </div>
+
+    <script>
+        function playAudio(rule) {
+            let apiUrl = "";
+
+            if (rule === "idgham") {
+                apiUrl = "https://server8.mp3quran.net/afs/023.mp3";
+            } else if (rule === "ikhfa") {
+                apiUrl = "https://server8.mp3quran.net/afs/024.mp3";
+            } else if (rule === "izhar") {
+                apiUrl = "https://server8.mp3quran.net/afs/025.mp3";
+            } else if (rule === "iqlaab") {
+                apiUrl = "https://server8.mp3quran.net/afs/026.mp3";
+            } else if (rule === "mad_awad") {
+                apiUrl = "https://server8.mp3quran.net/afs/027.mp3";
+            } else if (rule === "mad_badal") {
+                apiUrl = "https://server8.mp3quran.net/afs/028.mp3";
+            } else if (rule === "mad_leen") {
+                apiUrl = "https://server8.mp3quran.net/afs/029.mp3";
+            } else if (rule === "lam_shams_qamar") {
+                apiUrl = "https://server8.mp3quran.net/afs/030.mp3";
+            }
+
+            let audioElement = document.getElementById(rule);
+            audioElement.src = apiUrl;
+            audioElement.play();
+        }
+    </script>
+
+</body>
+</html>

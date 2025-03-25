@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أسماء الله الحسنى</title>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: 'Amiri', serif;
+            direction: rtl;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            background-image: url('islamic-pattern.png');
+            background-repeat: repeat;
+            background-size: 200px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        h1 {
+            text-align: center;
+            color: #8792ae;
+            animation: slideInLeft 1s ease-in-out;
+        }
+
+        h2 {
+            color: #333;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        /* تصميم دائري للإطارات */
+        .asmaa-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            /*  تعديل للتحريك الأفضل */
+        }
+
+        .asmaa-list li {
+            font-size: 24px;
+            color: #555;
+            margin: 10px;
+            width: 120px;
+            height: 120px;
+            border: 1px solid #ddd;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background-color: #f9f9f9;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+             //* إضافة تحريك دوراني */
+            animation: rotate 10s linear infinite;
+        }
+
+        .asmaa-list li:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* تصميم الزر */
+        .back-button {
+            background-color: #e3e8ef;
+            border: 1px solid #8792ae;
+            padding: 15px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 18px;
+            color: #333;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 20px;
+              //*Add some spacing */
+        }
+
+        .back-button:hover {
+            background-color: #8792ae;
+            color: #fff;
+            transform: translateY(-5px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-button i {
+            margin-left: 5px;
+        }
+
+        /* Keyframes for animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-100%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        
+        <button class="back-button" onclick="goBack()">
+            <span>رجوع للقائمة الرئيسية<i class="fas fa-arrow-right"></i></span>
+        </button>
+
+        <h1>أسماء الله الحسنى</h1>
+
+        <ul class="asmaa-list">
+            <li>ٱللَّٰهُ</li>
+            <li>ٱلرَّحْمَٰنُ</li>
+            <li>ٱلرَّحِيمُ</li>
+            <li>ٱلْمَلِكُ</li>
+            <li>ٱلْقُدُّوسُ</li>
+            <li>ٱلسَّلَامُ</li>
+            <li>ٱلْمُؤْمِنُ</li>
+            <li>ٱلْمُهَيْمِنُ</li>
+            <li>ٱلْعَزِيزُ</li>
+            <li>ٱلْجَبَّارُ</li>
+            <li>ٱلْمُتَكَبِّرُ</li>
+            <li>ٱلْخَالِقُ</li>
+            <li>ٱلْبَارِئُ</li>
+            <li>ٱلْمُصَوِّرُ</li>
+            <li>ٱلْغَفَّارُ</li>
+            <li>ٱلْقَهَّارُ</li>
+            <li>ٱلْوَهَّابُ</li>
+            <li>ٱلرَّزَّاقُ</li>
+            <li>ٱلْفَتَّاحُ</li>
+            <li>ٱلْعَلِيمُ</li>
+            <li>ٱلْقَابِضُ</li>
+            <li>ٱلْبَاسِطُ</li>
+            <li>ٱلْخَافِضُ</li>
+            <li>ٱلرَّافِعُ</li>
+            <li>ٱلْمُعِزُّ</li>
+            <li>ٱلْمُذِلُّ</li>
+            <li>ٱلسَّمِيعُ</li>
+            <li>ٱلْبَصِيرُ</li>
+            <li>ٱلْحَكَمُ</li>
+            <li>ٱلْعَدْلُ</li>
+            <li>ٱللَّطِيفُ</li>
+            <li>ٱلْخَبِيرُ</li>
+            <li>ٱلْحَلِيمُ</li>
+            <li>ٱلْعَظِيمُ</li>
+            <li>ٱلْغَفُورُ</li>
+            <li>ٱلشَّكُورُ</li>
+            <li>ٱلْعَلِيُّ</li>
+            <li>ٱلْكَبِيرُ</li>
+            <li>ٱلْحَفِيظُ</li>
+            <li>ٱلْمُقِيتُ</li>
+            <li>ٱلْحَسِيبُ</li>
+            <li>ٱلْجَلِيلُ</li>
+            <li>ٱلْكَرِيمُ</li>
+            <li>ٱلرَّقِيبُ</li>
+            <li>ٱلْمُجِيبُ</li>
+            <li>ٱلْوَاسِعُ</li>
+            <li>ٱلْحَكِيمُ</li>
+            <li>ٱلْوَدُودُ</li>
+            <li>ٱلْمَجِيدُ</li>
+            <li>ٱلْبَاعِثُ</li>
+            <li>ٱلشَّهِيدُ</li>
+            <li>ٱلْحَقُّ</li>
+            <li>ٱلْوَكِيلُ</li>
+            <li>ٱلْقَوِيُّ</li>
+            <li>ٱلْمَتِينُ</li>
+            <li>ٱلْوَلِيُّ</li>
+            <li>ٱلْحَمِيدُ</li>
+            <li>ٱلْمُحْصِي</li>
+            <li>ٱلْمُبْدِئُ</li>
+            <li>ٱلْمُعِيدُ</li>
+            <li>ٱلْمُحْيِي</li>
+            <li>ٱلْمُمِيتُ</li>
+            <li>ٱلْحَيُّ</li>
+            <li>ٱلْقَيُّومُ</li>
+            <li>ٱلْوَاجِدُ</li>
+            <li>ٱلْمَاجِدُ</li>
+            <li>ٱلْوَاحِدُ</li>
+            <li>ٱلْأَحَدُ</li>
+            <li>ٱلصَّمَدُ</li>
+            <li>ٱلْقَادِرُ</li>
+            <li>ٱلْمُقْتَدِرُ</li>
+            <li>ٱلْمُقَدِّمُ</li>
+            <li>ٱلْمُؤَخِّرُ</li>
+            <li>ٱلْأَوَّلُ</li>
+            <li>ٱلْآخِرُ</li>
+            <li>ٱلظَّاهِرُ</li>
+            <li>ٱلْبَاطِنُ</li>
+            <li>ٱلْوَالِي</li>
+            <li>ٱلْمُتَعَالِي</li>
+            <li>ٱلْبَرُّ</li>
+            <li>ٱلتَّوَّابُ</li>
+            <li>ٱلْمُنْتَقِمُ</li>
+            <li>ٱلْعَفُوُّ</li>
+            <li>ٱلرَّءُوفُ</li>
+            <li>مَٰلِكُ ٱلْمُلْكِ</li>
+            <li>ذُو ٱلْجَلَالِ وَٱلْإِكْرَامِ</li>
+            <li>ٱلْمُقْسِطُ</li>
+            <li>ٱلْجَامِعُ</li>
+            <li>ٱلْغَنِيُّ</li>
+            <li>ٱلْمُغْنِي</li>
+            <li>ٱلْمَانِعُ</li>
+            <li>ٱلضَّارُّ</li>
+            <li>ٱلنَّافِعُ</li>
+            <li>ٱلنُّورُ</li>
+            <li>ٱلْهَادِي</li>
+            <li>ٱلْبَدِيعُ</li>
+            <li>ٱلْبَاقِي</li>
+            <li>ٱلْوَارِثُ</li>
+            <li>ٱلرَّشِيدُ</li>
+            <li>ٱلصَّبُورُ</li>
+        </ul>
+    </div>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+
+</html>

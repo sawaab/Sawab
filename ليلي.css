@@ -1,0 +1,49 @@
+body {
+    font-family: 'Amiri', serif;
+    margin: 0;
+    padding: 0;
+    direction: rtl;
+    background-color: #f0f0f0; /* لون خلفية لطيف */
+}
+
+.quran-index-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.quran-index-container h1 {
+    font-size: 36px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.quran-index-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 1200px; /* تحديد عرض أقصى */
+    margin: 0 auto; /* توسيط المجموعة */
+}
+
+.quran-button {
+    background-color: #8FBC8F; /* لون أخضر فاتح */
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 20px; /* حواف مدورة */
+    cursor: pointer;
+    font-size: 16px;
+    color: #fff; /* لون النص أبيض */
+    transition: background-color 0.3s ease; /* تأثير التغيير عند المرور */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* ظل خفيف */
+}
+
+.quran-button:hover {
+    background-color: #3CB371; /* لون أخضر أغمق عند المرور */
+}
+
+.quran-button span {
+    font-weight: bold;
+}

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جدول الصلوات اليومية</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            direction: rtl;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            width: 90%;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: black;
+        }
+        .date-navigation {
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        button {
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: #8792ae;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+        button:hover, button:active {
+            background-color: #aebad2;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #8792ae;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #aebad2;
+            color: white;
+        }
+        input[type="radio"] {
+            transform: scale(1.5);
+            cursor: pointer;
+        }
+        .rewards-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        .rewards-modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 70%;
+            max-height: 90%;
+            overflow-y: auto;
+        }
+        .reward-level {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 5px;
+            background-color: #f9f9f9;
+        }
+        .reward-level.unlocked {
+            background-color: #bfcae2;
+            color: white;
+            animation: rgbGlow 2s infinite alternate;
+        }
+        @keyframes rgbGlow {
+            0% { box-shadow: 0px 0px 10px 3px rgba(255, 0, 0, 0.7); }
+            33% { box-shadow: 0px 0px 10px 3px rgba(0, 255, 0, 0.7); }
+            66% { box-shadow: 0px 0px 10px 3px rgba(0, 0, 255, 0.7); }
+            100% { box-shadow: 0px 0px 10px 3px rgba(255, 0, 0, 0.7); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>جدول الصلوات اليومية</h1>
+        <div class="date-navigation">
+            <button onclick="changeDay(-1)">اليوم السابق</button>
+            <span id="currentDate"></span>
+            <button onclick="changeDay(1)">اليوم التالي</button>
+            
+        </div>
+        <button onclick="resetTable()">تصفير الجدول</button>
+        <button onclick="showRewardsModal()">الجوائز</button>
+        <button class="back-button" onclick="goBack()">
+            <span>رجوع للقائمة الرئيسية<i class="fas fa-arrow-right"></i></span>
+        </button>
+        <table>
+            <thead>
+                <tr>
+                    <th>الصلاة</th>
+                    <th>صليت في الموعد</th>
+                    <th>لم أصلِّ بعد</th>
+                    <th>تأخرت</th>
+                </tr>
+            </thead>
+            <tbody id="prayerTable"></tbody>
+            
+        </table>
+        
+    </div>
+
+    <div class="rewards-modal" id="rewardsModal">
+        <button onclick="hideRewardsModal()">عودة</button>
+        <div class="rewards-modal-content">
+            <h2>الجوائز</h2>
+            <div id="rewardsList"></div>
+        </div>
+    </div>
+
+    <script>
+        const prayers = ["الفجر", "الظهر", "العصر", "المغرب", "العشاء"];
+        let currentDate = new Date();
+        const rewards = Array.from({ length: 100 }, (_, index) => ({
+            days: index + 1,
+            name: `مستوى ${index + 1}: ${["مثابر", "جيد", "جيد جدًا", "ممتاز", "رائع", "استثنائي", "مذهل", "مذهل جدًا", "فائق", "أسطوري"][Math.floor(index / 10)]}`
+        }));
+
+        function formatDate(date) {
+            const days = ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"];
+            const months = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
+            return `${days[date.getDay()]}، ${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
+        }
+
+        function changeDay(offset) {
+            const newDate = new Date(currentDate);
+            newDate.setDate(currentDate.getDate() + offset);
+            currentDate = newDate;
+            loadTable();
+        }
+
+        function loadTable() {
+            document.getElementById("currentDate").textContent = formatDate(currentDate);
+            const formattedDate = currentDate.toISOString().split('T')[0];
+            const savedData = JSON.parse(localStorage.getItem("prayerTracker") || "{}")[formattedDate] || {};
+            const tableBody = document.getElementById("prayerTable");
+            tableBody.innerHTML = "";
+
+            prayers.forEach(prayer => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${prayer}</td>
+                    ${["ontime", "late", "missed"].map(status => 
+                        `<td><input type="radio" name="${prayer}" value="${status}" 
+                            onchange="saveSelection('${formattedDate}', '${prayer}', '${status}'); updateRewards()" 
+                            ${savedData[prayer] === status ? "checked" : ""}></td>`
+                    ).join("")}
+                `;
+                tableBody.appendChild(row);
+            });
+
+            updateRewards();
+        }
+
+        function saveSelection(date, prayer, status) {
+            let savedData = JSON.parse(localStorage.getItem("prayerTracker") || "{}");
+            if (!savedData[date]) savedData[date] = {};
+            savedData[date][prayer] = status;
+            localStorage.setItem("prayerTracker", JSON.stringify(savedData));
+        }
+
+        function resetTable() {
+            const confirmReset = confirm("⚠️ هل أنت متأكد أنك تريد مسح جميع بيانات الجدول والبدء من جديد؟");
+            if (confirmReset) {
+                localStorage.removeItem("prayerTracker");
+                loadTable();
+                alert("✅ تم مسح البيانات بنجاح، يمكنك البدء من جديد!");
+            }
+        }
+
+        function updateRewards() {
+            let consecutiveDays = 0;
+            let savedData = JSON.parse(localStorage.getItem("prayerTracker") || "{}");
+            Object.keys(savedData).forEach(date => {
+                if (Object.values(savedData[date]).every(status => status === "ontime")) {
+                    consecutiveDays++;
+                }
+            });
+            const rewardsList = document.getElementById("rewardsList");
+            rewardsList.innerHTML = rewards.map(reward =>
+                `<div class="reward-level ${consecutiveDays >= reward.days ? "unlocked" : ""}">
+                    ${reward.name}: ${consecutiveDays >= reward.days ? "مفتوح 🎉" : "مغلق 🔒"}
+                </div>`
+            ).join("");
+        }
+
+        function showRewardsModal() {
+            const modal = document.getElementById("rewardsModal");
+            modal.style.display = "flex";
+        }
+
+        function hideRewardsModal() {
+            const modal = document.getElementById("rewardsModal");
+            modal.style.display = "none";
+        }
+
+        document.addEventListener("DOMContentLoaded", loadTable);
+    function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

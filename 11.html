@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فهرس القرآن الكريم</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Amiri', serif;
+            margin: 0;
+            padding: 0;
+            direction: rtl;
+            background-color: #f0f0f0;
+            text-align: center;
+        }
+
+        .quran-index-container {
+            padding: 20px;
+        }
+     .quran-button {
+            background-color: #coc8d9;
+            border: 1px solid #8792ae;
+            padding: 15px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 18px;
+            outline:none;
+            color: #333;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+.quran-button:hover {
+            background-color: #8792ae;
+            color: #fff;
+            transform: translateY(-5px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+            outline:none;
+        }
+
+        .quran-button span {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            outline:none;
+        }
+
+        
+
+        .search-container {
+            margin-bottom: 20px;
+        }
+// Search Box*/
+        .search-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            outline:none;
+            
+        }
+
+        #searchBox {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            outline:none;
+        }
+    #searchButton {
+            background-color: #8792ae
+            color: #fff
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-left: 10px;
+            outline: none;
+            
+        }
+    
+        
+
+         0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 20px;
+           // Add some spacing */
+            outline:none;
+        }
+
+        .back-button:hover {
+            background-color: #3CB371;
+            color: #fff;
+            transform: translateY(-5px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+            outline:none;
+        }
+
+        .quran-index-list {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="quran-index-container">
+        <h1>فهرس القرآن الكريم</h1>
+        <div class="search-container">
+            <input type="text" id="searchBox" placeholder="ابحث عن سورة..." onkeyup="filterSurahs()">
+            <button class="quran-button" onclick="filterSurahs()">بحث</button>
+        </div>
+        <div id="quranIndexList" class="quran-index-list"></div>
+        <div id="surahContent" style="display: none;">
+            <button class="quran-button back-button" onclick="goBack()">العودة إلى الفهرس</button>
+            <h2></h2>
+            <div id="ayahList"></div>
+        </div>
+    </div>
+
+    <script>
+        const baseUrl = 'https://api.alquran.cloud/v1';
+        const surahNames = [
+            "الفاتحة", "البقرة", "آل عمران", "النساء", "المائدة", "الأنعام", "الأعراف", "الأنفال", "التوبة", "يونس",
+            "هود", "يوسف", "الرعد", "إبراهيم", "الحجر", "النحل", "الإسراء", "الكهف", "مريم", "طه",
+            "الأنبياء", "الحج", "المؤمنون", "النور", "الفرقان", "الشعراء", "النمل", "القصص", "العنكبوت", "الروم",
+            "لقمان", "السجدة", "الأحزاب", "سبأ", "فاطر", "يس", "الصافات", "ص", "الزمر", "غافر",
+            "فصلت", "الشورى", "الزخرف", "الدخان", "الجاثية", "الأحقاف", "محمد", "الفتح", "الحجرات", "ق",
+            "الذاريات", "الطور", "النجم", "القمر", "الرحمن", "الواقعة", "الحديد", "المجادلة", "الحشر", "الممتحنة",
+            "الصف", "الجمعة", "المنافقون", "التغابن", "الطلاق", "التحريم", "الملك", "القلم", "الحاقة", "المعارج",
+            "نوح", "الجن", "المزمل", "المدثر", "القيامة", "الإنسان", "المرسلات", "النبأ", "النازعات", "عبس",
+            "التكوير", "الانفطار", "المطففين", "الانشقاق", "البروج", "الطارق", "الأعلى", "الغاشية", "الفجر", "البلد",
+            "الشمس", "الليل", "الضحى", "الشرح", "التين", "العلق", "القدر", "البينة", "الزلزلة", "العاديات",
+            "القارعة", "التكاثر", "العصر", "الهمزة", "الفيل", "قريش", "الماعون", "الكوثر", "الكافرون", "النصر",
+            "المسد", "الإخلاص", "الفلق", "الناس"
+        ];
+
+        document.addEventListener("DOMContentLoaded", () => {
+            loadSurahList();
+        });
+
+        async function loadSurahList() {
+            const quranIndexList = document.getElementById('quranIndexList');
+            quranIndexList.innerHTML = '';
+
+            surahNames.forEach((name, index) => {
+                const button = document.createElement('button');
+                button.className = "quran-button";
+                button.textContent = name;
+                button.onclick = () => loadSurah(index + 1);
+                quranIndexList.appendChild(button);
+            });
+        }
+
+        async function loadSurah(surahNumber) {
+            try {
+                const response = await fetch(`${baseUrl}/surah/${surahNumber}?edition=ar.alafasy`);
+                const data = await response.json();
+                
+                if (data.status === 'OK') {
+                    document.getElementById('quranIndexList').style.display = 'none';
+                    const surah = data.data;
+                    document.querySelector('#surahContent h2').textContent = surahNames[surahNumber - 1];
+                    document.querySelector('#ayahList').innerHTML = surah.ayahs.map(ayah => `<p>${ayah.text}</p>`).join('');
+                    document.getElementById('surahContent').style.display = 'block';
+                } else {
+                    alert('حدث خطأ أثناء جلب السورة.');
+                }
+            } catch (error) {
+                alert('حدث خطأ في الشبكة.');
+            }
+        }
+
+
+        function filterSurahs() {
+            const input = document.getElementById('searchBox').value.toUpperCase();
+            const buttons = document.querySelectorAll('.quran-button');
+            
+            buttons.forEach(button => {
+                if (button.textContent.toUpperCase().includes(input)) {
+                    button.style.display = "";
+                } else {
+                    button.style.display = "none";
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

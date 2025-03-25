@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فهرس القرآن الكريم</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* CSS */
+        body {
+            font-family: 'Amiri', serif;
+            margin: 0;
+            padding: 0;
+            direction: rtl;
+            background-color: #f0f0f0;
+            background-image: url('islamic-pattern.png');
+            background-repeat: repeat;
+            background-size: 200px;
+        }
+        .quran-index-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
+            max-width: 900px;
+            margin: 20px auto;
+        }
+        .quran-index-container h1 {
+            font-size: 48px;
+            color: #333;
+            margin-bottom: 30px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            border-bottom: 2px solid #8792ae;
+            padding-bottom: 10px;
+        }
+        .quran-index-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .quran-button {
+            background-color: #coc8d9;
+            border: 1px solid #8792ae;
+            padding: 15px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 18px;
+            color: #333;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .quran-button:hover {
+            background-color: #8792ae;
+            color: #fff;
+            transform: translateY(-5px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+        .quran-button span {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        #surahContent {
+            margin-top: 30px;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        #surahContent h2 {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        #surahContent #ayahList {
+            font-size: 20px;
+            color: #555;
+            line-height: 2.2;
+            text-align: justify;
+        }
+        .back-button {
+            background-color: #coc8d9;
+            border: 1px solid #8792ae;
+            padding: 15px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 18px;
+            color: #333;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .back-button:hover {
+            background-color: #3CB371;
+            color: #fff;
+            transform: translateY(-5px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+        .back-button i {
+            margin-left: 5px;
+        }
+        .search-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        #searchBox {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            outline:none;
+        }
+        #searchButton {
+            background-color: #8792ae;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+        #searchButton i {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="quran-index-container">
+        <!-- زر السابق -->
+        <button class="quran-button" onclick="goBack()">
+            <span>السابق <i class="fas fa-arrow-right"></i></span>
+        </button>
+        <h1>فهرس القرآن الكريم</h1>
+        <div class="search-container">
+            <input type="text" id="searchBox" placeholder="ابحث عن سورة..." onkeyup="filterSurahs()">
+            <button id="searchButton" onclick="filterSurahs()">
+                <i class="fas fa-search"></i> بحث
+            </button>
+        </div>
+        <!-- فهرس السور -->
+        <div id="quranIndexList" class="quran-index-list">
+            <button class="quran-button" onclick="loadSurah(1)"><span>الفاتحة</span></button>
+            <button class="quran-button" onclick="loadSurah(2)"><span>البقرة</span></button>
+            <button class="quran-button" onclick="loadSurah(3)"><span>آل عمران</span></button>
+            <button class="quran-button" onclick="loadSurah(4)"><span>النساء</span></button>
+            <button class="quran-button" onclick="loadSurah(5)"><span>المائدة</span></button>
+            <button class="quran-button" onclick="loadSurah(6)"><span>الأنعام</span></button>
+            <button class="quran-button" onclick="loadSurah(7)"><span>الأعراف</span></button>
+            <button class="quran-button" onclick="loadSurah(8)"><span>الأنفال</span></button>
+            <button class="quran-button" onclick="loadSurah(9)"><span>التوبة</span></button>
+            <button class="quran-button" onclick="loadSurah(10)"><span>يونس</span></button>
+            <!-- إكمال باقي السور حتى السورة 114 -->
+            <button class="quran-button" onclick="loadSurah(114)"><span>الناس</span></button>
+        </div>
+        <div id="surahContent" style="display: none;">
+            <!-- زر العودة إلى الفهرس -->
+            <button class="back-button" onclick="showIndex()">
+                <i class="fas fa-arrow-left"></i> العودة إلى الفهرس
+            </button>
+            <h2></h2>
+            <div id="ayahList"></div>
+        </div>
+    </div>
+    <script>
+        const baseUrl = 'https://api.alquran.cloud/v1';
+        const surahNames = [
+            "الفاتحة", "البقرة", "آل عمران", "النساء", "المائدة", "الأنعام", "الأعراف", "الأنفال", "التوبة", "يونس",
+            "هود", "يوسف", "الرعد", "إبراهيم", "الحجر", "النحل", "الإسراء", "الكهف", "مريم", "طه",
+            "الأنبياء", "الحج", "المؤمنون", "النور", "الفرقان", "الشعراء", "النمل", "القصص", "العنكبوت", "الروم",
+            "لقمان", "السجدة", "الأحزاب", "سبأ", "فاطر", "يس", "الصافات", "ص", "الزمر", "غافر",
+            "فصلت", "الشورى", "الزخرف", "الدخان", "الجاثية", "الأحقاف", "محمد", "الفتح", "الحجرات", "ق",
+            "الذاريات", "الطور", "النجم", "القمر", "الرحمن", "الواقعة", "الحديد", "المجادلة", "الحشر", "الممتحنة",
+            "الصف", "الجمعة", "المنافقون", "التغابن", "الطلاق", "التحريم", "الملك", "القلم", "الحاقة", "المعارج",
+            "نوح", "الجن", "المزمل", "المدثر", "القيامة", "الإنسان", "المرسلات", "النبأ", "النازعات", "عبس",
+            "التكوير", "الانفطار", "المطففين", "الانشقاق", "البروج", "الطارق", "الأعلى", "الغاشية", "الفجر", "البلد",
+            "الشمس", "الليل", "الضحى", "الشرح", "التين", "العلق", "القدر", "البينة", "الزلزلة", "العاديات",
+            "القارعة", "التكاثر", "العصر", "الهمزة", "الفيل", "قريش", "الماعون", "الكوثر", "الكافرون", "النصر",
+            "المسد", "الإخلاص", "الفلق", "الناس"
+        ];
+        document.addEventListener("DOMContentLoaded", () => {
+            loadSurahList();
+        });
+        async function loadSurahList() {
+            const quranIndexList = document.getElementById('quranIndexList');
+            quranIndexList.innerHTML = '';
+            surahNames.forEach((name, index) => {
+                const button = document.createElement('button');
+                button.className = "quran-button";
+                button.textContent = name;
+                button.onclick = () => loadSurah(index + 1);
+                quranIndexList.appendChild(button);
+            });
+        }
+        async function loadSurah(surahNumber) {
+            try {
+                const response = await fetch(`${baseUrl}/surah/${surahNumber}?edition=ar.alafasy`);
+                const data = await response.json();
+                if (data.status === 'OK') {
+                    document.getElementById('quranIndexList').style.display = 'none';
+                    const surah = data.data;
+                    document.querySelector('#surahContent h2').textContent = surahNames[surahNumber - 1];
+                    document.querySelector('#ayahList').innerHTML = surah.ayahs.map(ayah => `<p>${ayah.text}</p>`).join('');
+                    document.getElementById('surahContent').style.display = 'block';
+                } else {
+                    alert('حدث خطأ أثناء جلب السورة.');
+                }
+            } catch (error) {
+                alert('حدث خطأ في الشبكة.');
+            }
+        }
+        function filterSurahs() {
+            const input = document.getElementById('searchBox').value.toUpperCase();
+            const buttons = document.querySelectorAll('.quran-button');
+            buttons.forEach(button => {
+                if (button.textContent.toUpperCase().includes(input)) {
+                    button.style.display = "";
+                } else {
+                    button.style.display = "none";
+                }
+            });
+        }
+        // تعديل دالة goBack لتوجيه المستخدم إلى index.html
+        function goBack() {
+            window.location.href = 'index.html';
+        }
+        // دالة showIndex لإظهار الفهرس
+        function showIndex() {
+            document.getElementById('surahContent').style.display = 'none';
+            document.getElementById('quranIndexList').style.display = 'flex';
+        }
+    </script>
+</body>
+</html>

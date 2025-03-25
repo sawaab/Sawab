@@ -1,0 +1,47 @@
+<div>
+  <button id="prevDay">اليوم السابق</button>
+  <span id="currentDate">22 مارس 2025</span>
+  <button id="nextDay">اليوم التالي</button>
+</div>
+
+<table id="dataTable">
+  <!-- جدول البيانات هنا -->
+</table>
+<script>// الحصول على التاريخ الحالي
+let currentDate = new Date();
+
+// تحديث عرض التاريخ
+function updateDateDisplay() {
+  const dateElement = document.getElementById("currentDate");
+  dateElement.textContent = currentDate.toLocaleDateString("ar-EG", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
+// تحديث البيانات بناءً على التاريخ
+function updateData() {
+  // هنا يمكنك استدعاء بيانات جديدة أو تحديث الجدول الحالي
+  console.log(`تحديث البيانات لليوم: ${currentDate}`);
+}
+
+// التعامل مع زر اليوم السابق
+document.getElementById("prevDay").addEventListener("click", () => {
+  currentDate.setDate(currentDate.getDate() - 1);
+  updateDateDisplay();
+  updateData();
+});
+
+// التعامل مع زر اليوم التالي
+document.getElementById("nextDay").addEventListener("click", () => {
+  currentDate.setDate(currentDate.getDate() + 1);
+  updateDateDisplay();
+  updateData();
+});
+
+// التهيئة الأولية
+updateDateDisplay();
+updateData();
+
+</script>

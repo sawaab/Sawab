@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فهرس القرآن الكريم</title>
+    <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+  
+        /* تحسين التصميم */
+        body {
+            font-family: 'Amiri', serif;
+            margin: 0;
+            padding: 0;
+            direction: rtl;
+            background: url('https://source.unsplash.com/1600x900/?islamic-pattern') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .quran-index-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 900px;
+            margin: 40px auto;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .quran-index-container h1 {
+            font-size: 36px;
+            color: #3CB371;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
+
+        .quran-index-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            padding: 10px;
+        }
+
+        .quran-button {
+            background-color: #E6F4EA;
+            border: 2px solid #3CB371;
+            padding: 15px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 18px;
+            color: #333;
+            transition: 0.3s;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .quran-button:hover {
+            background: #3CB371;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        #surahContent {
+            display: none;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        #surahContent h2 {
+            font-size: 28px;
+            color: #2c3e50;
+            border-bottom: 2px solid #3CB371;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        #ayahList {
+            font-size: 22px;
+            color: #555;
+            line-height: 2;
+            text-align: justify;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .back-button {
+            background: #3CB371;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+            margin-top: 15px;
+            border: none;
+        }
+
+        .back-button:hover {
+            background: #2c3e50;
+            transform: scale(1.05);
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        #searchBox {
+            padding: 10px;
+            border: 2px solid #3CB371;
+            border-radius: 25px;
+            font-size: 16px;
+            width: 70%;
+            text-align: center;
+        }
+
+        #searchButton {
+            background: #3CB371;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: 0.3s;
+        }
+
+        #searchButton:hover {
+            background: #2c3e50;
+        }
+    </style>
+</head>
+
+<body>
+  
+</head>
+<body>
+    <div class="container">
+        <!-- ✅ إضافة الشعار في أعلى يمين الصفحة -->
+        <div class="logo">
+            <img src="https://via.placeholder.com/50" alt="شعار ثواب">
+            <span class="logo-text">ثواب</span>
+        </div>
+
+    <div class="quran-index-container">
+        <h1>📖 فهرس القرآن الكريم</h1>
+
+        <div class="search-container">
+            <input type="text" id="searchBox" placeholder="🔍 ابحث عن سورة..." onkeyup="filterSurahs()">
+            <button id="searchButton" onclick="filterSurahs()">بحث</button>
+        </div>
+
+        <div id="quranIndexList" class="quran-index-list">
+            <button class="quran-button" onclick="loadSurah(1)">الفاتحة</button>
+            <button class="quran-button" onclick="loadSurah(2)">البقرة</button>
+            <button class="quran-button" onclick="loadSurah(3)">آل عمران</button>
+            <button class="quran-button" onclick="loadSurah(4)">النساء</button>
+            <button class="quran-button" onclick="loadSurah(5)">المائدة</button>
+        </div>
+
+        <div id="surahContent">
+            <h2></h2>
+            <div id="ayahList"></div>
+            <button class="back-button" onclick="goBack()">🔙 رجوع</button>
+        </div>
+    </div>
+
+    <script>
+        async function loadSurah(surahNumber) {
+            const apiUrl = `https://api.alquran.cloud/v1/surah/${surahNumber}`;
+            const surahNames = ["الفاتحة", "البقرة", "آل عمران", "النساء", "المائدة"];
+
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+
+                if (data.status === "OK") {
+                    const ayahs = data.data.ayahs;
+                    document.querySelector("#surahContent h2").textContent = surahNames[surahNumber - 1];
+                    const ayahText = ayahs.map(ayah => `<p>﴿ ${ayah.text} ﴾ <span>(${ayah.numberInSurah})</span></p>`).join('');
+                    document.querySelector("#ayahList").innerHTML = ayahText;
+
+                    document.getElementById("quranIndexList").style.display = "none";
+                    document.getElementById("surahContent").style.display = "block";
+                } else {
+                    alert("حدث خطأ أثناء جلب الآيات.");
+                }
+            } catch (error) {
+                console.error("خطأ في تحميل البيانات:", error);
+                alert("تعذر تحميل السورة. تأكد من الاتصال بالإنترنت.");
+            }
+        }
+
+        function goBack() {
+            document.getElementById("quranIndexList").style.display = "grid";
+            document.getElementById("surahContent").style.display = "none";
+        }
+
+        function filterSurahs() {
+            let input = document.getElementById("searchBox").value.toUpperCase();
+            let buttons = document.getElementsByClassName("quran-button");
+
+            for (let button of buttons) {
+                if (button.textContent.toUpperCase().includes(input)) {
+                    button.style.display = "";
+                } else {
+                    button.style.display = "none";
+                }
+            }
+        }
+    </script>
+</body>
+</html>

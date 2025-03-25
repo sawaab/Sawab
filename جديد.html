@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جدول الصلوات اليومية</title>
+    <style>
+        /* تعديل الألوان العامة */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: white; /* خلفية بيضاء */
+            direction: rtl;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            width: 90%;
+            margin: auto;
+            background: white; /* خلفية بيضاء */
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* ظل خفيف */
+        }
+
+        h1 {
+            color: black; /* عنوان أسود */
+        }
+
+        .date-navigation {
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        button {
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: #8792ae; /* لون زر رمادي مائل للأزرق */
+            color: white; /* نص أبيض */
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover, button:active {
+            background-color: #aebad2; /* لون زر عند التحويم */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #8792ae; /* حدود الجدول بنفس لون الأزرار */
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #aebad2; /* خلفية الرأس بنفس لون الأزرار */
+            color: white; /* نص أبيض */
+        }
+
+        input[type="radio"] {
+            transform: scale(1.5);
+            cursor: pointer;
+        }
+
+        /* تأثير RGB على الجوائز المكتسبة */
+        @keyframes rgbGlow {
+            0% { box-shadow: 0 0 15px red; }
+            25% { box-shadow: 0 0 15px blue; }
+            50% { box-shadow: 0 0 15px green; }
+            75% { box-shadow: 0 0 15px yellow; }
+            100% { box-shadow: 0 0 15px red; }
+        }
+
+        .reward-item {
+            padding: 15px;
+            margin: 5px 0;
+            border-radius: 8px;
+            background-color: #f9f9f9; /* خلفية فاتحة للمستويات */
+            position: relative;
+            transition: 0.3s;
+        }
+
+        .reward-locked::before {
+            content: "🔒";
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            color: #ccc; /* رمز القفل رمادي */
+        }
+
+        .reward-unlocked {
+            animation: rgbGlow 2s infinite;
+            background-color: #bfcae2; /* خلفية مستويات مفتوحة */
+            color: white; /* نص أبيض */
+        }
+
+        /* قائمة الجوائز */
+        .rewards-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* خلفية شبه شفافة */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .rewards-modal-content {
+            background-color: white; /* خلفية بيضاء للمحتوى */
+            padding: 20px;
+            border-radius: 10px;
+            width: 70%;
+            max-height: 80%;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: red; /* زر إغلاق أحمر */
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>جدول الصلوات اليومية</h1>
+    <div class="date-navigation">
+        <button onclick="changeDay(-1)">اليوم السابق</button>
+        <span id="currentDate"></span>
+        <button onclick="changeDay(1)">اليوم التالي</button>
+    </div>
+    <button onclick="confirmReset()">تصفير الجدول</button>
+    <button onclick="showRewardsModal()">الجوائز</button>
+
+    <table>
+        <thead>
+            <tr>
+                <th>الصلاة</th>
+                <th>صليت في الموعد</th>
+                <th>لم أصلِّ بعد</th>
+                <th>تأخرت</th>
+            </tr>
+            
+            <tbody id="prayerTable"></tbody>
+            <a href="look.html">
+    <button style="background-color:#8792ae; color:; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+        الرجوع للصفحة الرئيسية
+    </button>
+        </thead>
+        <tbody id="prayerTable"></tbody>
+    </table>
+</div>
+
+<!-- قائمة الجوائز -->
+<div class="rewards-modal" id="rewardsModal">
+    <div class="rewards-modal-content">
+       <button onclick="hideRewardsModal()">عودة</button>
+        <h2>الجوائز</h2>
+        <div id="rewardsList"></div>
+    </div>
+</div>
+
+<script>
+    const prayers = ["الفجر", "الظهر", "العصر", "المغرب", "العشاء"];
+    let currentDate = new Date();
+    const totalLevels = 100;
+    const categoryNames = [
+        "مبتدئ", "مثابر", "محترف", "بطل", "جامد",
+        "سيد", "ماهر", "متقدم", "خبير", "ملك",
+        "مجتهدجدا", "قائد", "صارم", "مجاهد", "مصلح",
+        "عالم", "حريف", "مبدع", "حكيم", "أسطوري"
+    ];
+
+    function formatDate(date) {
+        const days = ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"];
+        return `${days[date.getDay()]} - ${date.toLocaleDateString("ar-EG")}`;
+    }
+
+    function loadTable() {
+        document.getElementById("currentDate").textContent = formatDate(currentDate);
+        const tableBody = document.getElementById("prayerTable");
+        tableBody.innerHTML = "";
+
+        prayers.forEach(prayer => {
+            const row = document.createElement("tr");
+            row.innerHTML = `<td>${prayer}</td>` + ["ontime", "late", "missed"].map(status => {
+                return `<td><input type="radio" name="${prayer}" value="${status}" onchange="saveSelection('${formatDate(currentDate)}', '${prayer}', '${status}')"></td>`;
+            }).join("");
+
+            const savedData = JSON.parse(localStorage.getItem("prayerTracker") || "{}");
+            const today = formatDate(currentDate);
+            if (savedData[today] && savedData[today][prayer]) {
+                const status = savedData[today][prayer];
+                row.querySelector(`input[value="${status}"]`).checked = true;
+            }
+
+            tableBody.appendChild(row);
+        });
+    }
+
+    function saveSelection(date, prayer, status) {
+        let savedData = JSON.parse(localStorage.getItem("prayerTracker") || "{}");
+        if (!savedData[date]) savedData[date] = {};
+        savedData[date][prayer] = status;
+        localStorage.setItem("prayerTracker", JSON.stringify(savedData));
+        checkRewards();
+    }
+
+    function checkRewards() {
+        let savedData = JSON.parse(localStorage.getItem("prayerTracker") || "{}");
+        let today = formatDate(currentDate);
+
+        if (prayers.every(prayer => savedData[today] && savedData[today][prayer] === "ontime")) {
+            let earnedPoints = parseInt(localStorage.getItem("earnedPoints") || "0");
+            localStorage.setItem("earnedPoints", Math.min(earnedPoints + 1, totalLevels));
+        }
+
+        loadRewards();
+    }
+
+    function showRewardsModal() {
+        document.getElementById("rewardsModal").style.display = "flex";
+        loadRewards();
+    }
+
+    function hideRewardsModal() {  
+    const modal = document.getElementById("rewardsModal");
+    modal.classList.add("closing");
+    setTimeout(() => {
+        modal.classList.remove("show", "closing");
+        modal.style.display = "none";
+    }, 500);
+}
+
+    function confirmReset() {
+        if (confirm("هل أنت متأكد من تصفير الجدول؟ سيتم فقدان جميع البيانات!")) {
+            localStorage.removeItem("prayerTracker");
+            localStorage.removeItem("earnedPoints");
+            loadTable();
+        }
+    }
+
+    function changeDay(offset) {
+        currentDate.setDate(currentDate.getDate() + offset);
+        loadTable();
+    }
+
+    function loadRewards() {
+        const rewardsList = document.getElementById("rewardsList");
+        const earnedPoints = parseInt(localStorage.getItem("earnedPoints") || "0");
+
+        rewardsList.innerHTML = "";
+        for (let i = 1; i <= totalLevels; i++) {
+            const rewardItem = document.createElement("div");
+            rewardItem.className = "reward-item";
+
+            const categoryIndex = Math.floor((i - 1) / 5);
+            const categoryName = categoryNames[categoryIndex];
+            rewardItem.textContent = `المستوى ${i}: ${categoryName}`;
+
+            if (earnedPoints >= i) {
+                rewardItem.classList.add("reward-unlocked");
+            } else {
+                rewardItem.classList.add("reward-locked");
+            }
+
+            rewardsList.appendChild(rewardItem);
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", loadTable);
+</script>
+</body>
+</html>

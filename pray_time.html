@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+     <button id="goBackToMenu" onclick="goBackToMenu()">
+            <span>السابق <i class="fas fa-arrow-right"></i></span>
+        </button>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مواقيت الصلاة</title>
+    <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: 'Amiri', serif;
+            direction: rtl;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            background-image: url('islamic-pattern.png');
+            background-repeat: repeat;
+            background-size: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        h1 {
+            color: #8792ae;
+        }
+
+        #prayer-times {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .prayer-row {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .prayer-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: #e3e8ef;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .prayer-circle i {
+            font-size: 30px;
+            margin-bottom: 5px;
+            color: #3CB371;
+        }
+
+        .prayer-name {
+            font-size: 20px;
+            color: #333;
+        }
+
+        .prayer-time {
+            font-size: 16px;
+            color: #555;
+        }
+
+        #city-input {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        #change-city-button {
+            background-color: #8792ae;
+            color: white;
+            border-radius: 5px;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #next-prayer {
+            font-size: 24px;
+            color: #8792ae;
+            margin-top: 30px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        #time-left {
+            font-size: 32px;
+            font-weight: bold;
+            color: #555;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>مواقيت الصلاة</h1>
+        <input type="text" id="city-input" placeholder="أدخل اسم المدينة">
+        <button id="change-city-button" onclick="changeCity()">تحديث المواقيت</button>
+        <div id="prayer-times"></div>
+        <h3 id="next-prayer"></h3>
+        <h2 id="time-left"></h2>
+    </div>
+
+    <script>
+        let prayerTimesData;
+        const prayerNames = { Fajr: "الفجر", Dhuhr: "الظهر", Asr: "العصر", Maghrib: "المغرب", Isha: "العشاء" };
+
+        async function getPrayerTimes(city) {
+            const apiUrl = `https://api.aladhan.com/v1/timingsByCity?city=${city}&country=EG&method=8`;
+
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+
+                if (data.code === 200) {
+                    prayerTimesData = data.data.timings;
+                    displayPrayerTimes();
+                    updateNextPrayer();
+                    setInterval(updateNextPrayer, 1000);
+                } else {
+                    document.getElementById('prayer-times').innerHTML = '<p>فشل في جلب مواقيت الصلاة.</p>';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('prayer-times').innerHTML = '<p>حدث خطأ في الاتصال بالخادم.</p>';
+            }
+        }
+
+        function changeCity() {
+            const city = document.getElementById("city-input").value;
+            if (city) {
+                getPrayerTimes(city);
+            } else {
+                alert("يرجى إدخال اسم المدينة.");
+            }
+        }
+
+        function displayPrayerTimes() {
+            const prayerTimesDiv = document.getElementById("prayer-times");
+            prayerTimesDiv.innerHTML = "";
+
+            let prayerRow = document.createElement("div");
+            prayerRow.className = "prayer-row";
+
+            let count = 0;
+            for (const prayer in prayerTimesData) {
+                if (prayerNames[prayer]) {
+                    const prayerBox = document.createElement("div");
+                    prayerBox.className = "prayer-circle";
+                    prayerBox.innerHTML = `<strong class="prayer-name">${prayerNames[prayer]}</strong><br><span class="prayer-time">${prayerTimesData[prayer]}</span>`;
+
+                    prayerRow.appendChild(prayerBox);
+                    count++;
+
+                    if (count % 2 === 0) {
+                        prayerTimesDiv.appendChild(prayerRow);
+                        prayerRow = document.createElement("div");
+                        prayerRow.className = "prayer-row";
+                    }
+                }
+            }
+
+            if (count % 2 !== 0) {
+                prayerTimesDiv.appendChild(prayerRow);
+            }
+        }
+
+        function updateNextPrayer() {
+            if (!prayerTimesData) return;
+
+            const now = new Date();
+            let nextPrayerTime = null;
+            let nextPrayerName = null;
+
+            for (const prayer in prayerTimesData) {
+                const [hours, minutes] = prayerTimesData[prayer].split(':');
+                const prayerDateTime = new Date();
+                prayerDateTime.setHours(hours, minutes, 0);
+
+                if (prayerDateTime > now) {
+                    nextPrayerTime = prayerDateTime - now;
+                    nextPrayerName = prayerNames[prayer];
+                    break;
+                }
+            }
+
+            if (nextPrayerTime) {
+                document.getElementById('next-prayer').textContent = 
+                    `الوقت المتبقي لصلاة ${nextPrayerName}: `;
+                document.getElementById('time-left').textContent = formatTimeLeft(nextPrayerTime);
+            }
+        }
+
+        function formatTimeLeft(timeLeft) {
+            const hours = Math.floor(timeLeft / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft / (1000 * 60)) % 60);
+            const seconds = Math.floor((timeLeft / 1000) % 60);
+            return `${hours} ساعة و ${minutes} دقيقة و ${seconds} ثانية`;
+        }
+
+        getPrayerTimes('Cairo'); // تحميل مواقيت القاهرة افتراضيًا عند فتح الصفحة
+    </script>
+</body>
+</html>

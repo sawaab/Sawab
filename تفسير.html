@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>القرآن الكريم</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            direction: rtl;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 90%;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        header {
+            background: #2c3e50;
+            color: white;
+            padding: 15px;
+            font-size: 22px;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .reader-options {
+            margin: 15px 0;
+        }
+
+        .quran-frame {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 2px solid #ddd;
+            padding: 10px;
+            background: #fff;
+            border-radius: 10px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sura-item, .ayah-item {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .sura-item:hover, .ayah-item:hover {
+            background: #ecf0f1;
+        }
+
+        .ayah-number {
+            color: #2980b9;
+            font-weight: bold;
+        }
+
+        .back-button {
+            margin-top: 20px;
+            padding: 10px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .audio-controls {
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📖 القرآن الكريم</h1>
+        </header>
+
+        <div class="reader-options">
+            <label for="reciter">🎤 اختر القارئ:</label>
+            <select id="reciter">
+                <option value="basfar">عبدالله بصفر</option>
+                <option value="minshawi">محمد المنشاوي</option>
+                <option value="afasy">مشاري العفاسي</option>
+                <option value="ghamdi">سعد الغامدي</option>
+                <option value="jalil">خالد الجليل</option>
+                <option value="dossary">ياسر الدوسري</option>
+                <option value="shuraym">سعود الشريم</option>
+                <option value="sudais">عبد الرحمن السديس</option>
+            </select>
+        </div>
+
+        <div class="quran-frame">
+            <ul id="sura-list"></ul>
+        </div>
+
+        <audio id="quran-audio" class="audio-controls" controls></audio>
+
+        <footer>
+            <p>المصدر: API القرآن الكريم</p>
+        </footer>
+    </div>
+
+    <script>
+        async function loadSurahs() {
+            try {
+                const response = await fetch("https://api.alquran.cloud/v1/surah");
+                const data = await response.json();
+                const surahs = data.data;
+                const suraList = document.getElementById("sura-list");
+
+                suraList.innerHTML = "";
+
+                surahs.forEach(surah => {
+                    let surahItem = document.createElement("li");
+                    surahItem.classList.add("sura-item");
+                    surahItem.textContent = `📖 سورة ${surah.name}`;
+                    surahItem.dataset.surahNumber = surah.number;
+                    surahItem.addEventListener("click", () => loadAyahs(surah.number));
+                    suraList.appendChild(surahItem);
+                });
+            } catch (error) {
+                console.error("❌ خطأ في تحميل السور:", error);
+            }
+        }
+
+        async function loadAyahs(surahNumber) {
+            try {
+                const response = await fetch(`https://api.alquran.cloud/v1/surah/${surahNumber}`);
+                const data = await response.json();
+                const ayahs = data.data.ayahs;
+                const suraList = document.getElementById("sura-list");
+
+                suraList.innerHTML = "";
+
+                ayahs.forEach(ayah => {
+                    let ayahItem = document.createElement("li");
+                    ayahItem.classList.add("ayah-item");
+                    ayahItem.innerHTML = `﴿ ${ayah.text} ﴾ <span class="ayah-number">(${ayah.numberInSurah})</span>`;
+                    ayahItem.dataset.surahNumber = surahNumber;
+                    ayahItem.dataset.ayahNumber = ayah.numberInSurah;
+                    ayahItem.addEventListener("click", () => playAyah(surahNumber, ayah.numberInSurah));
+                    suraList.appendChild(ayahItem);
+                });
+
+                let backButton = document.createElement("button");
+                backButton.textContent = "🔙 رجوع إلى السور";
+                backButton.classList.add("back-button");
+                backButton.addEventListener("click", loadSurahs);
+                suraList.appendChild(backButton);
+            } catch (error) {
+                console.error("❌ خطأ في تحميل الآيات:", error);
+            }
+        }
+
+        function playAyah(surah, ayah) {
+            const reciter = document.getElementById("reciter").value;
+            const audioPlayer = document.getElementById("quran-audio");
+            let surahFormatted = surah.toString().padStart(3, '0');
+            let ayahFormatted = ayah.toString().padStart(3, '0');
+
+            let baseUrls = {
+                "basfar": "https://server8.mp3quran.net/basfar/",
+                "minshawi": "https://server8.mp3quran.net/minsh/",
+                "afasy": "https://server8.mp3quran.net/afs/",
+                "ghamdi": "https://server8.mp3quran.net/ghamdi/",
+                "jalil": "https://server8.mp3quran.net/jleel/",
+                "dossary": "https://server8.mp3quran.net/yasser/",
+                "shuraym": "https://server8.mp3quran.net/shur/",
+                "sudais": "https://server8.mp3quran.net/sds/"
+            };
+
+            let audioUrl = `${baseUrls[reciter]}${surahFormatted}${ayahFormatted}.mp3`;
+
+            audioPlayer.src = audioUrl;
+            audioPlayer.style.display = "block";
+            audioPlayer.play();
+        }
+
+        loadSurahs();
+    </script>
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>القائمة الرئيسية</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+    
+        
+        .menu-button {
+            background-color: #d8dae3;
+            border: 1px solid #8792ae;
+            padding: 15px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 18px;
+            color:black;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: ;
+            width: 100%;
+            box-sizing: border-box;
+            /* Ensure padding is included in width */
+        }
+
+        .menu-button:hover {
+            background-color: #c1ddf3 ;
+            color:black ;
+            transform: translateY(-5px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+    
+</head>
+<body>
+    
+        <!-- ✅ إضافة الشعار في أعلى يمين الصفحة -->
+        
+
+   
+        <!-- الأزرار الرئيسية -->    
+        
+        <!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ثواب</title>
+    <style>
+        
+        
+
+        .
+        .logo {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 120px;
+            height: 120px;
+            border-radius: 10px;
+        }
+
+        /* ✅ تنسيق خاص لكلمة "ثواب" */
+        .logo-text {
+            font-size:40px;
+            font-weight: bold;
+            color: #2c3e50;
+            text-shadow: px 2px 4px rgba(0, 100, 10, 0.2);
+            font-family: 'Cairo', sans-serif;
+        }
+.logo-text {
+    font-size: 40px;
+    font-weight: bold;
+    color: black;
+    text-shadow: px 2px 4px rgba(0, 0, 0, 0.2);
+    font-family: 'Cairo', sans-serif;
+    position: relative;
+    top: -50px; 
+    right: -20px;
+    /* 🔹 رفع النص للأعلى */
+}
+        
+    </style>
+</head>
+<body>
+    
+   
+        <div class="logo">
+            <img src="76ac862235619c7ee0f1562e2960aa5e-removebg-preview (1).png" alt="شعار ثواب">
+            <span class="logo-text">ثَـــوَاب</span>
+        </div>
+
+       
+    </div>
+</body>
+</html>
+        <div class="buttons-container">
+             <button class="menu-button"onclick="navigateTo('جدول الصلاة.html')">جدول الصلاة</button>
+            <button class="menu-button" onclick="navigateTo('55555.html')">القرآن</button>
+             <button class="menu-button"onclick="navigateTo('مكتبة.html')">القرآن الصوتي</button>
+            <button class="menu-button"onclick="navigateTo('احاديث.html')">الأحاديث</button>
+            <button class="menu-button"onclick="navigateTo('تجويد.html')">التجويد</button>
+           
+            <button class="menu-button" onclick="navigateTo('456.html')">الأذكار</button>
+            <button class="menu-button"onclick="navigateTo('666.html')">مواقيت الصلاة</button>
+            <button class="menu-button"onclick="navigateTo('سبحة.html')">السبحة</button>
+            <button class="menu-button" onclick="navigateTo('اسماء.html')"> اسماء الله الحسنى</button>
+            <button class="menu-button"onclick="navigateTo('ادعية.html')">الدعاء</button>
+            
+           
+        </div>
+    </div>
+
+
+    <script>
+        function navigateTo(page) {
+            window.location.href = page;
+        }
+    </script>
+</body>
+
+
+    <!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>زر مخفي للمعلومات</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            direction: rtl;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 50px;
+        }
+
+        /* ✅ زر "i" صغير ومخفي */
+        .info-button {
+            position: fixed;
+            bottom: 10px; /* يظل ثابتًا أسفل الصفحة */
+            right: 10px; /* في الزاوية اليمنى */
+            width: 30px;
+            height: 30px;
+            background-color: #2c3e50;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* ✅ المربع المخفي عند الضغط */
+        .info-box {
+            display: none;
+            position: fixed;
+            bottom: 50px;
+            right: 10px;
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ✅ زر المعلومات المخفي -->
+    <div class="info-button" onclick="toggleInfo()">i</div>
+
+    <!-- ✅ مربع المعلومات المخفي -->
+    <div class="info-box" id="infoBox">
+        <p>صانع الموقع: ريهام عثمان الأحمدي</p>
+    </div>
+
+    <script>
+        function toggleInfo() {
+            var infoBox = document.getElementById("infoBox");
+            if (infoBox.style.display === "none" || infoBox.style.display === "") {
+                infoBox.style.display = "block";
+            } else {
+                infoBox.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>

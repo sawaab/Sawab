@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سبحة إلكترونية</title>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: 'Amiri', serif;
+            direction: rtl;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            background-image: url('islamic-pattern.png');
+            background-repeat: repeat;
+            background-size: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 30px;
+            /* زيادة المساحة الداخلية */
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            /* حواف أكثر استدارة */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            /* ظل أكبر */
+            text-align: center;
+            position: relative;
+            /* لتمكين الزخرفة المطلقة */
+            overflow: hidden;
+            /* إخفاء أي محتوى يتجاوز الحاوية */
+        }
+
+        /* زخرفة إسلامية للحاوية */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('islamic-pattern-2.png');
+            background-repeat: repeat;
+            opacity: 0.1;
+            /* جعل الزخرفة شفافة */
+            z-index: -1;
+            /* وضع الزخرفة في الخلفية */
+        }
+
+        h1 {
+            text-align: center;
+            color: #8792ae;
+            margin-bottom: 20px;
+            /* مساحة أسفل العنوان */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            /* ظل خفيف للنص */
+        }
+
+        #zekr-text {
+            font-size: 24px;
+            color: #555;
+            margin-bottom: 30px;
+            /* مساحة أسفل الذكر */
+            min-height: 70px;
+            /* مساحة كافية لعرض الذكر */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            /* انتقال سلس للتغييرات */
+        }
+
+        #tasbih-count {
+            font-size: 56px;
+            /* حجم أكبر للعداد */
+            font-weight: bold;
+            color: #8792ae;
+            /* لون أخضر للعداد */
+            margin-bottom: 30px;
+            /* مساحة أسفل العداد */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            /* ظل مميز للعداد */
+        }
+
+        /* تنسيق الأزرار */
+        .mode-button,
+        #tasbih-button,
+        #reset-button,
+        #back-button {
+            background-color: #e3e8ef;
+            /* أخضر فاتح */
+            color: #333;
+            border: none;
+            padding: 12px 24px;
+            cursor: pointer;
+            border-radius: 30px;
+            font-size: 18px;
+            margin: 5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .mode-button:hover,
+        #tasbih-button:hover,
+        #reset-button:hover,
+        #back-button:hover {
+            background-color: #8792ae;
+            color: #fff;
+            transform: translateY(-3px);
+            /* تحريك بسيط عند التحويم */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .mode-button.active {
+            background-color: #8792ae;
+            color: #fff;
+        }
+
+        /* إضافة animation لزر التسبيح */
+        #tasbih-button:active {
+            transform: scale(0.95);
+            /* تصغير الزر عند الضغط */
+            box-shadow: none;
+            /* إزالة الظل عند الضغط */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>سبحة إلكترونية</h1>
+
+        <!-- أزرار اختيار الوضع -->
+        <div>
+            <button class="mode-button active" data-mode="normal">تسبيح عادي</button>
+            <button class="mode-button" data-mode="azkar">أذكار</button>
+        </div>
+
+        <!-- عرض الذكر في وضع الأذكار -->
+        <div id="zekr-text"></div>
+
+        <div id="tasbih-count">0</div>
+        <button id="tasbih-button">سبّح</button>
+        <button id="reset-button">إعادة الضبط</button>
+        <button id="back-button" onclick="goBack()">الرجوع للصفحة الرئيسية</button>
+    </div>
+
+    <script>
+        let tasbihCount = 0;
+        let currentMode = 'normal'; // الوضع الافتراضي هو التسبيح العادي
+
+        const tasbihCountElement = document.getElementById('tasbih-count');
+        const tasbihButton = document.getElementById('tasbih-button');
+        const resetButton = document.getElementById('reset-button');
+        const modeButtons = document.querySelectorAll('.mode-button');
+        const zekrTextElement = document.getElementById('zekr-text');
+
+        // قائمة الأذكار
+        const azkarList = [
+            'سبحان الله',
+            'الحمد لله',
+            'لا إله إلا الله',
+            'الله أكبر',
+            'لا حول ولا قوة إلا بالله',
+            'أستغفر الله'
+        ];
+
+        // دالة لتحديث عرض الذكر في وضع الأذكار
+        function updateZekrText() {
+            const randomIndex = Math.floor(Math.random() * azkarList.length);
+            zekrTextElement.textContent = azkarList[randomIndex];
+        }
+
+        // إضافة استماع للأحداث لأزرار اختيار الوضع
+        modeButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                // إزالة الفئة النشطة من جميع الأزرار
+                modeButtons.forEach(btn => btn.classList.remove('active'));
+                // إضافة الفئة النشطة إلى الزر الذي تم النقر عليه
+                this.classList.add('active');
+                // تحديث الوضع الحالي
+                currentMode = this.dataset.mode;
+                // تحديث عرض الذكر إذا كان الوضع هو الأذكار
+                if (currentMode === 'azkar') {
+                    updateZekrText();
+                } else {
+                    zekrTextElement.textContent = ''; // مسح النص إذا كان الوضع عادي
+                }
+            });
+        });
+
+        // إضافة استماع للأحداث لزر التسبيح
+        tasbihButton.addEventListener('click', function () {
+            tasbihCount++;
+            tasbihCountElement.textContent = tasbihCount;
+
+            // إذا كان الوضع هو الأذكار، قم بتحديث عرض الذكر
+            if (currentMode === 'azkar') {
+                updateZekrText();
+            }
+        });
+
+        // إضافة استماع للأحداث لزر إعادة الضبط
+        resetButton.addEventListener('click', function () {
+            tasbihCount = 0;
+            tasbihCountElement.textContent = tasbihCount;
+            if (currentMode === 'azkar') {
+                updateZekrText(); // إعادة عرض الذكر في وضع الأذكار
+            }
+        });
+
+        // Function to go back to look.html
+        function goBack() {
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+
+</html>

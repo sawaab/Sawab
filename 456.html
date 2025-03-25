@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الأذكار</title>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* CSS */
+        body {
+            font-family: 'Amiri', serif;
+            direction: rtl;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            background-image: url('islamic-pattern.png');
+            background-repeat: repeat;
+            background-size: 200px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            
+        }
+
+        h1 {
+            text-align: center;
+            color: #8792ae;
+            
+        }
+
+        h2 {
+            color: #333;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        /* تعديل للمربع */
+        .dhikr-box {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeInUp 0.5s ease-in-out;
+            text-align: center;
+        }
+
+        .dhikr-text {
+            font-size: 18px;
+            color: #555;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        /*  تعديل شكل الايقونة */
+        .dhikr-icon {
+            color: #555;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        /*  عناصر التحكم */
+        .dhikr-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        /*  تصميم الزر  */
+        .dhikr-button {
+            background-color: #8792ae;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            font-size: 24px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .dhikr-button:hover {
+            background-color: #aebad2;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 7px rgba(0, 0, 0, 0.3);
+        }
+
+        .dhikr-button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+/*  إخفاء عرض العدد*/
+        .count-display {
+            display: none;
+        }
+
+      /* زر السابق*/
+      #goBackToMenu {
+            background-color: #8792ae;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            font-size: 24px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+            min-width: 60px;
+            text-align: center;
+         /* Added to Align to the name before */
+        }
+
+        /*Keyframes for animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-100%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Add back button to the the page from khkh -->
+        <button id="goBackToMenu" onclick="goBackToMenu()">
+            <span>السابق <i class="fas fa-arrow-right"></i></span>
+        </button>
+        <h1>الأذكار</h1>
+
+        <h2>أذكار الصباح</h2>
+        <div class="dhikr-box">
+            <i class="fas fa-sun dhikr-icon"></i>
+            <span class="dhikr-text">
+                أصبحنا وأصبح الملك لله، والحمد لله، لا إله إلا الله وحده لا شريك له، له الملك وله الحمد، وهو على كل شيء
+                قدير.
+            </span>
+            <div class="dhikr-controls">
+                <button class="dhikr-button" data-count="10" onclick="updateCount(this)">10</button>
+            </div>
+        </div>
+        <div class="dhikr-box">
+            <i class="fas fa-sun dhikr-icon"></i>
+            <span class="dhikr-text">
+                اللهم بك أصبحنا وبك أمسينا وبك نحيا وبك نموت وإليك النشور.
+            </span>
+            <div class="dhikr-controls">
+                <button class="dhikr-button" data-count="1" onclick="updateCount(this)">1</button>
+            </div>
+        </div>
+        <div class="dhikr-box">
+            <i class="fas fa-sun dhikr-icon"></i>
+            <span class="dhikr-text">
+                يا حي يا قيوم برحمتك أستغيث، أصلح لي شأني كله، ولا تكلني إلى نفسي طرفة عين.
+            </span>
+            <div class="dhikr-controls">
+                <button class="dhikr-button" data-count="1" onclick="updateCount(this)">1</button>
+            </div>
+        </div>
+
+        <h2>أذكار المساء</h2>
+        <div class="dhikr-box">
+            <i class="fas fa-moon dhikr-icon"></i>
+            <span class="dhikr-text">
+                أمسينا وأمسى الملك لله، والحمد لله، لا إله إلا الله وحده لا شريك له، له الملك وله الحمد، وهو على كل شيء
+                قدير.
+            </span>
+            <div class="dhikr-controls">
+                <button class="dhikr-button" data-count="10" onclick="updateCount(this)">10</button>
+            </div>
+        </div>
+        <div class="dhikr-box">
+            <i class="fas fa-moon dhikr-icon"></i>
+            <span class="dhikr-text">
+                اللهم بك أمسينا وبك أصبحنا وبك نحيا وبك نموت وإليك المصير.
+            </span>
+            <div class="dhikr-controls">
+                <button class="dhikr-button" data-count="1" onclick="updateCount(this)">1</button>
+            </div>
+        </div>
+        <div class="dhikr-box">
+            <i class="fas fa-moon dhikr-icon"></i>
+            <span class="dhikr-text">
+                أعوذ بكلمات الله التامات من شر ما خلق.
+            </span>
+            <div class="dhikr-controls">
+                <button class="dhikr-button" data-count="3" onclick="updateCount(this)">3</button>
+            </div>
+        </div>
+
+        <h2>أذكار النوم</h2>
+        <div class="dhikr-box">
+            <i class="fas fa-bed dhikr-icon"></i>
+            <span class="dhikr-text">
+                باسمك ربي وضعت جنبي وبك أرفعه، إن أمسكت نفسي فارحمها، وإن أرسلتها فاحفظها بما تحفظ به عبادك
+                الصالحين.
+            </span>
+            <div class="dhikr-controls">
+                <button class="dhikr-button" data-count="1" onclick="updateCount(this)">1</button>
+            </div>
+        </div>
+        <div class="dhikr-box">
+            <i class="fas fa-bed dhikr-icon"></i>
+            <span class="dhikr-text">
+                اللهم قني عذابك يوم تبعث عبادك.
+            </span>
+            <div class="dhikr-controls">
+                <button class="dhikr-button" data-count="3" onclick="updateCount(this)">3</button>
+            </div>
+        </div>
+        <div class="dhikr-box">
+            <i class="fas fa-bed dhikr-icon"></i>
+            <span class="dhikr-text">
+                آية الكرسي: "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُ مَا
+                فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۖ مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا
+                بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ
+                كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ".
+            </span>
+            <div class="dhikr-controls">
+                <button class="dhikr-button" data-count="1" onclick="updateCount(this)">1</button>
+            </div>
+        </div>
+
+        <h2>أذكار الاستيقاظ</h2>
+        <div class="dhikr-box">
+            <i class="fas fa-arrow-up dhikr-icon"></i>
+            <span class="dhikr-text">
+                الحمد لله الذي أحيانا بعد ما أماتنا وإليه النشور.
+            </span>
+            <div class="dhikr-controls">
+                <button class="dhikr-button" data-count="1" onclick="updateCount(this)">1</button>
+            </div>
+        </div>
+        <div class="dhikr-box">
+            <i class="fas fa-arrow-up dhikr-icon"></i>
+            <span class="dhikr-text">
+                لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير، سبحان الله والحمد لله ولا إله
+                إلا الله والله أكبر، ولا حول ولا قوة إلا بالله.
+            </span>
+            <div class="dhikr-controls">
+                <button class="dhikr-button" data-count="1" onclick="updateCount(this)">1</button>
+            </div>
+        </div>
+
+        <h2>أذكار بعد الصلاة</h2>
+        <div class="dhikr-box">
+            <span class="dhikr-text">
+                <i class="fas fa-pray dhikr-icon"></i>
+                أستغفر الله (ثلاثًا) اللهم أنت السلام ومنك السلام تباركت يا ذا الجلال والإكرام.
+            </span>
+            <div class="dhikr-controls">
+                <button class="dhikr-button" data-count="3" onclick="updateCount(this)">3</button>
+            </div>
+        </div>
+        <div class="dhikr-box">
+            <span class="dhikr-text">
+                <i class="fas fa-pray dhikr-icon"></i>
+                لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير، اللهم لا مانع لما أعطيت ولا معطي
+                لما منعت ولا ينفع ذا الجد منك الجد.
+            </span>
+            <div class="dhikr-controls">
+                <button class="dhikr-button" data-count="1" onclick="updateCount(this)">1</button>
+            </div>
+        </div>
+
+        <h2>أذكار الخلاء</h2>
+        <div class="dhikr-box">
+            <span class="dhikr-text">
+                <i class="fas fa-toilet dhikr-icon"></i>
+                (عند الدخول) اللهم إني أعوذ بك من الخبث والخبائث.
+            </span>
+            <div class="dhikr-controls">
+                <button class="dhikr-button" data-count="1" onclick="updateCount(this)">1</button>
+            </div>
+        </div>
+        <div class="dhikr-box">
+            <span class="dhikr-text">
+                <i class="fas fa-toilet dhikr-icon"></i>
+                (عند الخروج) غفرانك.
+            </span>
+            <div class="dhikr-controls">
+                <button class="dhikr-button" data-count="1" onclick="updateCount(this)">1</button>
+            </div>
+        </div>
+
+        <h2>أذكار الطعام</h2>
+        <div class="dhikr-box">
+            <span class="dhikr-text">
+                <i class="fas fa-utensils dhikr-icon"></i>
+                (عند البدء) بسم الله.
+            </span>
+            <div class="dhikr-controls">
+                <button class="dhikr-button" data-count="1" onclick="updateCount(this)">1</button>
+            </div>
+        </div>
+        <div class="dhikr-box">
+            <span class="dhikr-text">
+                <i class="fas fa-utensils dhikr-icon"></i>
+                (عند الانتهاء) الحمد لله الذي أطعمني هذا ورزقنيه من غير حول مني ولا قوة.
+            </span>
+            <div class="dhikr-controls">
+                <button class="dhikr-button" onclick="updateCount(this)" data-count="1">1</button>
+            </div>
+        </div>
+
+        <h2>أذكار عامة</h2>
+        <div class="dhikr-box">
+            <i class="fas fa-star dhikr-icon"></i>
+            <span class="dhikr-text">
+                سبحان الله وبحمده سبحان الله العظيم.
+            </span>
+            <div class="dhikr-controls">
+                <button class="dhikr-button" data-count="100" onclick="updateCount(this)">100</button>
+            </div>
+        </div>
+        <div class="dhikr-box">
+            <span class="dhikr-text">
+                <i class="fas fa-star dhikr-icon"></i>
+                لا حول ولا قوة إلا بالله.
+            </span>
+            <div class="dhikr-controls">
+                <button class="dhikr-button" data-count="50" onclick="updateCount(this)">50</button>
+            </div>
+        </div>
+        <div class="dhikr-box">
+            <span class="dhikr-text">
+                <i class="fas fa-star dhikr-icon"></i>
+                أستغفر الله وأتوب إليه.
+            </span>
+            <div class="dhikr-controls">
+                <button class="dhikr-button" data-count="100" onclick="updateCount(this)">100</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateCount(button) {
+            let count = parseInt(button.dataset.count);
+
+            if (count > 0) {
+                count--;
+                button.dataset.count = count;
+                button.textContent = count;
+
+                if (count === 0) {
+                    button.textContent = 'تم';
+                    button.disabled = true;
+                    button.style.backgroundColor = '#ccc';
+                    button.style.cursor = 'not-allowed';
+                }
+            }
+        }
+        /* the button to back for main menu*/
+        function goBackToMenu() {
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+
+</html>

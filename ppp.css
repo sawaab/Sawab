@@ -1,0 +1,76 @@
+body {
+    font-family: 'Amiri', serif;
+    margin: 0;
+    padding: 0;
+    direction: rtl;
+    background-color: #f0f0f0;
+}
+
+.quran-index-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.quran-index-container h1 {
+    font-size: 36px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.quran-index-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.quran-button {
+    background-color: #8FBC8F;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #fff;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.quran-button:hover {
+    background-color: #3CB371;
+}
+
+.quran-button span {
+    font-weight: bold;
+}
+
+#surahContent {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+#surahContent h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+#surahContent #ayahList {
+    font-size: 18px;
+    color: #555;
+    line-height: 2;
+}
+
+#surahContent audio {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 500px;
+}

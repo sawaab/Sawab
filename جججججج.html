@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>القائمة الرئيسية</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: 'Amiri', serif;
+            margin: 0;
+            padding: 0;
+            direction: rtl;
+            background-color: #f0f0f0;
+            background-image: url('islamic-pattern.png');
+            background-repeat: repeat;
+            background-size: 200px;
+        }
+
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px;
+            /* Increased padding for better spacing */
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
+            max-width: 900px;
+            margin: 20px auto;
+        }
+
+        .buttons-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            /* Increased gap for better spacing */
+            margin-bottom: 30px;
+            /* Increased margin for better spacing */
+            width: 100%;
+            /* Make sure the buttons take up the full width */
+            max-width: 1200px;
+            /* Set a maximum width for the buttons container */
+        }
+
+        .menu-button {
+            background-color: #E6F4EA;
+            border: 1px solid #3CB371;
+            padding: 15px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 18px;
+            color: #333;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            /* Ensure padding is included in width */
+        }
+
+        .menu-button:hover {
+            background-color: #3CB371;
+            color: #fff;
+            transform: translateY(-5px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-container">
+        <!-- الأزرار الرئيسية -->
+        <div class="buttons-container">
+            <button class="menu-button" onclick="navigateTo('خخ.html')">القرآن</button>
+            <button class="menu-button" onclick="navigateTo('تجربةة.html')">الأذكار</button>
+            <button class="menu-button" onclick="navigateTo('تجربةة.html')">مواقيت الصلاة</button>
+            <button class="menu-button"onclick="navigateTo('تجربةة.html')">السبحة</button>
+            <button class="menu-button">أسماء الله الحسنى</button>
+            <button class="menu-button">الدعاء</button>
+        </div>
+    </div>
+
+    <script>
+        function navigateTo(page) {
+            window.location.href = page;
+        }
+    </script>
+</body>
+
+</html>

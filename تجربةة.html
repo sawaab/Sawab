@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أحكام التجويد</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            text-align: right;
+            background-color: #f5f5f5;
+            margin: 20px;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #004d40;
+        }
+        .rule {
+            background-color: #fff;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        audio {
+            width: 100%;
+            margin-top: 10px;
+        }
+        button {
+            padding: 10px;
+            background-color: #00897b;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>أحكام التجويد</h1>
+
+    <div class="rule">
+        <h2>الإدغام</h2>
+        <p>الإدغام هو إدخال حرف ساكن في حرف متحرك بحيث يصبحان حرفًا واحدًا مشددًا. وينقسم إلى إدغام بغنة وإدغام بغير غنة.</p>
+        <button onclick="playAudio('idgham')">استمع للإدغام</button>
+        <audio id="idgham" controls></audio>
+    </div>
+
+    <div class="rule">
+        <h2>الإخفاء</h2>
+        <p>الإخفاء هو النطق بالنون الساكنة أو التنوين بحالة وسط بين الإظهار والإدغام عند ملاقاتها لأحد حروف الإخفاء.</p>
+        <button onclick="playAudio('ikhfa')">استمع للإخفاء</button>
+        <audio id="ikhfa" controls></audio>
+    </div>
+
+    <div class="rule">
+        <h2>الإظهار</h2>
+        <p>الإظهار هو نطق النون الساكنة أو التنوين بوضوح دون غنة إذا جاء بعدها أحد حروف الحلق.</p>
+        <button onclick="playAudio('izhar')">استمع للإظهار</button>
+        <audio id="izhar" controls></audio>
+    </div>
+
+    <script>
+        function playAudio(rule) {
+            let apiUrl = "";
+
+            if (rule === "idgham") {
+                apiUrl = "https://server8.mp3quran.net/afs/001.mp3"; // مثال لصوت من القرآن
+            } else if (rule === "ikhfa") {
+                apiUrl = "https://server8.mp3quran.net/afs/002.mp3";
+            } else if (rule === "izhar") {
+                apiUrl = "https://server8.mp3quran.net/afs/003.mp3";
+            }
+
+            let audioElement = document.getElementById(rule);
+            audioElement.src = apiUrl;
+            audioElement.play();
+        }
+    </script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أحكام التجويد</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            text-align: right;
+            background-color: #f5f5f5;
+            margin: 20px;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #004d40;
+        }
+        .rule {
+            background-color: #fff;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        audio {
+            width: 100%;
+            margin-top: 10px;
+        }
+        button {
+            padding: 10px;
+            background-color: #00897b;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>أحكام التجويد</h1>
+
+    <div class="rule">
+        <h2>الإدغام</h2>
+        <p>الإدغام هو إدخال حرف ساكن في حرف متحرك بحيث يصبحان حرفًا واحدًا مشددًا. وينقسم إلى إدغام بغنة وإدغام بغير غنة.</p>
+        <button onclick="playAudio('idgham')">🎧 استمع للإدغام</button>
+        <audio id="idgham" controls></audio>
+    </div>
+
+    <div class="rule">
+        <h2>الإخفاء</h2>
+        <p>الإخفاء هو النطق بالنون الساكنة أو التنوين بحالة وسط بين الإظهار والإدغام عند ملاقاتها لأحد حروف الإخفاء.</p>
+        <button onclick="playAudio('ikhfa')">🎧 استمع للإخفاء</button>
+        <audio id="ikhfa" controls></audio>
+    </div>
+
+    <div class="rule">
+        <h2>الإظهار</h2>
+        <p>الإظهار هو نطق النون الساكنة أو التنوين بوضوح دون غنة إذا جاء بعدها أحد حروف الحلق.</p>
+        <button onclick="playAudio('izhar')">🎧 استمع للإظهار</button>
+        <audio id="izhar" controls></audio>
+    </div>
+
+    <div class="rule">
+        <h2>القلقلة</h2>
+        <p>القلقلة هي اهتزاز الصوت عند نطق بعض الحروف الساكنة لإحداث جرس قوي. الحروف هي: ق، ط، ب، ج، د.</p>
+        <button onclick="playAudio('qalqalah')">🎧 استمع للقلقلة</button>
+        <audio id="qalqalah" controls></audio>
+    </div>
+
+    <div class="rule">
+        <h2>المدود</h2>
+        <p>المد هو إطالة الصوت عند النطق بالحرف المدّي (الألف، الواو، الياء) عند ملاقاته سببًا للمد.</p>
+        <button onclick="playAudio('mad')">🎧 استمع للمدود</button>
+        <audio id="mad" controls></audio>
+    </div>
+
+    <div class="rule">
+        <h2>التفخيم والترقيق</h2>
+        <p>التفخيم هو تضخيم الصوت عند نطق بعض الحروف (حروف الاستعلاء). والترقيق هو العكس، أي تخفيف الصوت.</p>
+        <button onclick="playAudio('tafkhim_tarqiq')">🎧 استمع للتفخيم والترقيق</button>
+        <audio id="tafkhim_tarqiq" controls></audio>
+    </div>
+
+    <script>
+        function playAudio(rule) {
+            let apiUrl = "";
+
+            if (rule === "idgham") {
+                apiUrl = "https://server8.mp3quran.net/afs/001.mp3"; 
+            } else if (rule === "ikhfa") {
+                apiUrl = "https://server8.mp3quran.net/afs/002.mp3";
+            } else if (rule === "izhar") {
+                apiUrl = "https://server8.mp3quran.net/afs/003.mp3";
+            } else if (rule === "qalqalah") {
+                apiUrl = "https://server8.mp3quran.net/afs/004.mp3";
+            } else if (rule === "mad") {
+                apiUrl = "https://server8.mp3quran.net/afs/005.mp3";
+            } else if (rule === "tafkhim_tarqiq") {
+                apiUrl = "https://server8.mp3quran.net/afs/006.mp3";
+            }
+
+            let audioElement = document.getElementById(rule);
+            audioElement.src = apiUrl;
+            audioElement.play();
+        }
+    </script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أحكام التجويد</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            text-align: right;
+            background-color: #f5f5f5;
+            margin: 20px;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #004d40;
+        }
+        .rule {
+            background-color: #fff;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        audio {
+            width: 100%;
+            margin-top: 10px;
+        }
+        button {
+            padding: 10px;
+            background-color: #00897b;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>أحكام التجويد</h1>
+
+    <div class="rule">
+        <h2>الإدغام بغنة</h2>
+        <p>يكون عند التقاء النون الساكنة أو التنوين بأحد حروف الإدغام بغنة (ي، ن، م، و) فيتم دمج الصوت مع غنة.</p>
+        <button onclick="playAudio('idgham_ghunnah')">🎧 استمع للإدغام بغنة</button>
+        <audio id="idgham_ghunnah" controls></audio>
+    </div>
+
+    <div class="rule">
+        <h2>الإدغام بغير غنة</h2>
+        <p>يكون عند التقاء النون الساكنة أو التنوين بحرفي (ل، ر) فيتم الإدغام بدون غنة.</p>
+        <button onclick="playAudio('idgham_no_ghunnah')">🎧 استمع للإدغام بغير غنة</button>
+        <audio id="idgham_no_ghunnah" controls></audio>
+    </div>
+
+    <div class="rule">
+        <h2>الإقلاب</h2>
+        <p>يكون عند التقاء النون الساكنة أو التنوين بحرف الباء، فتقلب النون إلى ميم مع الغنة.</p>
+        <button onclick="playAudio('iqlab')">🎧 استمع للإقلاب</button>
+        <audio id="iqlab" controls></audio>
+    </div>
+
+    <div class="rule">
+        <h2>مد العوض</h2>
+        <p>يحدث عند الوقف على التنوين بالفتح، حيث يُمد بمقدار حركتين.</p>
+        <button onclick="playAudio('mad_ewad')">🎧 استمع لمد العوض</button>
+        <audio id="mad_ewad" controls></audio>
+    </div>
+
+    <div class="rule">
+        <h2>مد البدل</h2>
+        <p>يكون عندما يأتي حرف مد قبل همزة في نفس الكلمة، ويمد بمقدار حركتين.</p>
+        <button onclick="playAudio('mad_badal')">🎧 استمع لمد البدل</button>
+        <audio id="mad_badal" controls></audio>
+    </div>
+
+    <div class="rule">
+        <h2>المد اللازم</h2>
+        <p>هو المد الذي يأتي بعده حرف ساكن أصلي في الكلمة، ويمد بمقدار ست حركات.</p>
+        <button onclick="playAudio('mad_lazim')">🎧 استمع للمد اللازم</button>
+        <audio id="mad_lazim" controls></audio>
+    </div>
+
+    <div class="rule">
+        <h2>المد المتصل</h2>
+        <p>يحدث عندما يأتي حرف المد متبوعًا بهمز في نفس الكلمة، ويمد بمقدار 4-5 حركات.</p>
+        <button onclick="playAudio('mad_muttasil')">🎧 استمع للمد المتصل</button>
+        <audio id="mad_muttasil" controls></audio>
+    </div>
+
+    <div class="rule">
+        <h2>المد المنفصل</h2>
+        <p>يكون عندما يأتي حرف المد في آخر الكلمة، والهمزة في بداية الكلمة التالية، ويمد 4-5 حركات.</p>
+        <button onclick="playAudio('mad_munfasil')">🎧 استمع للمد المنفصل</button>
+        <audio id="mad_munfasil" controls></audio>
+    </div>
+
+    <script>
+        function playAudio(rule) {
+            let apiUrl = "";
+
+            if (rule === "idgham_ghunnah") {
+                apiUrl = "https://server8.mp3quran.net/afs/007.mp3";
+            } else if (rule === "idgham_no_ghunnah") {
+                apiUrl = "https://server8.mp3quran.net/afs/008.mp3";
+            } else if (rule === "iqlab") {
+                apiUrl = "https://server8.mp3quran.net/afs/009.mp3";
+            } else if (rule === "mad_ewad") {
+                apiUrl = "https://server8.mp3quran.net/afs/010.mp3";
+            } else if (rule === "mad_badal") {
+                apiUrl = "https://server8.mp3quran.net/afs/011.mp3";
+            } else if (rule === "mad_lazim") {
+                apiUrl = "https://server8.mp3quran.net/afs/012.mp3";
+            } else if (rule === "mad_muttasil") {
+                apiUrl = "https://server8.mp3quran.net/afs/013.mp3";
+            } else if (rule === "mad_munfasil") {
+                apiUrl = "https://server8.mp3quran.net/afs/014.mp3";
+            }
+
+            let audioElement = document.getElementById(rule);
+            audioElement.src = apiUrl;
+            audioElement.play();
+        }
+    </script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أحكام التجويد</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            text-align: right;
+            background-color: #f5f5f5;
+            margin: 20px;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #004d40;
+        }
+        .rule {
+            background-color: #fff;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        audio {
+            width: 100%;
+            margin-top: 10px;
+        }
+        button {
+            padding: 10px;
+            background-color: #00897b;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>أحكام التجويد</h1>
+
+    <div class="rule">
+        <h2>الغنة</h2>
+        <p>الغنة هي صوت رخيم يخرج من الأنف، ويظهر عند النطق بالنون والميم المشددتين.</p>
+        <button onclick="playAudio('ghunnah')">🎧 استمع للغنة</button>
+        <audio id="ghunnah" controls></audio>
+    </div>
+
+    <div class="rule">
+        <h2>المد الطبيعي</h2>
+        <p>هو المد الذي لا يتوقف على سبب، ويمد بمقدار حركتين.</p>
+        <button onclick="playAudio('mad_tabi3i')">🎧 استمع للمد الطبيعي</button>
+        <audio id="mad_tabi3i" controls></audio>
+    </div>
+
+    <div class="rule">
+        <h2>مد الصلة الكبرى والصغرى</h2>
+        <p>مد الصلة الصغرى يكون عند ورود هاء الضمير بين متحركين، ويمد بمقدار حركتين. أما الكبرى فتمد 4-5 حركات إذا جاءت بعدها همزة.</p>
+        <button onclick="playAudio('mad_silah')">🎧 استمع لمد الصلة</button>
+        <audio id="mad_silah" controls></audio>
+    </div>
+
+    <div class="rule">
+        <h2>الوقف والابتداء</h2>
+        <p>الوقف هو قطع الصوت عند نهاية الآية أو الكلمة، أما الابتداء فهو استئناف القراءة بعد الوقف بطريقة صحيحة.</p>
+        <button onclick="playAudio('waqf_ibtda')">🎧 استمع للوقف والابتداء</button>
+        <audio id="waqf_ibtda" controls></audio>
+    </div>
+
+    <div class="rule">
+        <h2>الترقيق والتفخيم</h2>
+        <p>الترقيق هو تخفيف الصوت عند نطق بعض الحروف، بينما التفخيم هو تضخيم الصوت عند نطق الحروف المستعلية.</p>
+        <button onclick="playAudio('tafkhim_tarqiq_detail')">🎧 استمع للترقيق والتفخيم</button>
+        <audio id="tafkhim_tarqiq_detail" controls></audio>
+    </div>
+
+    <div class="rule">
+        <h2>السكت</h2>
+        <p>السكت هو الوقف على الحرف دون تنفس لمدة قصيرة جدًا.</p>
+        <button onclick="playAudio('sakt')">🎧 استمع للسكت</button>
+        <audio id="sakt" controls></audio>
+    </div>
+
+    <div class="rule">
+        <h2>أحكام الراء</h2>
+        <p>الراء تفخم في حالات مثل وجود فتح أو ضم قبلها، وترقق إذا كان قبلها كسر.</p>
+        <button onclick="playAudio('ahkam_raa')">🎧 استمع لأحكام الراء</button>
+        <audio id="ahkam_raa" controls></audio>
+    </div>
+
+    <div class="rule">
+        <h2>أحكام النون والميم المشددتين</h2>
+        <p>تظهر الغنة بوضوح عند نطق النون والميم المشددتين.</p>
+        <button onclick="playAudio('noon_meem_shaddah')">🎧 استمع لأحكام النون والميم المشددتين</button>
+        <audio id="noon_meem_shaddah" controls></audio>
+    </div>
+
+    <script>
+        function playAudio(rule) {
+            let apiUrl = "";
+
+            if (rule === "ghunnah") {
+                apiUrl = "https://server8.mp3quran.net/afs/015.mp3";
+            } else if (rule === "mad_tabi3i") {
+                apiUrl = "https://server8.mp3quran.net/afs/016.mp3";
+            } else if (rule === "mad_silah") {
+                apiUrl = "https://server8.mp3quran.net/afs/017.mp3";
+            } else if (rule === "waqf_ibtda") {
+                apiUrl = "https://server8.mp3quran.net/afs/018.mp3";
+            } else if (rule === "tafkhim_tarqiq_detail") {
+                apiUrl = "https://server8.mp3quran.net/afs/019.mp3";
+            } else if (rule === "sakt") {
+                apiUrl = "https://server8.mp3quran.net/afs/020.mp3";
+            } else if (rule === "ahkam_raa") {
+                apiUrl = "https://server8.mp3quran.net/afs/021.mp3";
+            } else if (rule === "noon_meem_shaddah") {
+                apiUrl = "https://server8.mp3quran.net/afs/022.mp3";
+            }
+
+            let audioElement = document.getElementById(rule);
+            audioElement.src = apiUrl;
+            audioElement.play();
+        }
+    </script>
+
+</body>
+</html>

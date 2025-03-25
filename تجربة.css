@@ -1,0 +1,110 @@
+body {
+    font-family: 'Amiri', serif;
+    direction: rtl;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    background-image: url('islamic-pattern.png');
+    background-repeat: repeat;
+    background-size: 200px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 1s ease-in-out;
+}
+
+h1 {
+    text-align: center;
+    color: #3CB371;
+    animation: slideInLeft 1s ease-in-out;
+}
+
+h2 {
+    color: #333;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.dhikr-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    animation: fadeInUp 0.5s ease-in-out;
+}
+
+.dhikr-item:last-child {
+    border-bottom: none;
+}
+
+.dhikr-button {
+    background-color: #3CB371;
+    color: #fff;
+    border: none;
+    padding: 12px 24px; /* Increased padding */
+    font-size: 20px; /* Increased font size */
+    cursor: pointer;
+    border-radius: 8px; /* Increased border radius */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); /* Added shadow */
+    min-width: 150px; /* Set a minimum width for more prominent buttons */
+}
+
+.dhikr-button:hover {
+    background-color: #2E8B57;
+    transform: translateY(-3px); /* Adjust translateY for a more noticeable effect */
+    box-shadow: 0 5px 7px rgba(0, 0, 0, 0.3); /* Adjust shadow for a more noticeable effect */
+}
+
+.dhikr-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.count-display {
+    font-size: 16px;
+    color: #555;
+    margin-left: 10px;
+}
+
+/* Keyframes for animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+

@@ -1,0 +1,36 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    direction: rtl;
+}
+
+.azkar-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.azkar-box {
+    margin: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    width: 300px;
+}
+
+button {
+    background-color: #c6efce; /* أخضر فاتح */
+    color: #333;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #b3e6b3;
+}
+
+

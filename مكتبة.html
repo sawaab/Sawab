@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مشغل القرآن الكريم</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            direction: rtl;
+            background-color:#;
+            outline:none
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            animation: fadeIn 1s;
+            outline:none
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        h1 {
+            color:#8792ae; /* لون أخضر فاتح */
+            font-weight: bold;
+            animation: slideIn 1s;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-100px); }
+            to { transform: translateX(0); }
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color:#; /* لون أخضر غامق */
+        }
+
+        select, button {
+            margin: 10px;
+            padding: 5px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+            transition: all 0.3s ease;
+            outline:none
+        }
+
+        select:hover, button:hover {
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        button {
+            background-color:#8792ae; /* لون أخضر فاتح */
+            color: white;
+            cursor: pointer;
+            outline:none
+        }
+
+        button:hover {
+            background-color:#aebad2; /* لون أخضر غامق */
+        }
+
+        audio {
+            margin-top: 20px;
+            width: 80%;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            outline:none
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-bottom: 10px;
+            outline:none
+        }
+
+        /* إضافة بعض التأثيرات */
+        .container {
+            transition: all 0.3s ease;
+        }
+
+        .container:hover {
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>مشغل القرآن الكريم</h1>
+
+        <label>اختر القارئ:</label>
+        <select id="qariSelect"></select>
+
+        <label>اختر السورة:</label>
+        <select id="suraSelect"></select>
+
+        <button onclick="playSura()">تشغيل السورة</button>
+
+        <audio id="audioPlayer" controls></audio>
+
+        <div id="errorMessage" class="error-message"></div>
+
+        <button id="backButton" onclick="goBack()">الرجوع للصفحة الرئيسية</button>
+    </div>
+
+    <script>
+        const qariSelect = document.getElementById("qariSelect");
+        const suraSelect = document.getElementById("suraSelect");
+        const audioPlayer = document.getElementById("audioPlayer");
+        const errorMessage = document.getElementById("errorMessage");
+
+        // 🔹 جلب قائمة القراء
+        async function fetchQaris() {
+            try {
+                const response = await fetch("https://mp3quran.net/api/v3/reciters");
+                const data = await response.json();
+                data.reciters.forEach(qari => {
+                    const option = document.createElement("option");
+                    option.value = qari.id;
+                    option.textContent = qari.name;
+                    qariSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error("خطأ في جلب قائمة القراء:", error);
+                errorMessage.textContent = "خطأ في جلب قائمة القراء";
+            }
+        }
+
+        // 🔹 جلب قائمة السور
+        async function fetchSuras() {
+            try {
+                const response = await fetch("https://api.quran.com/api/v4/chapters");
+                const data = await response.json();
+                data.chapters.forEach(sura => {
+                    const option = document.createElement("option");
+                    option.value = sura.id;
+                    option.textContent = `${sura.id} - ${sura.name_arabic}`;
+                    suraSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error("خطأ في جلب قائمة السور:", error);
+                errorMessage.textContent = "خطأ في جلب قائمة السور";
+            }
+        }
+
+        // 🔹 تشغيل السورة المختارة للقارئ المحدد
+        async function playSura() {
+            const qariId = qariSelect.value;
+            const suraId = suraSelect.value;
+            if (!qariId || !suraId) {
+                errorMessage.textContent = "الرجاء اختيار القارئ والسورة";
+                return;
+            }
+
+            // جلب بيانات القارئ للعثور على رابط الصوت
+            try {
+                const response = await fetch(`https://mp3quran.net/api/v3/reciters?reciter=${qariId}`);
+                const data = await response.json();
+                const reciter = data.reciters.find(r => r.id == qariId);
+
+                if (reciter && reciter.moshaf.length > 0) {
+                    const suraNumber = String(suraId).padStart(3, '0'); // تحويل رقم السورة إلى 3 أرقام (مثال: 001، 002)
+                    const baseUrl = reciter.moshaf[0].server; // رابط السيرفر الخاص بالقارئ
+                    const audioUrl = `${baseUrl}${suraNumber}.mp3`; // تكوين رابط الصوت
+
+                    audioPlayer.src = audioUrl;
+                    audioPlayer.play();
+                    errorMessage.textContent = "";
+                } else {
+                    errorMessage.textContent = "عذرًا، لا يوجد تسجيل لهذه السورة مع هذا القارئ.";
+                }
+            } catch (error) {
+                console.error("خطأ في تشغيل السورة:", error);
+                errorMessage.textContent = "خطأ في تشغيل السورة";
+            }
+        }
+
+        // Function to go back to look.html
+        function goBack() {
+            window.location.href = "index.html";
+        }
+
+        // تحميل البيانات عند فتح الصفحة
+        fetchQaris();
+        fetchSuras();
+    </script>
+
+</body>
+</html>
