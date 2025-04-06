@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سبحة إلكترونية</title>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: 'Amiri', serif;
+            direction: rtl;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            background-image: url('islamic-pattern.png');
+            background-repeat: repeat;
+            background-size: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 30px;
+            /* زيادة المساحة الداخلية */
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            /* حواف أكثر استدارة */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            /* ظل أكبر */
+            text-align: center;
+            position: relative;
+            /* لتمكين الزخرفة المطلقة */
+            overflow: hidden;
+            /* إخفاء أي محتوى يتجاوز الحاوية */
+        }
+    button {
+            padding: 10px;
+            background-color: ;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+        /* زخرفة إسلامية للحاوية */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('islamic-pattern-2.png');
+            background-repeat: repeat;
+            opacity: 0.1;
+            /* جعل الزخرفة شفافة */
+            z-index: -1;
+            /* وضع الزخرفة في الخلفية */
+        }
+
+        h1 {
+            text-align: center;
+            color: #8792ae;
+            margin-bottom: 20px;
+            /* مساحة أسفل العنوان */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            /* ظل خفيف للنص */
+        }
+
+        #zekr-text {
+            font-size: 24px;
+            color: #555;
+            margin-bottom: 30px;
+            /* مساحة أسفل الذكر */
+            min-height: 70px;
+            /* مساحة كافية لعرض الذكر */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            /* انتقال سلس للتغييرات */
+        }
+
+        #tasbih-count {
+            font-size: 56px;
+            /* حجم أكبر للعداد */
+            font-weight: bold;
+            color: #;
+            /* لون أخضر للعداد */
+            margin-bottom: 30px;
+            /* مساحة أسفل العداد */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            /* ظل مميز للعداد */
+        }
+
+        /* تنسيق الأزرار */
+        .mode-button,
+        #tasbih-button,
+        #reset-button,
+        #back-button {
+            background-color: #;
+            /* أخضر فاتح */
+            color: #333;
+            border: none;
+            padding: 12px 24px;
+            cursor: pointer;
+            border-radius: 30px;
+            font-size: 18px;
+            margin: 5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .mode-button:hover,
+        #tasbih-button:hover,
+        #reset-button:hover,
+        #back-button:hover {
+            background-color: #;
+            color: #fff;
+            transform: translateY(-3px);
+            /* تحريك بسيط عند التحويم */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .mode-button.active {
+            background-color: #;
+            color: #fff;
+        }
+
+        /* إضافة animation لزر التسبيح */
+        #tasbih-button:active {
+            transform: scale(0.95);
+            /* تصغير الزر عند الضغط */
+            box-shadow: none;
+            /* إزالة الظل عند الضغط */
+        }
+    </style>
+</head>
+
+<body>
+    <style id="dynamicStyle"></style>
+<style>
+
+    .theme-selector {
+        position: fixed;
+        top: 50px;
+        right: 10px;
+        background: white;
+        padding: 10px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        display: none;
+        flex-direction: column;
+        gap: 10px;
+        animation: fadeIn 0.3s ease-in-out;
+        z-index: 1000;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .theme-option {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        cursor: pointer;
+        border: 2px solid #ccc;
+        transition: transform 0.2s;
+    }
+    .theme-option:hover {
+        transform: scale(1.1);
+    }
+    .theme-icon-btn {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #eee;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        font-size: 20px;
+        z-index: 1001;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.3s;
+    }
+
+    .theme-icon-btn:hover {
+        background-color: #ddd;
+    }
+</style>
+
+<script>
+    const themes = [
+        { font: "'Cairo', sans-serif", background: "#f0f4f8", container: "#ffffff", text: "#333", primary: "#7FB3D5", secondary: "#D6EAF8", th: "#5499C7", icon: "#7FB3D5" },
+        { font: "'Tajawal', sans-serif", background: "#fcfcfa", container: "#ffffff", text: "#2c2c2c", primary: "#A3C1AD", secondary: "#E1ECE1", th: "#7BA68A", icon: "#A3C1AD" },
+        { font: "'Amiri', serif", background: "#f9f9f9", container: "#fff", text: "#222", primary: "#C6A477", secondary: "#F3E9DC", th: "#AD8A64", icon: "#C6A477" },
+        { font: "'Changa', sans-serif", background: "#eef2f3", container: "#ffffff", text: "#1a1a1a", primary: "#B0C4DE", secondary: "#E6ECF0", th: "#708090", icon: "#B0C4DE" },
+        { font: "'Reem Kufi', sans-serif", background: "#fefefe", container: "#ffffff", text: "#333", primary: "#DAB894", secondary: "#F8EEE7", th: "#B47B57", icon: "#DAB894" },
+        { font: "'Mada', sans-serif", background: "#f3f3f3", container: "#ffffff", text: "#222", primary: "#89CFF0", secondary: "#DCEEFB", th: "#6495ED", icon: "#89CFF0" },
+        { font: "'Noto Naskh Arabic', serif", background: "#fdfdfd", container: "#ffffff", text: "#2a2a2a", primary: "#C0B283", secondary: "#F3EFE0", th: "#A89F68", icon: "#C0B283" },
+        { font: "'Lateef', cursive", background: "#f8f9fa", container: "#ffffff", text: "#2c2c2c", primary: "#E0BBE4", secondary: "#F3D1F4", th: "#D291BC", icon: "#E0BBE4" },
+        { font: "'Harmattan', sans-serif", background: "#f6f6f6", container: "#ffffff", text: "#1f1f1f", primary: "#AED6F1", secondary: "#D6EAF8", th: "#5DADE2", icon: "#AED6F1" },
+        { font: "'Almarai', sans-serif", background: "#f7f7f7", container: "#ffffff", text: "#2b2b2b", primary: "#F9CCAC", secondary: "#FFE5B4", th: "#F4A460", icon: "#F9CCAC" }
+    ,
+        { font: "'Cairo', sans-serif", background: "#f2f2f2", container: "#ffffff", text: "#4d4d4d", primary: "#b0b0b0", secondary: "#d9d9d9", th: "#a6a6a6", icon: "#999999" },
+        { font: "'Tajawal', sans-serif", background: "#f5f5dc", container: "#ffffff", text: "#5a5a5a", primary: "#d9cbb0", secondary: "#ece2cf", th: "#d4c2a5", icon: "#bba37f" },
+        { font: "'Amiri', serif", background: "#e6dbc7", container: "#ffffff", text: "#3e3e3e", primary: "#c8b798", secondary: "#f2e8d0", th: "#b5a47c", icon: "#998d6c" },
+        { font: "'Cairo', sans-serif", background: "#e6e6fa", container: "#ffffff", text: "#5c4d7d", primary: "#a899c8", secondary: "#dcd6f2", th: "#8e7abf", icon: "#7a68a3" },
+        { font: "'Tajawal', sans-serif", background: "#d8bfd8", container: "#ffffff", text: "#4b3b6b", primary: "#b599c8", secondary: "#ebd9f2", th: "#9e7abf", icon: "#8668a3" },
+        { font: "'Amiri', serif", background: "#9370db", container: "#ffffff", text: "#fff", primary: "#b19cd9", secondary: "#d3c2f2", th: "#a47cd4", icon: "#8e68bf" },
+        { font: "'Cairo', sans-serif", background: "#b8a9c9", container: "#ffffff", text: "#3b3b3b", primary: "#cbbfe0", secondary: "#e2dbf2", th: "#b49dd4", icon: "#9c85bf" },
+        { font: "'Tajawal', sans-serif", background: "#800000", container: "#fff8f8", text: "#fbeaea", primary: "#a05252", secondary: "#c98787", th: "#6e3b3b", icon: "#5e2b2b" },
+        { font: "'Amiri', serif", background: "#ffe6f0", container: "#ffffff", text: "#7a4b5c", primary: "#f8c8dc", secondary: "#fddde6", th: "#e0b0ff", icon: "#d19cb3" },
+        { font: "'Cairo', sans-serif", background: "#f4cccc", container: "#ffffff", text: "#403636", primary: "#f6d1c1", secondary: "#faebef", th: "#f8dada", icon: "#d9b1b1" },
+        { font: "'Tajawal', sans-serif", background: "#fdf6f0", container: "#fff", text: "#5d5d5d", primary: "#c8bcb0", secondary: "#e0d7cd", th: "#b3a99f", icon: "#998f87" },
+        { font: "'Amiri', serif", background: "#eaeaea", container: "#ffffff", text: "#2c2c2c", primary: "#b0b0b0", secondary: "#cfcfcf", th: "#9e9e9e", icon: "#8a8a8a" },
+        { font: "'Cairo', sans-serif", background: "#fbeaea", container: "#fff", text: "#5a3e3e", primary: "#d48c8c", secondary: "#f0cccc", th: "#b97373", icon: "#a65c5c" },
+        { font: "'Tajawal', sans-serif", background: "#fddde6", container: "#ffffff", text: "#663f4c", primary: "#eca3b2", secondary: "#f9c7d2", th: "#e0b0c0", icon: "#c2919f" },
+        { font: "'Amiri', serif", background: "#f8c8dc", container: "#fff", text: "#5e4a4a", primary: "#e5a0b2", secondary: "#f4d0dc", th: "#d69aab", icon: "#b88494" },
+        { font: "'Cairo', sans-serif", background: "#f0f0f0", container: "#ffffff", text: "#4a4a4a", primary: "#cccccc", secondary: "#e6e6e6", th: "#b3b3b3", icon: "#999999" },
+        { font: "'Tajawal', sans-serif", background: "#fdf5f5", container: "#ffffff", text: "#6f4d4d", primary: "#e8c3c3", secondary: "#f7dddd", th: "#d6aaaa", icon: "#bb8989" },
+        { font: "'Amiri', serif", background: "#f9f4ef", container: "#fff", text: "#5a5a5a", primary: "#d7c2b2", secondary: "#e9dcd0", th: "#c9b0a0", icon: "#b49a8a" },
+        { font: "'Cairo', sans-serif", background: "#ececec", container: "#ffffff", text: "#333333", primary: "#bbbbbb", secondary: "#dddddd", th: "#a0a0a0", icon: "#888888" },
+        { font: "'Tajawal', sans-serif", background: "#faebef", container: "#ffffff", text: "#4d4d4d", primary: "#d4a5b5", secondary: "#f2cfdc", th: "#c68da5", icon: "#a77384" }
+
+    ,
+        { font: "'Cairo', sans-serif", background: "#e0e0e0", container: "#ffffff", text: "#404040", primary: "#bababa", secondary: "#dcdcdc", th: "#a0a0a0", icon: "#8a8a8a" },
+        { font: "'Tajawal', sans-serif", background: "#f9f4e8", container: "#ffffff", text: "#5c5c5c", primary: "#dcd2b5", secondary: "#f2e8d0", th: "#c9bb98", icon: "#b3a77a" },
+        { font: "'Amiri', serif", background: "#f5efe6", container: "#ffffff", text: "#3d3d3d", primary: "#e6dbc7", secondary: "#f9f2e4", th: "#d4c6a8", icon: "#bba786" },
+        { font: "'Cairo', sans-serif", background: "#ede4f7", container: "#ffffff", text: "#5a4e71", primary: "#cbbfe0", secondary: "#e5ddf7", th: "#b4a0d4", icon: "#9e89bf" },
+        { font: "'Tajawal', sans-serif", background: "#f0d9ff", container: "#ffffff", text: "#4b3b6b", primary: "#d8bfd8", secondary: "#f5e6f9", th: "#c3a0c8", icon: "#a888b2" },
+        { font: "'Amiri', serif", background: "#d9c0eb", container: "#ffffff", text: "#fff", primary: "#bfa3db", secondary: "#e5d8f7", th: "#a78ac8", icon: "#8f70b0" },
+        { font: "'Cairo', sans-serif", background: "#f0e0f8", container: "#ffffff", text: "#3b3b3b", primary: "#ceb8e0", secondary: "#eee4f7", th: "#b89dd4", icon: "#a286bf" },
+        { font: "'Tajawal', sans-serif", background: "#990000", container: "#fff8f8", text: "#fbeaea", primary: "#b35959", secondary: "#d48c8c", th: "#993d3d", icon: "#7f2a2a" },
+        { font: "'Amiri', serif", background: "#ffeff3", container: "#ffffff", text: "#7a4b5c", primary: "#f8c8dc", secondary: "#fddde6", th: "#e0b0ff", icon: "#d19cb3" },
+        { font: "'Cairo', sans-serif", background: "#fce4ec", container: "#ffffff", text: "#4a3a3a", primary: "#f6b8c8", secondary: "#f9d8e4", th: "#eba0b0", icon: "#cc8a8a" },
+        { font: "'Tajawal', sans-serif", background: "#f4e6e6", container: "#ffffff", text: "#5d3e3e", primary: "#dbaaaa", secondary: "#f1cccc", th: "#c29292", icon: "#a86f6f" },
+        { font: "'Amiri', serif", background: "#f2dede", container: "#ffffff", text: "#4a2c2c", primary: "#e4b0b0", secondary: "#f5cccc", th: "#c78d8d", icon: "#a46868" },
+        { font: "'Cairo', sans-serif", background: "#fff0f5", container: "#ffffff", text: "#5a3f4c", primary: "#eab6cc", secondary: "#f9d6e6", th: "#dea0b9", icon: "#bb7a94" },
+        { font: "'Tajawal', sans-serif", background: "#f9e0e7", container: "#ffffff", text: "#664750", primary: "#e6a3b2", secondary: "#f4cfdc", th: "#cc89a0", icon: "#a66f84" },
+        { font: "'Amiri', serif", background: "#fbf1f1", container: "#ffffff", text: "#4a4a4a", primary: "#dbbaba", secondary: "#efdbdb", th: "#c9a0a0", icon: "#b38686" },
+        { font: "'Cairo', sans-serif", background: "#f4f4f4", container: "#ffffff", text: "#3f3f3f", primary: "#c2c2c2", secondary: "#dddddd", th: "#a9a9a9", icon: "#8f8f8f" },
+        { font: "'Tajawal', sans-serif", background: "#f5efe6", container: "#ffffff", text: "#545454", primary: "#d6c6b5", secondary: "#eee4d8", th: "#c3b39f", icon: "#a89686" },
+        { font: "'Amiri', serif", background: "#f2e8e0", container: "#ffffff", text: "#403f3f", primary: "#d1bfae", secondary: "#e9ded2", th: "#bca895", icon: "#a6907c" },
+        { font: "'Cairo', sans-serif", background: "#eeeeee", container: "#ffffff", text: "#404040", primary: "#c0c0c0", secondary: "#dddddd", th: "#a6a6a6", icon: "#8c8c8c" },
+        { font: "'Tajawal', sans-serif", background: "#faf0f5", container: "#ffffff", text: "#4c3f4f", primary: "#dab0c8", secondary: "#f3d7e6", th: "#c699b0", icon: "#a38094" }
+
+    ];
+    let currentTheme = parseInt(localStorage.getItem('themeIndex') || "0");
+
+    function applyTheme(theme) {
+        const css = `
+            body { font-family: ${theme.font}; background-color: ${theme.background}; color: ${theme.text}; }
+            .container { background-color: ${theme.container}; color: ${theme.text}; }
+            h1, h2, h3, h4, h5 { color: ${theme.text}; }
+            button { background-color: ${theme.primary}; }
+            button:hover { background-color: ${theme.th}; }
+            th { background-color: ${theme.th}; }
+            td, th { border-color: ${theme.primary}; }
+            .reward-level { background-color: ${theme.secondary}; color: ${theme.text}; }
+             .mode-button:hover{ background-color: ${theme.primary}; color: white; }
+        `;
+        document.getElementById('dynamicStyle').textContent = css;
+    }
+
+    function showThemeSelector() {
+        const selector = document.getElementById('themeSelector');
+        selector.style.display = selector.style.display === "flex" ? "none" : "flex";
+    }
+
+    function selectTheme(index) {
+        currentTheme = index;
+        applyTheme(themes[currentTheme]);
+    }
+
+    function saveTheme() {
+        localStorage.setItem('themeIndex', currentTheme);
+        alert("تم حفظ النمط الحالي!");
+        document.getElementById('themeSelector').style.display = "none";
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const btnIcon = document.createElement("button");
+        btnIcon.className = "theme-icon-btn";
+        btnIcon.textContent = "🎨";
+        btnIcon.onclick = showThemeSelector;
+        document.body.appendChild(btnIcon);
+
+        const selector = document.createElement("div");
+        selector.className = "theme-selector";
+        selector.id = "themeSelector";
+
+        const icons = document.createElement("div");
+        icons.style.display = "flex";
+        icons.style.flexWrap = "wrap";
+        icons.style.gap = "10px";
+
+        themes.forEach((theme, i) => {
+            const icon = document.createElement("div");
+            icon.className = "theme-option";
+            icon.style.backgroundColor = theme.icon;
+            icon.onclick = () => selectTheme(i);
+            icons.appendChild(icon);
+        });
+
+        const saveBtn = document.createElement("button");
+        saveBtn.textContent = "تأكيد وحفظ";
+        saveBtn.onclick = saveTheme;
+
+        selector.appendChild(icons);
+        selector.appendChild(saveBtn);
+        document.body.appendChild(selector);
+
+        applyTheme(themes[currentTheme]);
+    });
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Amiri&amp;family=Cairo&amp;family=Changa&amp;family=Harmattan&amp;family=Lateef&amp;family=Mada&amp;family=Noto+Naskh+Arabic&amp;family=Reem+Kufi&amp;family=Tajawal&amp;family=Almarai&amp;display=swap" rel="stylesheet"/>
+    <div class="container">
+        <h1>سبحة إلكترونية</h1>
+
+        <!-- أزرار اختيار الوضع -->
+        <div>
+            <button class="mode-button active" data-mode="normal">تسبيح عادي</button>
+            <button class="mode-button" data-mode="azkar">أذكار</button>
+        </div>
+
+        <!-- عرض الذكر في وضع الأذكار -->
+        <div id="zekr-text"></div>
+
+        <div id="tasbih-count">0</div>
+        <button id="tasbih-button">سبّح</button>
+        <button id="reset-button">إعادة الضبط</button>
+        <button id="back-button" onclick="goBack()">الرجوع للصفحة الرئيسية</button>
+    </div>
+
+    <script>
+        let tasbihCount = 0;
+        let currentMode = 'normal'; // الوضع الافتراضي هو التسبيح العادي
+
+        const tasbihCountElement = document.getElementById('tasbih-count');
+        const tasbihButton = document.getElementById('tasbih-button');
+        const resetButton = document.getElementById('reset-button');
+        const modeButtons = document.querySelectorAll('.mode-button');
+        const zekrTextElement = document.getElementById('zekr-text');
+
+        // قائمة الأذكار
+        const azkarList = [
+            'سبحان الله',
+            'الحمد لله',
+            'لا إله إلا الله',
+            'الله أكبر',
+            'لا حول ولا قوة إلا بالله',
+            'أستغفر الله'
+        ];
+
+        // دالة لتحديث عرض الذكر في وضع الأذكار
+        function updateZekrText() {
+            const randomIndex = Math.floor(Math.random() * azkarList.length);
+            zekrTextElement.textContent = azkarList[randomIndex];
+        }
+
+        // إضافة استماع للأحداث لأزرار اختيار الوضع
+        modeButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                // إزالة الفئة النشطة من جميع الأزرار
+                modeButtons.forEach(btn => btn.classList.remove('active'));
+                // إضافة الفئة النشطة إلى الزر الذي تم النقر عليه
+                this.classList.add('active');
+                // تحديث الوضع الحالي
+                currentMode = this.dataset.mode;
+                // تحديث عرض الذكر إذا كان الوضع هو الأذكار
+                if (currentMode === 'azkar') {
+                    updateZekrText();
+                } else {
+                    zekrTextElement.textContent = ''; // مسح النص إذا كان الوضع عادي
+                }
+            });
+        });
+
+        // إضافة استماع للأحداث لزر التسبيح
+        tasbihButton.addEventListener('click', function () {
+            tasbihCount++;
+            tasbihCountElement.textContent = tasbihCount;
+
+            // إذا كان الوضع هو الأذكار، قم بتحديث عرض الذكر
+            if (currentMode === 'azkar') {
+                updateZekrText();
+            }
+        });
+
+        // إضافة استماع للأحداث لزر إعادة الضبط
+        resetButton.addEventListener('click', function () {
+            tasbihCount = 0;
+            tasbihCountElement.textContent = tasbihCount;
+            if (currentMode === 'azkar') {
+                updateZekrText(); // إعادة عرض الذكر في وضع الأذكار
+            }
+        });
+
+        // Function to go back to look.html
+        function goBack() {
+            window.location.href = "index.html";
+        }
+    </script>
+
+
+
+</body>

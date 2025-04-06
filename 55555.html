@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فهرس القرآن الكريم</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* CSS */
+        body {
+            font-family: 'Amiri', serif;
+            margin: 0;
+            padding: 0;
+            direction: rtl;
+            background-color: #f0f0f0;
+            background-image: url('islamic-pattern.png');
+            background-repeat: repeat;
+            background-size: 200px;
+        }
+        .quran-index-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
+            max-width: 900px;
+            margin: 20px auto;
+        }
+        .quran-index-container h1 {
+            font-size: 48px;
+            color: ;
+            margin-bottom: 30px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            border-bottom: 2px solid ;
+            padding-bottom: 10px;
+        }
+        .quran-index-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .quran-button {
+            background-color: #coc8d9;
+            border: 1px solid ;
+            padding: 15px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 18px;
+            color: #;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .quran-button:hover {
+            background-color: ;
+            color: ;
+            transform: translateY(-5px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+        .quran-button span {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        #surahContent {
+            margin-top: 30px;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        #surahContent h2 {
+            font-size: 32px;
+            color: white;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        #surahContent #ayahList {
+            font-size: 20px;
+            color: #555;
+            line-height: 2.2;
+            text-align: justify;
+        }
+        .back-button {
+            background-color: #;
+            border: 1px solid ;
+            padding: 15px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 18px;
+            color: #;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .back-button:hover {
+            background-color: #;
+            color: #;
+            transform: translateY(-5px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+        .back-button i {
+            margin-left: 5px;
+        }
+        .search-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        #searchBox {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            outline:none;
+        }
+        .searchButton {
+            background-color: black;
+            color: #;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+        #searchButton i {
+            margin-right: 5px;
+        }
+    
+    </style>
+</head>
+<body>
+    <style id="dynamicStyle"></style>
+<style>
+.theme-button {
+    margin-top: 10px;
+    align-self: center;
+}
+    .theme-selector {
+        position: fixed;
+        top: 50px;
+        right: 10px;
+        background: white;
+        padding: 10px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        display: none;
+        flex-direction: column;
+        gap: 10px;
+        animation: fadeIn 0.3s ease-in-out;
+        z-index: 1000;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .theme-option {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        cursor: pointer;
+        border: 2px solid #ccc;
+        transition: transform 0.2s;
+    }
+    .theme-option:hover {
+        transform: scale(1.1);
+    }
+    .theme-icon-btn {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #eee;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        font-size: 20px;
+        z-index: 1001;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.3s;
+    }
+    .theme-icon-btn:hover {
+        background-color: #ddd;
+    }
+</style>
+<script>
+
+function applyTheme(theme) {
+    const css = `
+        body {
+            font-family: ${theme.font};
+            background-color: ${theme.background};
+            color: ${theme.text};
+        }
+        .container {
+            background-color: ${theme.container};
+            color: ${theme.text};
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        h1, h2, h3, h4, h5 {
+            color: ${theme.text};
+        }
+    .quran-button {
+            background-color: #coc8d9;
+            border: 1px solid #coc8d9;
+            padding: 15px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 18px;
+            color: #333;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: ${theme.primary};
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 14px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        button:hover {
+            background-color: ${theme.th};
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        th {
+            background-color: ${theme.th};
+            color: #fff;
+        }
+        td, th {
+            border: 1px solid ${theme.primary};
+            padding: 8px;
+        }
+        .searchButton {
+            background-color: ${theme.secondary};
+            color: ${theme.text};
+            border-radius: 10px;
+            padding: 5px;
+        }
+        .reward-level.unlocked {
+            background-color: ${theme.primary};
+            color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+    `;
+    document.getElementById('dynamicStyle').textContent = css;
+}
+    const themes = [
+        { font: "'Cairo', sans-serif", background: "#f0f4f8", container: "#ffffff", text: "#333", primary: "#7FB3D5", secondary: "#D6EAF8", th: "#5499C7", icon: "#7FB3D5" },
+        { font: "'Tajawal', sans-serif", background: "#fcfcfa", container: "#ffffff", text: "#2c2c2c", primary: "#A3C1AD", secondary: "#E1ECE1", th: "#7BA68A", icon: "#A3C1AD" },
+        { font: "'Amiri', serif", background: "#f9f9f9", container: "#fff", text: "#222", primary: "#C6A477", secondary: "#F3E9DC", th: "#AD8A64", icon: "#C6A477" },
+        { font: "'Changa', sans-serif", background: "#eef2f3", container: "#ffffff", text: "#1a1a1a", primary: "#B0C4DE", secondary: "#E6ECF0", th: "#708090", icon: "#B0C4DE" },
+        { font: "'Reem Kufi', sans-serif", background: "#fefefe", container: "#ffffff", text: "#333", primary: "#DAB894", secondary: "#F8EEE7", th: "#B47B57", icon: "#DAB894" },
+        { font: "'Mada', sans-serif", background: "#f3f3f3", container: "#ffffff", text: "#222", primary: "#89CFF0", secondary: "#DCEEFB", th: "#6495ED", icon: "#89CFF0" },
+        { font: "'Noto Naskh Arabic', serif", background: "#fdfdfd", container: "#ffffff", text: "#2a2a2a", primary: "#C0B283", secondary: "#F3EFE0", th: "#A89F68", icon: "#C0B283" },
+        { font: "'Lateef', cursive", background: "#f8f9fa", container: "#ffffff", text: "#2c2c2c", primary: "#E0BBE4", secondary: "#F3D1F4", th: "#D291BC", icon: "#E0BBE4" },
+        { font: "'Harmattan', sans-serif", background: "#f6f6f6", container: "#ffffff", text: "#1f1f1f", primary: "#AED6F1", secondary: "#D6EAF8", th: "#5DADE2", icon: "#AED6F1" },
+        { font: "'Almarai', sans-serif", background: "#f7f7f7", container: "#ffffff", text: "#2b2b2b", primary: "#F9CCAC", secondary: "#FFE5B4", th: "#F4A460", icon: "#F9CCAC" }
+    ,
+        { font: "'Cairo', sans-serif", background: "#f2f2f2", container: "#ffffff", text: "#4d4d4d", primary: "#b0b0b0", secondary: "#d9d9d9", th: "#a6a6a6", icon: "#999999" },
+        { font: "'Tajawal', sans-serif", background: "#f5f5dc", container: "#ffffff", text: "#5a5a5a", primary: "#d9cbb0", secondary: "#ece2cf", th: "#d4c2a5", icon: "#bba37f" },
+        { font: "'Amiri', serif", background: "#e6dbc7", container: "#ffffff", text: "#3e3e3e", primary: "#c8b798", secondary: "#f2e8d0", th: "#b5a47c", icon: "#998d6c" },
+        { font: "'Cairo', sans-serif", background: "#e6e6fa", container: "#ffffff", text: "#5c4d7d", primary: "#a899c8", secondary: "#dcd6f2", th: "#8e7abf", icon: "#7a68a3" },
+        { font: "'Tajawal', sans-serif", background: "#d8bfd8", container: "#ffffff", text: "#4b3b6b", primary: "#b599c8", secondary: "#ebd9f2", th: "#9e7abf", icon: "#8668a3" },
+        { font: "'Amiri', serif", background: "#9370db", container: "#ffffff", text: "#fff", primary: "#b19cd9", secondary: "#d3c2f2", th: "#a47cd4", icon: "#8e68bf" },
+        { font: "'Cairo', sans-serif", background: "#b8a9c9", container: "#ffffff", text: "#3b3b3b", primary: "#cbbfe0", secondary: "#e2dbf2", th: "#b49dd4", icon: "#9c85bf" },
+        { font: "'Tajawal', sans-serif", background: "#800000", container: "#fff8f8", text: "#fbeaea", primary: "#a05252", secondary: "#c98787", th: "#6e3b3b", icon: "#5e2b2b" },
+        { font: "'Amiri', serif", background: "#ffe6f0", container: "#ffffff", text: "#7a4b5c", primary: "#f8c8dc", secondary: "#fddde6", th: "#e0b0ff", icon: "#d19cb3" },
+        { font: "'Cairo', sans-serif", background: "#f4cccc", container: "#ffffff", text: "#403636", primary: "#f6d1c1", secondary: "#faebef", th: "#f8dada", icon: "#d9b1b1" },
+        { font: "'Tajawal', sans-serif", background: "#fdf6f0", container: "#fff", text: "#5d5d5d", primary: "#c8bcb0", secondary: "#e0d7cd", th: "#b3a99f", icon: "#998f87" },
+        { font: "'Amiri', serif", background: "#eaeaea", container: "#ffffff", text: "#2c2c2c", primary: "#b0b0b0", secondary: "#cfcfcf", th: "#9e9e9e", icon: "#8a8a8a" },
+        { font: "'Cairo', sans-serif", background: "#fbeaea", container: "#fff", text: "#5a3e3e", primary: "#d48c8c", secondary: "#f0cccc", th: "#b97373", icon: "#a65c5c" },
+        { font: "'Tajawal', sans-serif", background: "#fddde6", container: "#ffffff", text: "#663f4c", primary: "#eca3b2", secondary: "#f9c7d2", th: "#e0b0c0", icon: "#c2919f" },
+        { font: "'Amiri', serif", background: "#f8c8dc", container: "#fff", text: "#5e4a4a", primary: "#e5a0b2", secondary: "#f4d0dc", th: "#d69aab", icon: "#b88494" },
+        { font: "'Cairo', sans-serif", background: "#f0f0f0", container: "#ffffff", text: "#4a4a4a", primary: "#cccccc", secondary: "#e6e6e6", th: "#b3b3b3", icon: "#999999" },
+        { font: "'Tajawal', sans-serif", background: "#fdf5f5", container: "#ffffff", text: "#6f4d4d", primary: "#e8c3c3", secondary: "#f7dddd", th: "#d6aaaa", icon: "#bb8989" },
+        { font: "'Amiri', serif", background: "#f9f4ef", container: "#fff", text: "#5a5a5a", primary: "#d7c2b2", secondary: "#e9dcd0", th: "#c9b0a0", icon: "#b49a8a" },
+        { font: "'Cairo', sans-serif", background: "#ececec", container: "#ffffff", text: "#333333", primary: "#bbbbbb", secondary: "#dddddd", th: "#a0a0a0", icon: "#888888" },
+        { font: "'Tajawal', sans-serif", background: "#faebef", container: "#ffffff", text: "#4d4d4d", primary: "#d4a5b5", secondary: "#f2cfdc", th: "#c68da5", icon: "#a77384" }
+
+    ,
+        { font: "'Cairo', sans-serif", background: "#fff9e6", container: "#ffffff", text: "#665c2e", primary: "#ffe680", secondary: "#fff2b3", th: "#ffeb99", icon: "#e6cc66" },
+        { font: "'Tajawal', sans-serif", background: "#fff5cc", container: "#ffffff", text: "#665c00", primary: "#ffdd66", secondary: "#ffeeaa", th: "#ffe066", icon: "#ccb300" },
+        { font: "'Amiri', serif", background: "#fdf6e3", container: "#ffffff", text: "#776d2c", primary: "#f0d67c", secondary: "#fae9b0", th: "#e6c96f", icon: "#c8aa49" },
+        { font: "'Cairo', sans-serif", background: "#fff3e0", container: "#ffffff", text: "#704214", primary: "#ffbb77", secondary: "#ffe0cc", th: "#ff9966", icon: "#cc7044" },
+        { font: "'Tajawal', sans-serif", background: "#ffe5b4", container: "#ffffff", text: "#805c2e", primary: "#ffcc99", secondary: "#ffe5cc", th: "#f4b183", icon: "#c97a33" },
+        { font: "'Amiri', serif", background: "#ffefdb", container: "#ffffff", text: "#5e422c", primary: "#f9c79b", secondary: "#fde2c1", th: "#edb98a", icon: "#c8875f" },
+        { font: "'Cairo', sans-serif", background: "#f0fff0", container: "#ffffff", text: "#2f4f2f", primary: "#a8d5a8", secondary: "#d8f0d8", th: "#90c590", icon: "#6ea96e" },
+        { font: "'Tajawal', sans-serif", background: "#e6ffe6", container: "#ffffff", text: "#3b5e3b", primary: "#b3e6b3", secondary: "#ddf7dd", th: "#99cc99", icon: "#77aa77" },
+        { font: "'Amiri', serif", background: "#f5fff5", container: "#ffffff", text: "#385f38", primary: "#aad4aa", secondary: "#d1ead1", th: "#88c388", icon: "#66a166" },
+        { font: "'Cairo', sans-serif", background: "#e0ffe0", container: "#ffffff", text: "#1f4d1f", primary: "#9ce69c", secondary: "#c8f5c8", th: "#7fd07f", icon: "#5cad5c" },
+        { font: "'Tajawal', sans-serif", background: "#fafff0", container: "#ffffff", text: "#4a664a", primary: "#bfe6bf", secondary: "#e8f9e8", th: "#99cc99", icon: "#7fa87f" },
+        { font: "'Amiri', serif", background: "#fef9e7", container: "#ffffff", text: "#7a6d39", primary: "#f4e2a6", secondary: "#fef2c0", th: "#eedc8b", icon: "#c7b25e" },
+        { font: "'Cairo', sans-serif", background: "#fff8dc", container: "#ffffff", text: "#7a5c2e", primary: "#f7e3a4", secondary: "#fff3c2", th: "#eed890", icon: "#c4a83f" },
+        { font: "'Tajawal', sans-serif", background: "#fef3e2", container: "#ffffff", text: "#996633", primary: "#f8cba0", secondary: "#fde6c8", th: "#eab17c", icon: "#b87a4c" },
+        { font: "'Amiri', serif", background: "#fbead6", container: "#ffffff", text: "#7b5e3c", primary: "#f1c499", secondary: "#f9dfbc", th: "#e7ae77", icon: "#bc8855" },
+        { font: "'Cairo', sans-serif", background: "#f4fff4", container: "#ffffff", text: "#2f5934", primary: "#aad8b0", secondary: "#d4f0d9", th: "#88c797", icon: "#6aa973" },
+        { font: "'Tajawal', sans-serif", background: "#eaffea", container: "#ffffff", text: "#3e5c3e", primary: "#b9e6b9", secondary: "#e2f9e2", th: "#a0d4a0", icon: "#87b387" },
+        { font: "'Amiri', serif", background: "#f5fff5", container: "#ffffff", text: "#325c32", primary: "#a0d6a0", secondary: "#d4f4d4", th: "#88c388", icon: "#6ea26e" },
+        { font: "'Cairo', sans-serif", background: "#f0fce0", container: "#ffffff", text: "#456045", primary: "#b2deb2", secondary: "#e3f7e3", th: "#99cc99", icon: "#7eaa7e" },
+        { font: "'Tajawal', sans-serif", background: "#fbffe2", container: "#ffffff", text: "#5a5a2e", primary: "#e0e6a8", secondary: "#f5f9c2", th: "#d6d888", icon: "#b4b85a" }
+
+    ];
+    let currentTheme = parseInt(localStorage.getItem('themeIndex') || "0");
+
+    function applyTheme(theme) {
+        const css = `
+            body { font-family: ${theme.font}; background-color: ${theme.background}; color: ${theme.text}; }
+            .container { background-color: ${theme.container}; color: ${theme.text}; }
+            h1, h2, h3, h4, h5 { color: ${theme.text}; }
+            button { background-color: ${theme.primary}; }
+            button:hover { background-color: ${theme.th}; }
+            th { background-color: ${theme.th}; }
+           .quran-button: border { border-color: ${theme.primary}; }
+            .searchButton { background-color: ${theme.secondary}; color: ${theme.text}; }
+           { background-color: ${theme.primary}; color: white; }
+        
+            
+        `;
+        document.getElementById('dynamicStyle').textContent = css;
+    }
+
+    function showThemeSelector() {
+        const selector = document.getElementById('themeSelector');
+        selector.style.display = selector.style.display === "flex" ? "none" : "flex";
+    }
+
+    function selectTheme(index) {
+        currentTheme = index;
+        applyTheme(themes[currentTheme]);
+    }
+
+    function saveTheme() {
+        localStorage.setItem('themeIndex', currentTheme);
+        alert("تم حفظ النمط الحالي!");
+        document.getElementById('themeSelector').style.display = "none";
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const btnIcon = document.createElement("button");
+        btnIcon.className = "theme-icon-btn";
+        btnIcon.textContent = "🎨";
+        btnIcon.onclick = showThemeSelector;
+        document.body.appendChild(btnIcon);
+
+        const selector = document.createElement("div");
+        selector.className = "theme-selector";
+        selector.id = "themeSelector";
+
+        const icons = document.createElement("div");
+        icons.style.display = "flex";
+        icons.style.flexWrap = "wrap";
+        icons.style.gap = "10px";
+
+        themes.forEach((theme, i) => {
+            const icon = document.createElement("div");
+            icon.className = "theme-option";
+            icon.style.backgroundColor = theme.icon;
+            icon.onclick = () => selectTheme(i);
+            icons.appendChild(icon);
+        });
+
+        const saveBtn = document.createElement("button");
+        saveBtn.textContent = "تأكيد وحفظ";
+        saveBtn.onclick = saveTheme;
+
+        selector.appendChild(icons);
+        selector.appendChild(saveBtn);
+        document.body.appendChild(selector);
+
+        applyTheme(themes[currentTheme]);
+    });
+const saveButton = document.createElement("button");
+saveButton.className = "theme-button";
+saveButton.textContent = "تأكيد وحفظ";
+saveButton.onclick = saveTheme;
+selector.appendChild(saveButton);
+function applyTheme(theme) {  
+    const css = `  
+        body { font-family: ${theme.font}; background-color: ${theme.background}; color: ${theme.text}; }  
+        .container { background-color: ${theme.container}; color: ${theme.text}; }  
+        h1, h2, h3, h4, h5 { color: ${theme.text}; }  
+        button, .theme-button {  
+            background-color: ${theme.primary};  
+            color: ${theme.text};  
+            font-family: ${theme.font};  
+            border: none;  
+            border-radius: 8px;  
+            padding: 8px 16px;  
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);  
+            cursor: pointer;  
+            transition: all 0.3s ease;  
+        }  
+        button:hover, .theme-button:hover {  
+            background-color: ${theme.th};  
+        }  
+        th { background-color: ${theme.th}; }  
+        td, th { border-color: ${theme.primary}; }  
+       #searchButton { background-color: ${theme.secondary}; color: ${theme.text}; }  
+        .reward-level.unlocked { background-color: ${theme.primary}; color: white; }  
+    `;  
+    document.getElementById('dynamicStyle').textContent = css;  
+}
+    function applyTheme(theme) {
+    const css = `
+        body {
+            font-family: ${theme.font};
+            background-color: ${theme.background};
+            color: ${theme.text};
+        }
+
+        .container, .card, .box {
+            background-color: ${theme.container};
+            color: ${theme.text};
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 1rem;
+        }
+
+        h1, h2, h3, h4, h5 {
+            color: ${theme.text};
+        }
+
+        button, .btn {
+            background-color: ${theme.primary};
+            color: white;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        button:hover, .btn:hover {
+            background-color: ${theme.th};
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        th {
+            background-color: ${theme.th};
+        }
+
+        td, th {
+            border-color: ${theme.primary};
+        }
+
+        .reward-level {
+            background-color: ${theme.secondary};
+            color: ${theme.text};
+            border-radius: 10px;
+            padding: 0.5rem;
+        }
+
+        .searchButton {
+            background-color: ${theme.primary};
+            color: white;
+        }
+
+        .shadowed {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .rounded {
+            border-radius: 16px;
+        }
+    `;
+    document.getElementById('dynamicStyle').textContent = css;
+}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Amiri&amp;family=Cairo&amp;family=Changa&amp;family=Harmattan&amp;family=Lateef&amp;family=Mada&amp;family=Noto+Naskh+Arabic&amp;family=Reem+Kufi&amp;family=Tajawal&amp;family=Almarai&amp;display=swap" rel="stylesheet"/>
+    <style id="dynamicStyle"></style>
+
+<style>
+    .theme-selector {
+        position: fixed;
+        top: 50px;
+        right: 10px;
+        background: white;
+        padding: 10px;
+        border-radius: 16px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+        display: none;
+        flex-direction: column;
+        gap: 12px;
+        animation: fadeIn 0.3s ease-in-out;
+        z-index: 1000;
+        max-width: 240px;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .theme-option {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        cursor: pointer;
+        border: 2px solid #ccc;
+        transition: transform 0.2s;
+    }
+
+    .theme-option:hover {
+        transform: scale(1.1);
+    }
+
+    .theme-icon-btn {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background-color: #eee;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        font-size: 22px;
+        z-index: 1001;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.3s;
+    }
+
+    .theme-icon-btn:hover {
+        background-color: #ddd;
+    }
+</style>
+
+<script>
+    const themes = [...]; // ضع مصفوفة الثيمات هنا كما في الكود السابق
+
+    let currentTheme = parseInt(localStorage.getItem('themeIndex') || "0");
+
+    function applyTheme(theme) {
+        const css = `
+            body {
+                font-family: ${theme.font};
+                background-color: ${theme.background};
+                color: ${theme.text};
+                transition: all 0.4s ease-in-out;
+            }
+            .container, .box, .card {
+                background-color: ${theme.container};
+                color: ${theme.text};
+                border-radius: 16px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                padding: 16px;
+            }
+            h1, h2, h3, h4, h5, h6 {
+                color: ${theme.text};
+                font-weight: bold;
+            }
+            button, .btn {
+                background-color: ${theme.primary};
+                color: white;
+                border: none;
+                padding: 10px 16px;
+                border-radius: 8px;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            }
+            button:hover, .btn:hover {
+                background-color: ${theme.th};
+            }
+            th {
+                background-color: ${theme.th};
+                color: white;
+                padding: 8px;
+            }
+            td, th {
+                border: 1px solid ${theme.primary};
+            }
+            .reward-level {
+                background-color: ${theme.secondary};
+                color: ${theme.text};
+                padding: 8px;
+                border-radius: 12px;
+            }
+            .reward-level.unlocked {
+                background-color: ${theme.primary};
+                color: white;
+            }
+        `;
+        document.getElementById('dynamicStyle').textContent = css;
+    }
+
+    function showThemeSelector() {
+        const selector = document.getElementById('themeSelector');
+        selector.style.display = selector.style.display === "flex" ? "none" : "flex";
+    }
+
+    function selectTheme(index) {
+        currentTheme = index;
+        applyTheme(themes[currentTheme]);
+    }
+
+    function saveTheme() {
+        localStorage.setItem('themeIndex', currentTheme);
+        alert("تم حفظ التنسيق!");
+        document.getElementById('themeSelector').style.display = "none";
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const btnIcon = document.createElement("button");
+        btnIcon.className = "theme-icon-btn";
+        btnIcon.textContent = "🎨";
+        btnIcon.onclick = showThemeSelector;
+        document.body.appendChild(btnIcon);
+
+        const selector = document.createElement("div");
+        selector.className = "theme-selector";
+        selector.id = "themeSelector";
+
+        const icons = document.createElement("div");
+        icons.style.display = "flex";
+        icons.style.flexWrap = "wrap";
+        icons.style.gap = "10px";
+
+        themes.forEach((theme, i) => {
+            const icon = document.createElement("div");
+            icon.className = "theme-option";
+            icon.style.backgroundColor = theme.icon;
+            icon.onclick = () => selectTheme(i);
+            icons.appendChild(icon);
+        });
+
+        const saveBtn = document.createElement("button");
+        saveBtn.textContent = "تأكيد وحفظ";
+        saveBtn.className = "btn";
+        saveBtn.onclick = saveTheme;
+
+        selector.appendChild(icons);
+        selector.appendChild(saveBtn);
+        document.body.appendChild(selector);
+
+        applyTheme(themes[currentTheme]);
+    });
+</script>
+    
+    <div class="quran-index-container">
+        <!-- زر السابق -->
+        <button class="quran-button" onclick="goBack()">
+            <span>السابق <i class="fas fa-arrow-right"></i></span>
+        </button>
+        
+        <h1>فهرس القرآن الكريم</h1>
+        <div class="search-container">
+            <input type="text" id="searchBox" placeholder="ابحث عن سورة..." onkeyup="filterSurahs()">
+            <button id="searchButton" onclick="filterSurahs()">
+                <i class="fas fa-search"></i> بحث
+            </button>
+        </div>
+        <!-- فهرس السور -->
+        <div id="quranIndexList" class="quran-index-list">
+            <button class="quran-button" onclick="loadSurah(1)"><span>الفاتحة</span></button>
+            <button class="quran-button" onclick="loadSurah(2)"><span>البقرة</span></button>
+            <button class="quran-button" onclick="loadSurah(3)"><span>آل عمران</span></button>
+            <button class="quran-button" onclick="loadSurah(4)"><span>النساء</span></button>
+            <button class="quran-button" onclick="loadSurah(5)"><span>المائدة</span></button>
+            <button class="quran-button" onclick="loadSurah(6)"><span>الأنعام</span></button>
+            <button class="quran-button" onclick="loadSurah(7)"><span>الأعراف</span></button>
+            <button class="quran-button" onclick="loadSurah(8)"><span>الأنفال</span></button>
+            <button class="quran-button" onclick="loadSurah(9)"><span>التوبة</span></button>
+            <button class="quran-button" onclick="loadSurah(10)"><span>يونس</span></button>
+            <!-- إكمال باقي السور حتى السورة 114 -->
+            <button class="quran-button" onclick="loadSurah(114)"><span>الناس</span></button>
+        </div>
+        <div id="surahContent" style="display: none;">
+            <!-- زر العودة إلى الفهرس -->
+            <button class="back-button" onclick="showIndex()">
+                <i class="fas fa-arrow-left"></i> العودة إلى الفهرس
+            </button>
+            <h2></h2>
+            <div id="ayahList"></div>
+        </div>
+    </div>
+    <script>
+        const baseUrl = 'https://api.alquran.cloud/v1';
+        const surahNames = [
+            "الفاتحة", "البقرة", "آل عمران", "النساء", "المائدة", "الأنعام", "الأعراف", "الأنفال", "التوبة", "يونس",
+            "هود", "يوسف", "الرعد", "إبراهيم", "الحجر", "النحل", "الإسراء", "الكهف", "مريم", "طه",
+            "الأنبياء", "الحج", "المؤمنون", "النور", "الفرقان", "الشعراء", "النمل", "القصص", "العنكبوت", "الروم",
+            "لقمان", "السجدة", "الأحزاب", "سبأ", "فاطر", "يس", "الصافات", "ص", "الزمر", "غافر",
+            "فصلت", "الشورى", "الزخرف", "الدخان", "الجاثية", "الأحقاف", "محمد", "الفتح", "الحجرات", "ق",
+            "الذاريات", "الطور", "النجم", "القمر", "الرحمن", "الواقعة", "الحديد", "المجادلة", "الحشر", "الممتحنة",
+            "الصف", "الجمعة", "المنافقون", "التغابن", "الطلاق", "التحريم", "الملك", "القلم", "الحاقة", "المعارج",
+            "نوح", "الجن", "المزمل", "المدثر", "القيامة", "الإنسان", "المرسلات", "النبأ", "النازعات", "عبس",
+            "التكوير", "الانفطار", "المطففين", "الانشقاق", "البروج", "الطارق", "الأعلى", "الغاشية", "الفجر", "البلد",
+            "الشمس", "الليل", "الضحى", "الشرح", "التين", "العلق", "القدر", "البينة", "الزلزلة", "العاديات",
+            "القارعة", "التكاثر", "العصر", "الهمزة", "الفيل", "قريش", "الماعون", "الكوثر", "الكافرون", "النصر",
+            "المسد", "الإخلاص", "الفلق", "الناس"
+        ];
+        document.addEventListener("DOMContentLoaded", () => {
+            loadSurahList();
+        });
+        async function loadSurahList() {
+            const quranIndexList = document.getElementById('quranIndexList');
+            quranIndexList.innerHTML = '';
+            surahNames.forEach((name, index) => {
+                const button = document.createElement('button');
+                button.className = "quran-button";
+                button.textContent = name;
+                button.onclick = () => loadSurah(index + 1);
+                quranIndexList.appendChild(button);
+            });
+        }
+        async function loadSurah(surahNumber) {
+            try {
+                const response = await fetch(`${baseUrl}/surah/${surahNumber}?edition=ar.alafasy`);
+                const data = await response.json();
+                if (data.status === 'OK') {
+                    document.getElementById('quranIndexList').style.display = 'none';
+                    const surah = data.data;
+                    document.querySelector('#surahContent h2').textContent = surahNames[surahNumber - 1];
+                    document.querySelector('#ayahList').innerHTML = surah.ayahs.map(ayah => `<p>${ayah.text}</p>`).join('');
+                    document.getElementById('surahContent').style.display = 'block';
+                } else {
+                    alert('حدث خطأ أثناء جلب السورة.');
+                }
+            } catch (error) {
+                alert('حدث خطأ في الشبكة.');
+            }
+        }
+        function filterSurahs() {
+            const input = document.getElementById('searchBox').value.toUpperCase();
+            const buttons = document.querySelectorAll('.quran-button');
+            buttons.forEach(button => {
+                if (button.textContent.toUpperCase().includes(input)) {
+                    button.style.display = "";
+                } else {
+                    button.style.display = "none";
+                }
+            });
+        }
+        // تعديل دالة goBack لتوجيه المستخدم إلى index.html
+        function goBack() {
+            window.location.href = 'index.html';
+        }
+        // دالة showIndex لإظهار الفهرس
+        function showIndex() {
+            document.getElementById('surahContent').style.display = 'none';
+            document.getElementById('quranIndexList').style.display = 'flex';
+        }
+    </script>
+</body>
+</html>
+<style id="dynamicStyle"></style>
+
+<style>
+    .theme-selector {
+        position: fixed;
+        top: 50px;
+        right: 10px;
+        background: white;
+        padding: 10px;
+        border-radius: 16px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+        display: none;
+        flex-direction: column;
+        gap: 12px;
+        animation: fadeIn 0.3s ease-in-out;
+        z-index: 1000;
+        max-width: 240px;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .theme-option {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        cursor: pointer;
+        border: 2px solid #ccc;
+        transition: transform 0.2s;
+    }
+
+    .theme-option:hover {
+        transform: scale(1.1);
+    }
+
+    .theme-icon-btn {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background-color: #eee;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        font-size: 22px;
+        z-index: 1001;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.3s;
+    }
+
+    .theme-icon-btn:hover {
+        background-color: #ddd;
+    }
+</style>
+
+<script>
+    const themes = [...]; // ضع مصفوفة الثيمات هنا كما في الكود السابق
+
+    let currentTheme = parseInt(localStorage.getItem('themeIndex') || "0");
+
+    function applyTheme(theme) {
+        const css = `
+            body {
+                font-family: ${theme.font};
+                background-color: ${theme.background};
+                color: ${theme.text};
+                transition: all 0.4s ease-in-out;
+            }
+            .container, .box, .card {
+                background-color: ${theme.container};
+                color: ${theme.text};
+                border-radius: 16px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                padding: 16px;
+            }
+            h1, h2, h3, h4, h5, h6 {
+                color: ${theme.text};
+                font-weight: bold;
+            }
+            button, .btn {
+                background-color: ${theme.primary};
+                color: white;
+                border: none;
+                padding: 10px 16px;
+                border-radius: 8px;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            }
+            button:hover, .btn:hover {
+                background-color: ${theme.th};
+            }
+            th {
+                background-color: ${theme.th};
+                color: white;
+                padding: 8px;
+            }
+            td, th {
+                border: 1px solid ${theme.primary};
+            }
+            .reward-level {
+                background-color: ${theme.secondary};
+                color: ${theme.text};
+                padding: 8px;
+                border-radius: 12px;
+            }
+            .reward-level.unlocked {
+                background-color: ${theme.primary};
+                color: white;
+            }
+        `;
+        document.getElementById('dynamicStyle').textContent = css;
+    }
+
+    function showThemeSelector() {
+        const selector = document.getElementById('themeSelector');
+        selector.style.display = selector.style.display === "flex" ? "none" : "flex";
+    }
+
+    function selectTheme(index) {
+        currentTheme = index;
+        applyTheme(themes[currentTheme]);
+    }
+
+    function saveTheme() {
+        localStorage.setItem('themeIndex', currentTheme);
+        alert("تم حفظ التنسيق!");
+        document.getElementById('themeSelector').style.display = "none";
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const btnIcon = document.createElement("button");
+        btnIcon.className = "theme-icon-btn";
+        btnIcon.textContent = "🎨";
+        btnIcon.onclick = showThemeSelector;
+        document.body.appendChild(btnIcon);
+
+        const selector = document.createElement("div");
+        selector.className = "theme-selector";
+        selector.id = "themeSelector";
+
+        const icons = document.createElement("div");
+        icons.style.display = "flex";
+        icons.style.flexWrap = "wrap";
+        icons.style.gap = "10px";
+
+        themes.forEach((theme, i) => {
+            const icon = document.createElement("div");
+            icon.className = "theme-option";
+            icon.style.backgroundColor = theme.icon;
+            icon.onclick = () => selectTheme(i);
+            icons.appendChild(icon);
+        });
+
+        const saveBtn = document.createElement("button");
+        saveBtn.textContent = "تأكيد وحفظ";
+        saveBtn.className = "btn";
+        saveBtn.onclick = saveTheme;
+
+        selector.appendChild(icons);
+        selector.appendChild(saveBtn);
+        document.body.appendChild(selector);
+
+        applyTheme(themes[currentTheme]);
+    });
+</script>
