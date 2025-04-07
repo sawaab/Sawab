@@ -949,3 +949,287 @@ function applyTheme(theme) {
         applyTheme(themes[currentTheme]);
     });
 </script>
+</script>
+<!-- زر الختمة -->
+<button onclick="toggleKhatmaPopup()" class="khatma-btn">ختم القرآن</button>
+
+<!-- النافذة المنبثقة -->
+<div id="khatmaPopup" class="popup" style="display:none;">
+  <h3>رحلة ختم القرآن</h3>
+
+  <label>اختر طريقة القراءة:</label><br>
+  <select id="readingType" onchange="updateDuration()">
+    <option value="ayat">آيات</option>
+    <option value="hizb">أحزاب</option>
+    <option value="juz">أجزاء</option>
+  </select>
+  <input type="number" id="amount" value="10" min="1" onchange="updateDuration()">
+  <p id="durationText"></p>
+
+  <button onclick="startPlan()">ابدأ الخطة</button>
+  <hr>
+
+  <p id="currentDateText"></p>
+  <label>
+    <input type="checkbox" id="dailyCheck" onchange="markDayDone()"> ✔️ أنجزت قراءة اليوم
+    <span id="checkStar" style="display:none;">🌟</span>
+  </label>
+
+  <div class="progress-container">
+    <div class="progress-bar">
+      <div class="progress" id="progressBar"></div>
+    </div>
+    <p id="progressText" class="motivational-text"></p>
+  </div>
+
+  <div class="nav-buttons">
+    <button onclick="changeDay(-1)">اليوم السابق</button>
+    <button onclick="changeDay(1)">اليوم التالي</button>
+  </div>
+
+  <button onclick="resetPlan()" style="background-color:#e63946;">تصفير الخطة</button>
+  <button onclick="toggleKhatmaPopup()">إغلاق</button>
+</div>
+
+<!-- تنسيقات محفزة -->
+<style>
+body {
+  font-family: 'Tajawal', sans-serif;
+}
+
+.khatma-btn {
+  position: fixed;
+  bottom: 2px;
+  right: 20px;
+  background: linear-gradient(135deg, #, #);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.khatma-btn:hover {
+  transform: scale(1.05);
+}
+
+.popup {
+  position: fixed;
+  bottom: 80px;
+  right: 0px;
+  background: #;
+  border: 3px solid #;
+  border-radius: 20px;
+  padding: 20px;
+  width: 330px;
+  box-shadow: 0 0 0px #;
+  z-index: 9999;
+  animation: popupIn 0.3s ease;
+
+}
+
+@keyframes popupIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.popup h3 {
+  color: #;
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.popup select, .popup input {
+  padding: 6px;
+  margin: 5px;
+  border-radius: 8px;
+  border: 1px solid #aaa;
+  width: 90px;
+}
+.progress {
+  animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+  0% { filter: brightness(1); }
+  100% { filter: brightness(1.4); }
+}
+.popup button {
+  background-color: #;
+  color: white;
+  border: none;
+  padding: 7px 15px;
+  border-radius: 12px;
+  margin-top: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.progress-container {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.progress-bar {
+  background-color: #ddd;
+  border-radius: 15px;
+  overflow: hidden;
+  height: 18px;
+}
+
+.progress {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(to right, #00b09b, #96c93d, #f9d423, #ff4e50);
+  transition: width 0.6s ease-in-out;
+}
+
+.motivational-text {
+  font-weight: bold;
+  color: #444;
+  margin-top: 8px;
+  font-size: 15px;
+}
+
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin: 12px 0;
+}
+</style>
+
+<!-- سكريبت تحفيزي -->
+<script>
+let totalAyat = 6236;
+let currentDay = 0;
+
+function toggleKhatmaPopup() {
+  const popup = document.getElementById("khatmaPopup");
+  popup.style.display = popup.style.display === "none" ? "block" : "none";
+  updatePopup();
+}
+
+function startPlan() {
+  const type = document.getElementById("readingType").value;
+  const amount = parseInt(document.getElementById("amount").value);
+  let dailyAyat = 1;
+
+  if (type === "ayat") dailyAyat = amount;
+  if (type === "hizb") dailyAyat = amount * Math.floor(totalAyat / 60);
+  if (type === "juz") dailyAyat = amount * Math.floor(totalAyat / 30);
+
+  const startDate = new Date();
+  localStorage.setItem("khatmaStart", startDate.toISOString());
+  localStorage.setItem("dailyAyat", dailyAyat);
+  currentDay = 0;
+  alert("تم بدء الخطة! انطلق بقوة!");
+  updatePopup();
+}
+
+function updateDuration() {
+  const type = document.getElementById("readingType").value;
+  const amount = parseInt(document.getElementById("amount").value || 1);
+  let dailyAyat = 1;
+
+  if (type === "ayat") dailyAyat = amount;
+  if (type === "hizb") dailyAyat = amount * Math.floor(totalAyat / 60);
+  if (type === "juz") dailyAyat = amount * Math.floor(totalAyat / 30);
+
+  const daysNeeded = Math.ceil(totalAyat / dailyAyat);
+  document.getElementById("durationText").innerText = `مدة الختمة: ${daysNeeded} يوم`;
+}
+
+function changeDay(val) {
+  currentDay += val;
+  updatePopup();
+}
+
+function markDayDone() {
+  const key = `day-${currentDay}`;
+  const isChecked = document.getElementById("dailyCheck").checked;
+  localStorage.setItem(key, isChecked ? "1" : "0");
+
+  if (isChecked) {
+    document.getElementById("checkStar").style.display = "inline";
+    alert("رائع! تم إنجاز هذا اليوم! ⭐");
+  } else {
+    document.getElementById("checkStar").style.display = "none";
+  }
+
+  updateProgress();
+}
+
+function updatePopup() {
+  const start = localStorage.getItem("khatmaStart");
+  const dailyAyat = parseInt(localStorage.getItem("dailyAyat") || "10");
+  if (!start || !dailyAyat) return;
+
+  const startDate = new Date(start);
+  const today = new Date(startDate);
+  today.setDate(startDate.getDate() + currentDay);
+
+  const dateText = today.toLocaleDateString('ar-EG', {
+    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+  });
+  document.getElementById("currentDateText").innerText = `اليوم ${currentDay + 1} - ${dateText}`;
+
+  const key = `day-${currentDay}`;
+  const done = localStorage.getItem(key) === "1";
+  document.getElementById("dailyCheck").checked = done;
+  document.getElementById("checkStar").style.display = done ? "inline" : "none";
+
+  updateProgress();
+}
+
+function updateProgress() {
+  let doneAyat = 0;
+  const dailyAyat = parseInt(localStorage.getItem("dailyAyat") || "10");
+
+  for (let i = 0; i < 1000; i++) {
+    if (localStorage.getItem(`day-${i}`) === "1") {
+      doneAyat += dailyAyat;
+    }
+  }
+
+  const percent = Math.min(100, (doneAyat / totalAyat) * 100).toFixed(1);
+  document.getElementById("progressBar").style.width = percent + "%";
+
+  let message = "";
+  if (percent < 10) message = "بداية ملهمة! استمر.";
+  else if (percent < 30) message = "أنت رائع! تقدمك واضح.";
+  else if (percent < 60) message = "منتصف الطريق! قوة العزم.";
+  else if (percent < 90) message = "قريب من النهاية! واصل.";
+  else if (percent < 100) message = "همتك تصنع الفرق! كملها.";
+  else message = "ما شاء الله! ختمت القرآن!";
+
+  document.getElementById("progressText").innerText =
+    `تم إنجاز ${percent}% (${doneAyat} آية)\n${message}`;
+}
+
+function resetPlan() {
+  if (confirm("هل تريد فعلاً تصفير خطة ختم القرآن والبدء من جديد؟")) {
+    for (let i = 0; i < 1000; i++) {
+      localStorage.removeItem(`day-${i}`);
+    }
+    localStorage.removeItem("khatmaStart");
+    localStorage.removeItem("dailyAyat");
+    currentDay = 0;
+
+    // إعادة تعيين الواجهة
+    document.getElementById("progressBar").style.width = "0%";
+    document.getElementById("progressText").innerText = "ابدأ اليوم رحلتك في ختم القرآن الكريم.";
+    document.getElementById("dailyCheck").checked = false;
+    document.getElementById("checkStar").style.display = "none";
+    document.getElementById("currentDateText").innerText = "ابدأ أول يوم من رحلتك الإيمانية";
+    
+    alert("تم تصفير كل شيء! يمكنك الآن البدء من جديد.");
+  }
+}
+if (!localStorage.getItem("khatmaStart")) {
+  document.getElementById("progressText").innerText = "جاهز للختم؟ اختر مقدار قراءتك وابدأ.";
+  document.getElementById("currentDateText").innerText = " لم تبدأ بعد. اختر بداية .";
+}
+</script>
