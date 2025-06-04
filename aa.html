@@ -1,0 +1,503 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>القرآن الكريم</title>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+  .search-container {
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: center;
+    animation: fadeIn 0.7s ease;
+  }
+
+  #searchInput {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px 16px;
+    border-radius: 25px;
+    border: none;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.07);
+    font-size: 16px;
+    transition: 0.3s;
+    background-color: #ffffff;
+    color: #0f3b2f;
+  }
+
+  #searchInput:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px #0f5e41;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+h2#main-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+  color: #0f5e41;
+  margin-bottom: 10px;
+  position: relative;
+}
+h2#main-title::after {
+  content: "";
+  display: block;
+  height: 4px;
+  width: 60%;
+  margin: 10px auto 0;
+  border-radius: 2px;
+  background: linear-gradient(to right, #0f5e41, #fdfdf5);
+}
+
+</style>
+  <style>
+  
+    body {
+      font-family: 'Amiri', serif;
+      background-color: #fdfdf5;
+      padding: 20px;
+      margin: 0;
+    }
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .toggle-btn {
+      background-color: #0f5e41;
+      color: white;
+      border: none;
+      padding: 10px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+   
+  transition: opacity 0.3s ease;
+}
+    }
+    h2 {
+      font-size:900px;
+      text-align: center;
+      color: #0f5e41;
+      width: 24px;
+      height: 24px;
+      
+      
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background-color: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: scale(1.02);
+    }
+    .card .number {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background-color: #e0fff1;
+      color: #0f5e41;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      text-align: center;
+      line-height: 24px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .card .heart {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 18px;
+      color: #ccc;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .card .heart.favorited {
+      color: #ff5a5f;
+    }
+    .heart.animate {
+      animation: pulse 0.4s ease;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.4); }
+      100% { transform: scale(1); }
+    }
+    .card .title {
+      font-family: 'Amiri', serif;
+      font-family: 'Amiri', serif;
+      font-size: 20px;
+      text-align: center;
+
+      font-weight: bold;
+      margin-top: 10px;
+      color: #333;
+    }
+    .ayah {
+  display: block; /* بدلًا من flex */
+  background-color: white;
+  margin: 10px 0;
+  padding: 20px 20px 20px 70px; /* مساحة لليسار للأيقونات */
+  border-radius: 10px;
+  font-size: 22px;
+  line-height: 2;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: relative;
+  direction: rtl;
+  text-align: right;
+}
+    .ayah .eye-icon, .ayah .audio-icon {
+  position: absolute;
+  left: 40px;
+  top: 15px;
+  font-size: 1px;
+  cursor: pointer;
+}
+.ayah .eye-icon {
+  left: 10px;
+}
+    .ayah .eye-icon {
+      left: 10px;
+      top: 15px;
+      font-size: 20px;
+
+      left: 10px;
+    }
+    .ayah .audio-icon {
+      left: 50px;
+      top: 15px;
+      font-size: 20px;
+
+      left: 40px;
+    }
+    .ayah-text {
+  display: block;
+  direction: rtl;
+  text-align: right;
+      font-size: 20px;
+}
+  .reader-select {
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  background-color: #ffffff;
+  color: #0f5e41;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transition: border 0.3s ease;
+  cursor: pointer;
+}
+
+.reader-select:hover {
+  border-color: #0f5e41;
+}
+
+.reader-select:focus {
+  outline: none;
+  border-color: #0f5e41;
+  box-shadow: 0 0 0 3px rgba(15, 94, 65, 0.2);
+}
+  </style>
+  
+</head>
+<body>
+
+
+
+<div class="top-bar" style="justify-content: ;">
+  <div style="margin-left: 10px;">
+    <label for="readerSelect" style="font-size: 0px; margin-left: 0px;"></label>
+   <div id="readerSelectWrapper" style="display: none;">
+  <label for="readerSelect" style="font-size: 15px; margin-left: 100px;">القارئ:</label>
+     
+  <select id="readerSelect" class="reader-select"></select>
+</div>
+  </div>
+  
+  <button class="toggle-btn" id="toggleBtn">المفضلات</button>
+</div>
+
+<h2 id="main-title" style="
+      text-align: center;
+      font-size: 28px;
+      color: #0f5e41;
+      font-family: 'Amiri', serif;
+      margin-bottom: 20px;
+      
+      padding: 10px;
+      border-radius: 15px;
+      
+      display: inline-block;
+      width: 100%;
+    ">فهرس سور القرآن الكريم</h2>
+  <div class="search-container">
+  <input type="text" id="searchInput" placeholder="ابحث عن السورة..." oninput="filterCards()">
+</div>
+
+<div class="grid" id="suraContainer"></div>
+<div id="ayahContainer"></div>
+  
+<button id="inAyahBackBtn" onclick="goBackToList()" style="display: none; position: fixed; top: 20px; left: 20px; z-index: 1000; background-color: #3b6f52; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 14px;">العودة</button>
+<script>
+  function removeTashkeel(text) {
+    return text.replace(/[\u0610-\u061A\u064B-\u065F\u06D6-\u06ED]/g, "");
+  }
+
+  function filterCards() {
+    const input = document.getElementById('searchInput');
+    const filter = removeTashkeel(input.value.trim().toLowerCase());
+    const cards = document.querySelectorAll('.card');
+
+    cards.forEach(card => {
+      const text = removeTashkeel(card.textContent.trim().toLowerCase());
+      if (text.includes(filter)) {
+        card.style.display = 'flex';
+        card.style.animation = 'fadeIn 0.4s ease';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+</script>
+<script>
+  
+  const suraContainer = document.getElementById('suraContainer');
+  const ayahContainer = document.getElementById('ayahContainer');
+  const title = document.getElementById('main-title');
+  const toggleBtn = document.getElementById('toggleBtn');
+  const favKey = 'favSuras';
+  let favList = JSON.parse(localStorage.getItem(favKey)) || [];
+  let allSuras = [];
+  let showingFavs = false;
+
+  function getSelectedReader() {
+    return document.getElementById("readerSelect").value;
+  }
+
+  function toggleFav(name, icon) {
+    const index = favList.indexOf(name);
+    if (index > -1) {
+      favList.splice(index, 1);
+      icon.classList.remove("favorited");
+    } else {
+      favList.push(name);
+      icon.classList.add("favorited");
+      icon.classList.add("animate");
+      setTimeout(() => icon.classList.remove("animate"), 400);
+    }
+    localStorage.setItem(favKey, JSON.stringify(favList));
+  }
+
+  function renderSuras(suras) {
+    suraContainer.innerHTML = '';
+    suras.forEach(sura => {
+      const card = document.createElement('div');
+      card.className = 'card';
+
+      const number = document.createElement('div');
+      number.className = 'number';
+      number.textContent = sura.number;
+
+      const heart = document.createElement('i');
+      heart.className = 'fas fa-heart heart';
+      if (favList.includes(sura.name)) heart.classList.add("favorited");
+      heart.onclick = (e) => {
+        e.stopPropagation();
+        toggleFav(sura.name, heart);
+      };
+
+      const name = document.createElement('div');
+      name.className = 'title';
+      name.textContent = sura.name;
+
+      card.appendChild(number);
+      card.appendChild(heart);
+      card.appendChild(name);
+
+      card.onclick = () => {
+        document.getElementById("toggleBtn").style.display = "none";
+        document.getElementById("readerSelectWrapper").style.display = "block";
+        document.getElementById("readerSelectWrapper").style.display = "block";
+        ayahContainer.innerHTML = '';
+        sessionStorage.setItem('suraScrollY', window.scrollY);
+suraContainer.scrollTop = 0;
+        fetch(`https://api.alquran.cloud/v1/surah/${sura.number}`)
+          .then(res => res.json())
+          .then(result => {
+            suraContainer.style.display = 'none';
+            toggleBtn.style.display = 'none';
+            title.textContent = result.data.name;
+            ayahContainer.innerHTML = '';
+            result.data.ayahs.forEach(ayah => {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+              
+                const ayahDiv = document.createElement('div');
+                ayahDiv.className = 'ayah';
+
+                const textSpan = document.createElement('span');
+                textSpan.className = 'ayah-text';
+                textSpan.innerHTML = `﴿${ayah.numberInSurah}﴾ ${ayah.text}`;
+
+                const iconsDiv = document.createElement('div');
+                iconsDiv.style.display = "flex";
+                iconsDiv.style.gap = "12px";
+                iconsDiv.style.marginTop = "6px";
+
+                const eyeIcon = document.createElement('i');
+                eyeIcon.className = 'fas fa-eye eye-icon';
+                eyeIcon.onclick = () => {
+                  textSpan.style.visibility = textSpan.style.visibility === 'hidden' ? 'visible' : 'hidden';
+                };
+
+                const audioIcon = document.createElement('i');
+                audioIcon.className = 'fas fa-volume-up audio-icon';
+                audioIcon.onclick = () => {
+                  const reader = getSelectedReader();
+                  const ayahNumber = ayah.number;
+                  fetch(`https://api.alquran.cloud/v1/ayah/${ayahNumber}/${reader}`)
+                    .then(res => res.json())
+                    .then(data => {
+                      if (data.code === 200 && data.data.audio) {
+                        const audio = new Audio(data.data.audio);
+                        audio.play();
+                      } else {
+                        alert("عذرًا، لا يوجد تسجيل صوتي متاح لهذه الآية مع القارئ المحدد.");
+                      }
+                    })
+                    .catch(() => {
+                      alert("حدث خطأ أثناء تحميل الصوت. تأكد من اتصالك بالإنترنت أو جرّب قارئًا آخر.");
+                    });
+                };
+
+                iconsDiv.appendChild(eyeIcon);
+                iconsDiv.appendChild(audioIcon);
+                ayahDiv.appendChild(textSpan);
+                ayahDiv.appendChild(iconsDiv);
+                ayahContainer.appendChild(ayahDiv);
+
+            });
+            document.getElementById("inAyahBackBtn").style.display = "block";
+          });
+      };
+
+      suraContainer.appendChild(card);
+    });
+  }
+toggleBtn.onclick = () => {
+      showingFavs = !showingFavs;
+      if (showingFavs) {
+        const favSuras = allSuras.filter(sura => favList.includes(sura.name));
+        renderSuras(favSuras);
+        toggleBtn.textContent = 'العودة إلى الفهرس';
+        title.textContent = 'المفضلات';
+      } else {
+        renderSuras(allSuras);
+        toggleBtn.textContent = 'المفضلات';
+        title.textContent = 'فهرس سور القرآن الكريم';
+      }
+    if (showingFavs) {
+      const favSuras = allSuras.filter(sura => favList.includes(sura.name));
+      renderSuras(favSuras);
+      toggleBtn.textContent = 'العودة';
+      title.textContent = 'المفضلات';
+    } else {
+      renderSuras(allSuras);
+      toggleBtn.textContent = 'المفضلات';
+      title.textContent = 'فهرس سور القرآن الكريم';
+    }
+  };
+
+  fetch('https://api.alquran.cloud/v1/surah')
+    .then(res => res.json())
+    .then(data => {
+      allSuras = data.data;
+      renderSuras(allSuras);
+    });
+
+  function goBackToList() {
+    document.getElementById("readerSelectWrapper").style.display = "none";
+    document.getElementById("toggleBtn").style.display = "inline-block";
+    document.getElementById("readerSelectWrapper").style.display = "none";
+    const savedScroll = sessionStorage.getItem('suraScrollY');
+if (savedScroll !== null) {
+  window.scrollTo({ top: parseInt(savedScroll), behavior: 'instant' });
+}
+    ayahContainer.innerHTML = '';
+    title.textContent = 'فهرس سور القرآن الكريم';
+    suraContainer.style.display = 'grid';
+    toggleBtn.style.display = 'inline-block';
+    document.getElementById("inAyahBackBtn").style.display = "none";
+    if (showingFavs) {
+      const favSuras = allSuras.filter(sura => favList.includes(sura.name));
+      renderSuras(favSuras);
+    } else {
+      renderSuras(allSuras);
+    }
+  }
+</script>
+
+
+  <script>
+    const select = document.getElementById("readerSelect");
+    select.innerHTML = "";
+    let option;
+    option = document.createElement("option"); option.value = "ar.abdulsamad"; option.textContent = "عبد الباسط عبد الصمد"; select.appendChild(option);
+    option = document.createElement("option"); option.value = "ar.ahmedajamy"; option.textContent = "أحمد العجمي"; select.appendChild(option);
+    option = document.createElement("option"); option.value = "ar.hudhaify"; option.textContent = "علي الحذيفي"; select.appendChild(option);
+    option = document.createElement("option"); option.value = "ar.husary"; option.textContent = "محمود الحصري"; select.appendChild(option);
+    option = document.createElement("option"); option.value = "ar.idrees_abkar"; option.textContent = "إدريس أبكر"; select.appendChild(option);
+    option = document.createElement("option"); option.value = "ar.khaalidjalil"; option.textContent = "خالد الجليل"; select.appendChild(option);
+    option = document.createElement("option"); option.value = "ar.mahermuaiqly"; option.textContent = "ماهر المعيقلي"; select.appendChild(option);
+    option = document.createElement("option"); option.value = "ar.minshawi"; option.textContent = "محمد صديق المنشاوي"; select.appendChild(option);
+    option = document.createElement("option"); option.value = "ar.mishari"; option.textContent = "مشاري راشد العفاسي"; select.appendChild(option);
+    option = document.createElement("option"); option.value = "ar.muhammadayyoub"; option.textContent = "محمد أيوب"; select.appendChild(option);
+    option = document.createElement("option"); option.value = "ar.muhammadjibreel"; option.textContent = "محمد جبريل"; select.appendChild(option);
+    option = document.createElement("option"); option.value = "ar.nasser_alqatami"; option.textContent = "ناصر القطامي"; select.appendChild(option);
+    option = document.createElement("option"); option.value = "ar.sahl_yassin"; option.textContent = "سهل ياسين"; select.appendChild(option);
+    option = document.createElement("option"); option.value = "ar.shaatree"; option.textContent = "أبو بكر الشاطري"; select.appendChild(option);
+    option = document.createElement("option"); option.value = "ar.sudais"; option.textContent = "عبد الرحمن السديس"; select.appendChild(option);
+    option = document.createElement("option"); option.value = "ar.yasseraldossari"; option.textContent = "ياسر الدوسري"; select.appendChild(option);
+    option = document.createElement("option"); option.value = "ar.alafasy"; option.textContent = "مشاري العفاسي (نسخة أخرى)"; select.appendChild(option);
+    option = document.createElement("option"); option.value = "ar.abubakrshatree"; option.textContent = "أبو بكر الشاطري (نسخة ثانية)"; select.appendChild(option);
+    option = document.createElement("option"); option.value = "ar.mahmoudali"; option.textContent = "محمود علي البنا"; select.appendChild(option);
+    option = document.createElement("option"); option.value = "ar.abdulrahmanalsaad"; option.textContent = "عبدالرحمن السعدي"; select.appendChild(option);
+    option = document.createElement("option"); option.value = "ar.saoodshuraym"; option.textContent = "سعود الشريم"; select.appendChild(option);
+    option = document.createElement("option"); option.value = "ar.adelrayyan"; option.textContent = "عادل ريان"; select.appendChild(option);
+    option = document.createElement("option"); option.value = "ar.abdullahkhayat"; option.textContent = "عبدالله خياط"; select.appendChild(option);
+    option = document.createElement("option"); option.value = "ar.muhannadaltikrit"; option.textContent = "مهند التكريتي"; select.appendChild(option);
+    option = document.createElement("option"); option.value = "ar.yousufalqaradawi"; option.textContent = "يوسف القرضاوي"; select.appendChild(option);
+    option = document.createElement("option"); option.value = "ar.alihajjaj"; option.textContent = "علي الحجاج"; select.appendChild(option);
+    option = document.createElement("option"); option.value = "ar.abdullahbasfar"; option.textContent = "عبدالله بصفر"; select.appendChild(option);
+    option = document.createElement("option"); option.value = "ar.saeedalghamdi"; option.textContent = "سعيد الغامدي"; select.appendChild(option);
+    option = document.createElement("option"); option.value = "ar.faresabbad"; option.textContent = "فارس عباد"; select.appendChild(option);
+    option = document.createElement("option"); option.value = "ar.bandarbalila"; option.textContent = "بندر بليلة"; select.appendChild(option);
+    option = document.createElement("option"); option.value = "ar.yahyaalghamdi"; option.textContent = "يحيى الغامدي"; select.appendChild(option);
+    option = document.createElement("option"); option.value = "ar.ahmadnafees"; option.textContent = "أحمد نفيس"; select.appendChild(option);
+    option = document.createElement("option"); option.value = "ar.waqasalbukhari"; option.textContent = "وقاص البخاري"; select.appendChild(option);
+    option = document.createElement("option"); option.value = "ar.muhammadkarim"; option.textContent = "محمد كريم راوي"; select.appendChild(option);
+    option = document.createElement("option"); option.value = "ar.anaskhali"; option.textContent = "أنس خالي"; select.appendChild(option);
+    option = document.createElement("option"); option.value = "ar.muratal"; option.textContent = "مرتل (بطيء)"; select.appendChild(option);
+    option = document.createElement("option"); option.value = "ar.mujawwad"; option.textContent = "مجود (ترتيل)"; select.appendChild(option);
+    option = document.createElement("option"); option.value = "ar.kurdi"; option.textContent = "القارئ الكردي"; select.appendChild(option);
+    option = document.createElement("option"); option.value = "ar.hanirifaie"; option.textContent = "هاني الرفاعي"; select.appendChild(option);
+  </script>
+</body>
+</html>
