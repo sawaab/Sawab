@@ -2,297 +2,220 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>مشغل القرآن الكريم</title>
-  <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>مشغل القرآن وتطبيق المهام</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <style>
     body {
-      font-family: 'Amiri', serif;
+      font-family: 'Cairo', sans-serif;
       background-color: #fdfdf5;
-      margin: 0;
-      padding: 30px 15px;
-      text-align: center;
-    }
-
-    .container {
-      background-color: #fdfdf5;
-      max-width: 600px;
-      margin: auto;
-      padding: 30px;
-      border-radius: 20px;
-      
-    }
-
-    h1 {
       color: #0f5e41;
-      font-size: 28px;
-      margin-bottom: 25px;
     }
 
-    label {
-      font-size: 18px;
-      color: #0f5e41;
-      margin-top: 15px;
-      display: block;
-      font-weight: bold;
+    select, button, input {
+      color: #0f5e41 !important;
     }
 
-    select {
-      font-family: inherit;
-      font-size: 16px;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 12px;
-      margin: 12px 0;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-      width: 80%;
+    #libraryPage,
+    #taskPage > div:first-child {
+      background-color: #ffffff !important;
+      border-color: #cccccc !important;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
-    select:focus {
-      outline: none;
-      box-shadow: 0 0 0 3px #0f5e41;
+    h1, label, #audio-title, #audio-reciter, #audio-time {
+      color: #0f5e41 !important;
     }
 
-    .audio-controls {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 20px;
-      gap: 15px;
-      flex-wrap: wrap;
+    #audio-progress {
+      background-color: #ddd !important;
+      accent-color: #0f5e41 !important;
     }
 
-    .audio-controls button {
-      background-color: transparent;
-      border: none;
-      font-size: 22px;
-      cursor: pointer;
-      color: #0f5e41;
-      transition: transform 0.2s;
-    }
-
-    .audio-controls button:hover {
-      transform: scale(1.3);
-      color: #0c4a33;
-    }
-
-    .custom-audio {
-      width: 100%;
-      margin-top: 10px;
-    }
-
-    .progress-bar {
-      width: 100%;
-      height: 10px;
-      background-color: #ddd;
-      border-radius: 5px;
-      margin-top: 10px;
-      cursor: pointer;
-      position: relative;
-    }
-
-    .progress {
-      height: 100%;
-      width: 0;
-      background-color: #0f5e41;
-      border-radius: 5px;
-      position: absolute;
-      top: 0;
-      left: 0;
-    }
-
-    .error-message {
-      color: red;
-      font-size: 14px;
-      margin-top: 10px;
-    }
-
-    .speed-indicator {
-      font-size: 14px;
-      color: #0f5e41;
-      margin-top: 5px;
+    #libraryPage button {
+      color: white !important;
     }
   </style>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
 </head>
-<body>
-  <a href="javascript:history.back()" style="position: absolute; top: 20px; left: 320px; font-size: 22px; color: #0f5e41; text-decoration: none;">
-  <i class="fas fa-arrow-right"></i>
-</a>
+<body class="min-h-screen flex flex-col items-center justify-center p-4 space-y-6">
 
-  <div class="container">
-    <h1>مشغل القرآن الكريم</h1>
+  <!-- صفحة اختيار القارئ والسورة -->
+  <div id="libraryPage" class="w-full max-w-md bg-white border border-gray-300 rounded-3xl p-6 space-y-4 shadow">
+    <h1 class="text-2xl text-center text-green-900">مشغل القرآن الكريم</h1>
+    <label for="qariSelect" class="text-green-900">اختر القارئ:</label>
+    <select id="qariSelect" class="w-full rounded p-2 border text-black"></select>
 
-    <label for="qariSelect">اختر القارئ:</label>
-    <select id="qariSelect"></select>
+    <label for="suraSelect" class="text-green-900">اختر السورة:</label>
+    <select id="suraSelect" class="w-full rounded p-2 border text-black"></select>
 
-    <label for="suraSelect">اختر السورة:</label>
-    <select id="suraSelect"></select>
+    <button onclick="saveSelection()" class="bg-green-800 text-white w-full py-2 rounded">تأكيد</button>
+    <p id="errorMessage" class="text-red-500 text-sm text-center mt-2"></p>
+  </div>
 
-    <button onclick="playSura()" style="
-      font-size: 16px;
-      padding: 10px 20px;
-      background-color: #0f5e41;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      margin-top: 10px;
-      cursor: pointer;
-    ">تشغيل السورة</button>
-
-    <div class="audio-section">
-      <div class="audio-controls">
-        <button onclick="togglePlay()"><i id="playPauseIcon" class="fas fa-play"></i></button>
-        <button onclick="decreaseSpeed()"><i class="fas fa-backward"></i></button>
-        <button onclick="increaseSpeed()"><i class="fas fa-forward"></i></button>
-        <button onclick="downloadCurrent()"><i class="fas fa-download"></i></button>
+  <!-- صفحة المشغل -->
+  <div id="taskPage" class="hidden w-full max-w-md space-y-6">
+    <div class="bg-white border border-gray-300 rounded-3xl py-6 px-6 flex flex-col space-y-6 shadow">
+      <p class="text-2xl text-center text-green-900" id="audio-title">بِسْمِ الرَّحْمَنِ الرَّحِيمِ</p>
+      <input type="range" min="0" max="100" value="0" id="audio-progress" class="w-full h-1 rounded-full bg-gray-300 accent-green-800" />
+      <div class="flex items-center justify-between text-xl">
+        <button onclick="toggleMute()" id="mute-btn"><i class="fas fa-volume-up"></i></button>
+        <div class="flex space-x-6 rtl:space-x-reverse">
+          <button onclick="prevSura()"><i class="fas fa-step-backward"></i></button>
+          <button onclick="togglePlay()" id="play-btn" class="text-[2.5rem]"><i class="fas fa-play"></i></button>
+          <button onclick="nextSura()"><i class="fas fa-step-forward"></i></button>
+        </div>
+        <p id="audio-reciter" class="text-green-900">--</p>
       </div>
-      <div class="speed-indicator" id="speedDisplay">السرعة: 1x</div>
-      <audio id="audioPlayer" class="custom-audio"></audio>
-      <div class="progress-bar" onclick="seek(event)">
-        <div id="progress" class="progress"></div>
+      <p class="text-green-700 text-center text-sm font-normal" id="audio-time">--</p>
+      <audio id="audioPlayer"></audio>
+
+      <!-- أيقونة التنزيل -->
+      <div class="text-center mt-2">
+        <a id="downloadBtn" href="#" download class="inline-block" title="تنزيل السورة">
+          <i class="fas fa-download text-2xl"></i>
+        </a>
       </div>
     </div>
 
-    <div id="errorMessage" class="error-message"></div>
-
-    
+    <div class="text-center">
+      <button onclick="showLibrary()" class="text-green-800 text-2xl mt-4"><i class="fas fa-plus"></i> تغيير السورة</button>
+    </div>
   </div>
 
   <script>
     const qariSelect = document.getElementById("qariSelect");
     const suraSelect = document.getElementById("suraSelect");
+    const audioTitle = document.getElementById("audio-title");
+    const audioReciter = document.getElementById("audio-reciter");
+    const audioTime = document.getElementById("audio-time");
     const audioPlayer = document.getElementById("audioPlayer");
+    const audioProgress = document.getElementById("audio-progress");
+    const playBtn = document.getElementById("play-btn");
     const errorMessage = document.getElementById("errorMessage");
-    const progress = document.getElementById("progress");
-    const playPauseIcon = document.getElementById("playPauseIcon");
-    const speedDisplay = document.getElementById("speedDisplay");
 
-    let currentAudioUrl = '';
-    let currentSpeed = 1;
+    const libraryPage = document.getElementById("libraryPage");
+    const taskPage = document.getElementById("taskPage");
+    const downloadBtn = document.getElementById("downloadBtn");
 
-    async function fetchQaris() {
+    let reciters = [];
+    let currentSura = 1;
+    let currentQariId = null;
+    let isPlaying = false;
+
+    async function fetchData() {
       try {
-        const response = await fetch("https://mp3quran.net/api/v3/reciters");
-        const data = await response.json();
-        data.reciters.forEach(qari => {
+        const reciterRes = await fetch("https://mp3quran.net/api/v3/reciters");
+        const reciterData = await reciterRes.json();
+        reciters = reciterData.reciters;
+        reciters.forEach(r => {
           const option = document.createElement("option");
-          option.value = qari.id;
-          option.textContent = qari.name;
+          option.value = r.id;
+          option.textContent = r.name;
           qariSelect.appendChild(option);
         });
-      } catch (error) {
-        errorMessage.textContent = "خطأ في جلب قائمة القراء";
-      }
-    }
 
-    async function fetchSuras() {
-      try {
-        const response = await fetch("https://api.quran.com/api/v4/chapters");
-        const data = await response.json();
-        data.chapters.forEach(sura => {
+        const suraRes = await fetch("https://api.quran.com/api/v4/chapters");
+        const suraData = await suraRes.json();
+        suraData.chapters.forEach(s => {
           const option = document.createElement("option");
-          option.value = sura.id;
-          option.textContent = `${sura.id} - ${sura.name_arabic}`;
+          option.value = s.id;
+          option.textContent = `${s.id} - ${s.name_arabic}`;
           suraSelect.appendChild(option);
         });
-      } catch (error) {
-        errorMessage.textContent = "خطأ في جلب قائمة السور";
+      } catch (err) {
+        errorMessage.textContent = "تعذر تحميل القراء أو السور.";
       }
     }
 
-    async function playSura() {
-      const qariId = qariSelect.value;
-      const suraId = suraSelect.value;
-      if (!qariId || !suraId) {
-        errorMessage.textContent = "الرجاء اختيار القارئ والسورة";
+    async function saveSelection() {
+      currentQariId = qariSelect.value;
+      currentSura = parseInt(suraSelect.value);
+
+      const reciter = reciters.find(r => r.id == currentQariId);
+      if (!reciter || reciter.moshaf.length === 0) {
+        errorMessage.textContent = "هذا القارئ لا يحتوي على تسجيلات.";
         return;
       }
 
-      try {
-        const response = await fetch(`https://mp3quran.net/api/v3/reciters?reciter=${qariId}`);
-        const data = await response.json();
-        const reciter = data.reciters.find(r => r.id == qariId);
+      const suraNumber = String(currentSura).padStart(3, '0');
+      const audioUrl = `${reciter.moshaf[0].server}${suraNumber}.mp3`;
 
-        if (reciter && reciter.moshaf.length > 0) {
-          const suraNumber = String(suraId).padStart(3, '0');
-          const baseUrl = reciter.moshaf[0].server;
-          currentAudioUrl = `${baseUrl}${suraNumber}.mp3`;
+      audioTitle.textContent = suraSelect.options[suraSelect.selectedIndex].text;
+      audioReciter.textContent = reciter.name;
+      audioPlayer.src = audioUrl;
+      downloadBtn.href = audioUrl;
+      downloadBtn.setAttribute("download", `${reciter.name} - ${suraSelect.options[suraSelect.selectedIndex].text}.mp3`);
+      audioPlayer.play();
+      isPlaying = true;
+      playBtn.innerHTML = '<i class="fas fa-pause"></i>';
 
-          audioPlayer.src = currentAudioUrl;
-          audioPlayer.play();
-          playPauseIcon.className = 'fas fa-pause';
-        } else {
-          errorMessage.textContent = "لا يوجد تسجيل متاح لهذه السورة.";
-        }
-      } catch (error) {
-        errorMessage.textContent = "حدث خطأ أثناء التشغيل.";
-      }
+      libraryPage.classList.add("hidden");
+      taskPage.classList.remove("hidden");
     }
 
     function togglePlay() {
       if (audioPlayer.paused) {
         audioPlayer.play();
-        playPauseIcon.className = 'fas fa-pause';
+        playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+        isPlaying = true;
       } else {
         audioPlayer.pause();
-        playPauseIcon.className = 'fas fa-play';
+        playBtn.innerHTML = '<i class="fas fa-play"></i>';
+        isPlaying = false;
       }
     }
 
-    function increaseSpeed() {
-      if (currentSpeed < 2) {
-        currentSpeed += 0.25;
-        audioPlayer.playbackRate = currentSpeed;
-        updateSpeedDisplay();
+    function toggleMute() {
+      audioPlayer.muted = !audioPlayer.muted;
+      document.getElementById("mute-btn").innerHTML = audioPlayer.muted
+        ? '<i class="fas fa-volume-mute"></i>'
+        : '<i class="fas fa-volume-up"></i>';
+    }
+
+    function showLibrary() {
+      audioPlayer.pause();
+      libraryPage.classList.remove("hidden");
+      taskPage.classList.add("hidden");
+    }
+
+    function prevSura() {
+      if (currentSura > 1) {
+        suraSelect.value = currentSura - 1;
+        saveSelection();
       }
     }
 
-    function decreaseSpeed() {
-      if (currentSpeed > 0.5) {
-        currentSpeed -= 0.25;
-        audioPlayer.playbackRate = currentSpeed;
-        updateSpeedDisplay();
+    function nextSura() {
+      if (currentSura < 114) {
+        suraSelect.value = currentSura + 1;
+        saveSelection();
       }
     }
 
-    function updateSpeedDisplay() {
-      speedDisplay.textContent = `السرعة: ${currentSpeed.toFixed(2)}x`;
-    }
+    audioPlayer.addEventListener("timeupdate", () => {
+      const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+      audioProgress.value = progress || 0;
 
-    function downloadCurrent() {
-      if (currentAudioUrl) {
-        const a = document.createElement('a');
-        a.href = currentAudioUrl;
-        a.download = "sura.mp3";
-        a.style.display = 'none';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-      }
-    }
-
-    function seek(event) {
-      const rect = event.currentTarget.getBoundingClientRect();
-      const percent = (event.clientX - rect.left) / rect.width;
-      audioPlayer.currentTime = percent * audioPlayer.duration;
-    }
-
-    audioPlayer.addEventListener('timeupdate', () => {
-      const percent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
-      progress.style.width = percent + '%';
+      const format = t => {
+        const m = Math.floor(t / 60);
+        const s = Math.floor(t % 60).toString().padStart(2, '0');
+        return `${m}:${s}`;
+      };
+      audioTime.textContent = `${format(audioPlayer.currentTime)} / ${format(audioPlayer.duration || 0)}`;
     });
 
-    function goBack() {
-      window.location.href = "index.html";
-    }
+    audioProgress.addEventListener("input", () => {
+      if (audioPlayer.duration) {
+        audioPlayer.currentTime = (audioProgress.value / 100) * audioPlayer.duration;
+      }
+    });
 
-    fetchQaris();
-    fetchSuras();
+    document.addEventListener("DOMContentLoaded", () => {
+      fetchData();
+    });
   </script>
-
 </body>
 </html>
