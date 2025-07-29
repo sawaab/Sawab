@@ -1,186 +1,223 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-  <head>
-    <meta name="ppck-ver" content="73ddf353e58fb987b12323a1628f2889" />
-  </head>
-<head>
-
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7212805850308684"
-     crossorigin="anonymous"></script>
-  <meta charset="UTF-8">
-  <title>ثواب</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700&display=swap" rel="stylesheet">
+<!DOCTYPE html>  <html lang="ar" dir="rtl">  
+<head>  
+  <meta charset="UTF-8">  
+  <title>ثواب</title>  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700&display=swap" rel="stylesheet">  
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: 'Cairo', sans-serif;
-      background-color: #fcfef7;
-      color: #0f3b2f;
-      line-height: 1.6;
-    }
-
-    .top-logo {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 16px;
-      padding: 30px 0 10px;
-      background: linear-gradient(to bottom, #e9f8f0, #fcfef7);
-      
-    }
-
-    .logo {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      object-fit: cover;
-      box-shadow: 0 4px 12px rgba(1000000, 100000, 10, 0.005);
-      position: relative;
-    bottom:-40px;
-    
-    }
-
-    .logo-text {
-    font-size: 40px;
-    font-weight: bold;
-    color: black;
-    text-shadow: px 2px 4px rgba(0, 0, 0, 0.2);
-    font-family: 'Cairo', sans-serif;
-    position: relative;
-    bottom:-40px;
-    right: -25px;
-    /* 🔹 رفع النص للأعلى */
+#info-icon {
+  position: fixed;
+  bottom: 15px;
+  left: 15px;
+  background-color: #0f5e41;
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 18px;
+  text-align: center;
+  line-height: 30px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  z-index: 9999;
+  transition: background-color 0.3s;
+}
+#info-icon:hover {
+  background-color: #0f5e41;
 }
 
-    .app-container {
-      max-width: 700px;
-      margin: auto;
-      padding: 20px;
-    }
+#creator-name {
+  position: fixed;
+  bottom: 15px;
+  left: 55px;
+  background-color: #fcfef7;
+  color: #333;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  display: none;
+  z-index: 9999;
+  font-family: 'Arial', sans-serif;
+}
+</style>
 
-    .header {
-      text-align: center;
-      margin: 20px 0 30px;
-    }
+<div id="info-icon" onclick="toggleCreator(event)">i</div>
+<div id="creator-name">اعداد: ريهام عثمان الأحمدي</div>
 
-    .header h1 {
-      font-size: 28px;
-      color: #0f5e41;
-      margin-bottom: 10px;
-      position: relative;
-    }
+<script>
+function toggleCreator(event) {
+  event.stopPropagation(); // يمنع إغلاقها مباشرة عند الضغط
+  var el = document.getElementById('creator-name');
+  el.style.display = (el.style.display === 'none' || el.style.display === '') ? 'block' : 'none';
+}
 
-    .header::after {
-      content: "";
-      width: 60px;
-      height: 4px;
-      background-color: #0f5e41;
-      display: block;
-      margin: 0 auto;
-      border-radius: 2px;
-    }
+// عند الضغط في أي مكان خارج الزر أو الشريط يتم إخفاؤه
+document.addEventListener('click', function(e) {
+  const creator = document.getElementById('creator-name');
+  const icon = document.getElementById('info-icon');
 
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
-
-    .card {
-      background-color: #ffffff;
-      border-radius: 18px;
-      padding: 16px 20px;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
-      text-decoration: none;
-      color: inherit;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: 0.3s ease;
-    }
-
-    .card:hover {
-      transform: scale(1.02);
-      background-color: #f5fff9;
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
-    }
-
-    .card-text {
-      font-size: 20px;
-      font-weight: 600;
-      color:#0f5e41;
-    }
-
-    .card-number {
-      background-color: #d6f5e6;
-      color: #0f5e41;
-      border-radius: 50%;
-      width: 34px;
-      height: 34px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 15px;
-      font-weight: bold;
-      box-shadow: 0 0 0 3px #f0fbf5;
-    }
-  </style>
-  <script type="text/javascript">
-    aclib.runAutoTag({
-        zoneId: 'ypf2fv6afi',
-    });
+  if (e.target !== creator && e.target !== icon) {
+    creator.style.display = 'none';
+  }
+});
 </script>
-<meta name="ppck-ver" content="73ddf353e58fb987b12323a1628f2889" />
-</head>
-<body>
-  <script type="text/javascript">
-    aclib.runAutoTag({
-        zoneId: 'ypf2fv6afi',
-    });
-</script>
+  <style>  
+    * {  
+      box-sizing: border-box;  
+      margin: 0;  
+      padding: 0;  
+    }  body {  
+  font-family: 'Cairo', sans-serif;  
+  background-color: #fcfef7;  
+  color: #0f3b2f;  
+  line-height: 1.6;  
+}  
 
-  <div class="top-logo">
-    <img src="ppoppo.png" alt="شعار" class="logo">
-    <span class="logo-text">ثواب</span>
-  </div>
+.top-logo {  
+  display: flex;  
+  align-items: center;  
+  justify-content: center;  
+  gap: 16px;  
+  padding: 30px 0 10px;  
+  background: linear-gradient(to bottom, #e9f8f0, #fcfef7);  
+    
+}  
 
-  <div class="app-container">
-    <div class="header">
-      <h1>القائمة الرئيسية</h1>
-    </div>
+.logo {  
+  width: 100px;  
+  height: 100px;  
+  border-radius: 50%;  
+  object-fit: cover;  
+  box-shadow: 0 4px 12px rgba(1000000, 100000, 10, 0.005);  
+  position: relative;  
+bottom:-40px;  
+  
+}  
 
-    <div class="grid">
-      <a class="card" href="صح.html"><div class="card-text">جدول الصلوات</div><div class="card-number">1</div></a>
-      
-      <a class="card" href="aa.html"><div class="card-text">القرآن الكريم</div><div class="card-number">2</div></a>
-      
-      <a class="card" href="مكتبة.html"><div class="card-text">القرآن الصوتي</div><div class="card-number">3</div></a>
-      <a class="card" href="808.html"><div class="card-text">مواقيت الصلاة</div><div class="card-number">4</div></a>
-       <a class="card" href="اخيرا.html"><div class="card-text">الأذكار</div><div class="card-number">5</div></a>
-      <a class="card" href="سبحة.html"><div class="card-text">السبحة</div><div class="card-number">6</div></a>
-      
-      <a class="card" href="احاديث.html"><div class="card-text">الأحاديث</div><div class="card-number">7</div></a>
-      <a class="card" href="ادعية.html"><div class="card-text">الدعاء</div><div class="card-number">8</div></a>
-      
-      
-      
-      <a class="card" href="تجويد.html"><div class="card-text">التجويد</div><div class="card-number">9</div></a>
-      
-      
-      
-      
-      
-      
-      <a class="card" href="اسماء.html"><div class="card-text">أسماء الله الحسنى</div><div class="card-number">10</div></a>
-      
-      
-    </div>
-  </div>
-</body>
-</html>
+.logo-text {  
+font-size: 40px;  
+font-weight: bold;  
+color: black;  
+text-shadow: px 2px 4px rgba(0, 0, 0, 0.2);  
+font-family: 'Cairo', sans-serif;  
+position: relative;  
+bottom:-40px;  
+right: -25px;  
+/* 🔹 رفع النص للأعلى */
+
+}
+
+.app-container {  
+  max-width: 700px;  
+  margin: auto;  
+  padding: 20px;  
+}  
+
+.header {  
+  text-align: center;  
+  margin: 20px 0 30px;  
+}  
+
+.header h1 {  
+  font-size: 28px;  
+  color: #0f5e41;  
+  margin-bottom: 10px;  
+  position: relative;  
+}  
+
+.header::after {  
+  content: "";  
+  width: 60px;  
+  height: 4px;  
+  background-color: #0f5e41;  
+  display: block;  
+  margin: 0 auto;  
+  border-radius: 2px;  
+}  
+
+.grid {  
+  display: grid;  
+  grid-template-columns: 1fr;  
+  gap: 16px;  
+}  
+
+.card {  
+  background-color: #ffffff;  
+  border-radius: 18px;  
+  padding: 16px 20px;  
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);  
+  text-decoration: none;  
+  color: inherit;  
+  display: flex;  
+  justify-content: space-between;  
+  align-items: center;  
+  transition: 0.3s ease;  
+}  
+
+.card:hover {  
+  transform: scale(1.02);  
+  background-color: #f5fff9;  
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);  
+}  
+
+.card-text {  
+  font-size: 20px;  
+  font-weight: 600;  
+  color:#0f5e41;  
+}  
+
+.card-number {  
+  background-color: #d6f5e6;  
+  color: #0f5e41;  
+  border-radius: 50%;  
+  width: 34px;  
+  height: 34px;  
+  display: flex;  
+  align-items: center;  
+  justify-content: center;  
+  font-size: 15px;  
+  font-weight: bold;  
+  box-shadow: 0 0 0 3px #f0fbf5;  
+}
+
+  </style>  
+</head>  
+<body>  
+  <div class="top-logo">  
+    <img src="ppoppo.png" alt="شعار" class="logo">  
+    <span class="logo-text">ثواب</span>  
+  </div>    <div class="app-container">  
+    <div class="header">  
+      <h1>القائمة الرئيسية</h1>  
+    </div>  <div class="grid">  
+  <a class="card" href="mm.html"><div class="card-text">جدول الصلوات</div><div class="card-number">1</div></a>  
+    
+  <a class="card" href="55555.html"><div class="card-text">القرآن الكريم</div><div class="card-number">2</div></a>  
+    
+  <a class="card" href="مكتبة.html"><div class="card-text">القرآن الصوتي</div><div class="card-number">3</div></a>  
+  <a class="card" href="666.html"><div class="card-text">مواقيت الصلاة</div><div class="card-number">4</div></a>  
+   <a class="card" href="456.html"><div class="card-text">الأذكار</div><div class="card-number">5</div></a>  
+  <a class="card" href="سبحة.html"><div class="card-text">السبحة</div><div class="card-number">6</div></a>  
+    
+  <a class="card" href="احاديث.html"><div class="card-text">الأحاديث</div><div class="card-number">7</div></a>  
+  <a class="card" href="ادعية.html"><div class="card-text">الدعاء</div><div class="card-number">8</div></a>  
+    
+    
+    
+  <a class="card" href="تجويد.html"><div class="card-text">التجويد</div><div class="card-number">9</div></a>  
+    
+    
+    
+    
+    
+    
+  <a class="card" href="اسماء.html"><div class="card-text">أسماء الله الحسنى</div><div class="card-number">10</div></a>  
+    
+    
+</div>
+
+  </div>  
+</body>  
+</html>  
